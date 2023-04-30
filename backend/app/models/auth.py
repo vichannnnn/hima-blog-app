@@ -6,7 +6,7 @@ from app.schemas.auth import (
     CurrentUserSchema,
     RoleEnum,
 )
-from sqlalchemy import Index, UniqueConstraint
+from sqlalchemy import Index
 from sqlalchemy import exc as SQLAlchemyExceptions
 from sqlalchemy import select, update
 from sqlalchemy.orm import relationship, Mapped, mapped_column
@@ -21,7 +21,6 @@ from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError, jwt
 from passlib.context import CryptContext
 from sqlalchemy.ext.asyncio import AsyncSession
-
 
 if TYPE_CHECKING:
     from app.models.blog import Blog, BlogPost
@@ -86,9 +85,7 @@ class Authenticator:
                         return CurrentUserSchema(
                             user_id=user.user_id,
                             username=username,
-
                             is_active=user.is_active,
-
                             user_type=user.user_type,
                         )
 
@@ -110,9 +107,7 @@ class Authenticator:
                     return CurrentUserSchema(
                         user_id=user.user_id,
                         username=username,
-
                         is_active=user.is_active,
-
                         user_type=user.user_type,
                     )
 
@@ -134,8 +129,6 @@ class Account(Base, CRUD["Account"]):
     __tablename__ = "account"
     __table_args__ = (
         Index("username_case_sensitive_index", text("upper(username)"), unique=True),
-        UniqueConstraint("username", "subdomain", name="_username_subdomain_uc"),
-        UniqueConstraint("email", "subdomain", name="_email_subdomain_uc"),
     )
 
     user_id: Mapped[int] = mapped_column(primary_key=True, index=True)
@@ -157,7 +150,6 @@ class Account(Base, CRUD["Account"]):
         cascade="all, delete-orphan", back_populates="account"
     )
 
-
     async def register(
         self, session: AsyncSession, data: AccountRegisterSchema
     ) -> CurrentUserSchema:
@@ -170,21 +162,10 @@ class Account(Base, CRUD["Account"]):
             await session.commit()
             await session.refresh(self)
 
-            stmt = (
-                update(Account)
-                .where(Account.user_id == self.user_id)
-
-            )
-            await session.execute(stmt)
-            await session.commit()
-
-
             user_data = {
                 "user_id": self.user_id,
                 "username": self.username,
-
                 "is_active": self.is_active,
-
                 "user_type": self.user_type,
             }
 
@@ -194,7 +175,6 @@ class Account(Base, CRUD["Account"]):
         except SQLAlchemyExceptions.IntegrityError as exc:
             await session.rollback()
             raise AppError.USERNAME_ALREADY_EXISTS_ERROR from exc
-
 
     @classmethod
     async def login(
@@ -247,7 +227,6 @@ class Account(Base, CRUD["Account"]):
         await session.execute(stmt)
         await session.commit()
         return status.HTTP_204_NO_CONTENT
-
 
     @classmethod
     async def select_from_username(cls, session: AsyncSession, username: str):

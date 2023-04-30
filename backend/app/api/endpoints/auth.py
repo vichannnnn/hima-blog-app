@@ -5,8 +5,6 @@ from app.schemas.auth import (
     CurrentUserSchema,
     AccountRegisterSchema,
     AccountUpdatePasswordSchema,
-    AccountUpdateEmailSchema,
-    AccountUpdateSubdomainSchema,
 )
 from app.schemas.blog import BlogCreateSchema
 from app.models.auth import Account, Authenticator, ALGORITHM, SECRET_KEY
@@ -14,7 +12,6 @@ from app.models.blog import Blog
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 import jwt
-
 
 router = APIRouter()
 
@@ -24,7 +21,6 @@ async def create_account(
     data: AccountRegisterSchema,
     session: AsyncSession = Depends(get_session),
 ):
-
     if data.password != data.repeat_password:
         raise AppError.PASSWORD_MISMATCH_ERROR
 
@@ -49,10 +45,8 @@ async def user_update_password(
     session: AsyncSession = Depends(get_session),
     authenticated: Account = Depends(Authenticator.get_current_user),
 ):
-
     credentials = await Account.update_password(session, authenticated.user_id, data)
     return credentials
-
 
 
 @router.get("/get", response_model=CurrentUserSchema)
@@ -80,5 +74,3 @@ async def user_login(
         "token_type": "bearer",
         "exp": decoded_token["exp"],
     }
-
-

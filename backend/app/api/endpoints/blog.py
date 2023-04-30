@@ -16,18 +16,12 @@ router = APIRouter()
 
 @router.post("/create", response_model=BlogSchema)
 async def create_user_blog(
-    data: BlogCreateSchema = Depends(),
-    favicon: UploadFile = File(None),
+    data: BlogCreateSchema,
     authenticated: Account = Depends(Authenticator.get_current_user),
     session: AsyncSession = Depends(get_session),
 ) -> BlogSchema:
     data_json = data.dict()
     data_json["user_id"] = authenticated.user_id
-
-    if isinstance(favicon, StarletteUploadFile):
-        folder = "images"
-        await save_file(favicon, folder)
-        data_json["image"] = favicon.filename
 
     try:
         res = await Blog.create(session, data=data_json)
