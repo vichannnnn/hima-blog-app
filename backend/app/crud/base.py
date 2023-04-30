@@ -23,6 +23,13 @@ class CRUD(Generic[ModelType]):
         return obj
 
     @classmethod
+    async def get_one(cls: Base, session: AsyncSession) -> ModelType:
+
+        stmt = select(cls)
+        result = await session.execute(stmt)
+        return result.scalar()
+
+    @classmethod
     async def get_one_by_filter(
         cls: Base,
         session: AsyncSession,

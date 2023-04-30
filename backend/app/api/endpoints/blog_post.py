@@ -16,9 +16,10 @@ from starlette.datastructures import UploadFile as StarletteUploadFile
 
 
 router = APIRouter()
+blogs_router = APIRouter()
 
 
-@router.post("/create", response_model=BlogPostSchema)
+@router.post("", response_model=BlogPostSchema)
 async def create_user_blog_post(
     data: BlogPostCreateSchema = Depends(),
     image: UploadFile = File(None),
@@ -37,8 +38,8 @@ async def create_user_blog_post(
     return res
 
 
-@router.get("/get", response_model=BlogPostSchema)
-async def get_user_blog_posts(
+@router.get("/{post_id}", response_model=BlogPostSchema)
+async def get_user_blog_post(
     post_id: int,
     session: AsyncSession = Depends(get_session),
 ):
@@ -48,7 +49,7 @@ async def get_user_blog_posts(
     return res
 
 
-@router.get("/get_all", response_model=List[BlogPostSchema])
+@blogs_router.get("", response_model=List[BlogPostSchema])
 async def get_all_user_blog_posts(
     user_id: int = None,
     session: AsyncSession = Depends(get_session),
@@ -62,7 +63,7 @@ async def get_all_user_blog_posts(
     return res
 
 
-@router.put("/update", response_model=BlogPostSchema)
+@router.put("", response_model=BlogPostSchema)
 async def update_user_blog_post(
     post_id: int,
     data: BlogPostUpdateSchema = Depends(),
@@ -90,7 +91,7 @@ async def update_user_blog_post(
     return res[0]
 
 
-@router.delete("/delete", response_model=BlogPostSchema)
+@router.delete("", response_model=BlogPostSchema)
 async def delete_user_blog_post(
     post_id: int,
     authenticated: Account = Depends(Authenticator.get_current_user),
