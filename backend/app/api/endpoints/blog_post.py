@@ -51,13 +51,10 @@ async def get_user_blog_post(
 
 @blogs_router.get("", response_model=List[BlogPostSchema])
 async def get_all_user_blog_posts(
-    user_id: int = None,
     session: AsyncSession = Depends(get_session),
 ):
 
-    res = await BlogPost.get_all_by_filter(
-        session, filter_conditions=[("user_id", user_id)]
-    )
+    res = await BlogPost.get_all(session)
     if not res:
         return []
     return res
