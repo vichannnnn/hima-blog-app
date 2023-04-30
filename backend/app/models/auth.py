@@ -2,8 +2,6 @@ from app.db.base_class import Base
 from app.exceptions import AppError
 from app.schemas.auth import (
     AccountRegisterSchema,
-    AccountUpdateSubdomainSchema,
-    AccountUpdateEmailSchema,
     AccountUpdatePasswordSchema,
     CurrentUserSchema,
     RoleEnum,
@@ -14,10 +12,6 @@ from sqlalchemy import select, update
 from sqlalchemy.orm import relationship, Mapped, mapped_column
 from sqlalchemy.sql.expression import text
 from typing import TYPE_CHECKING, Union, List
-from uuid import uuid4
-from app.email_handler import send_email
-from pydantic import EmailStr
-import re
 from app.crud.base import CRUD
 from datetime import datetime, timedelta
 from os import environ
@@ -92,9 +86,9 @@ class Authenticator:
                         return CurrentUserSchema(
                             user_id=user.user_id,
                             username=username,
-                            subdomain=user.subdomain,
+
                             is_active=user.is_active,
-                            email=user.email,
+
                             user_type=user.user_type,
                         )
 
@@ -116,9 +110,9 @@ class Authenticator:
                     return CurrentUserSchema(
                         user_id=user.user_id,
                         username=username,
-                        subdomain=user.subdomain,
+
                         is_active=user.is_active,
-                        email=user.email,
+
                         user_type=user.user_type,
                     )
 
@@ -147,14 +141,10 @@ class Account(Base, CRUD["Account"]):
     user_id: Mapped[int] = mapped_column(primary_key=True, index=True)
     username: Mapped[str] = mapped_column(nullable=False, unique=True)
     password: Mapped[str] = mapped_column(nullable=False)
-    email: Mapped[str] = mapped_column(nullable=False, unique=True)
-    subdomain: Mapped[str] = mapped_column(nullable=True, unique=True)
     user_type: Mapped[int] = mapped_column(
         nullable=False, server_default=text(f"{RoleEnum.USER}")
     )
     is_active: Mapped[bool] = mapped_column(nullable=False, default=False)
-    email_verification_token: Mapped[str] = mapped_column(nullable=True)
-
     user_to_blog_fk: Mapped["Blog"] = relationship(
         cascade="all, delete-orphan", uselist=False, back_populates="account"
     )
@@ -167,44 +157,12 @@ class Account(Base, CRUD["Account"]):
         cascade="all, delete-orphan", back_populates="account"
     )
 
-    @classmethod
-    async def verify_email(cls, session: AsyncSession, token: str):
-
-        try:
-            stmt = select(Account).where(Account.email_verification_token == token)
-            result = await session.execute(stmt)
-            return result.scalars().one()
-
-        except SQLAlchemyExceptions.NoResultFound:
-            return None
-
-    async def send_verification_email(self, session: AsyncSession, email: EmailStr, username: str):
-        token = uuid4().hex
-        confirm_url = f"https://{BACKEND_URL}/api/v1/auth/verify/{token}"
-        username_input = username
-        send_email(
-            username=username_input,
-            send_from="do-not-reply@fumi.moe",
-            send_to=email,
-            subject="Please confirm your email",
-            confirm_url=confirm_url,
-        )
-
-        stmt = (
-            update(Account)
-            .returning(Account)
-            .where(Account.user_id == self.user_id)
-            .values({"email_verification_token": token})
-        )
-        await session.execute(stmt)
-        await session.commit()
 
     async def register(
         self, session: AsyncSession, data: AccountRegisterSchema
     ) -> CurrentUserSchema:
         self.username = data.username
         self.password = Authenticator.pwd_context.hash(data.password)
-        self.email = data.email
         self.is_active = False
 
         try:
@@ -212,22 +170,21 @@ class Account(Base, CRUD["Account"]):
             await session.commit()
             await session.refresh(self)
 
-            self.subdomain = f"{self.username}-{self.user_id}"
             stmt = (
                 update(Account)
                 .where(Account.user_id == self.user_id)
-                .values({Account.subdomain: self.subdomain})
+
             )
             await session.execute(stmt)
             await session.commit()
-            await self.send_verification_email(session, data.email, data.username)
+
 
             user_data = {
                 "user_id": self.user_id,
                 "username": self.username,
-                "subdomain": self.subdomain,
+
                 "is_active": self.is_active,
-                "email": self.email,
+
                 "user_type": self.user_type,
             }
 
@@ -236,13 +193,8 @@ class Account(Base, CRUD["Account"]):
 
         except SQLAlchemyExceptions.IntegrityError as exc:
             await session.rollback()
-            constraint_name_match = re.search(r'"(.+?)"', str(exc.orig))
-            constraint_name = constraint_name_match.group(1)
-            if constraint_name == "account_email_key":
-                raise AppError.EMAIL_ALREADY_EXISTS_ERROR from exc
-            elif constraint_name == "account_username_key":
-                raise AppError.USERNAME_ALREADY_EXISTS_ERROR from exc
-            raise exc
+            raise AppError.USERNAME_ALREADY_EXISTS_ERROR from exc
+
 
     @classmethod
     async def login(
@@ -256,9 +208,7 @@ class Account(Base, CRUD["Account"]):
         user_data = {
             "user_id": credentials.user_id,
             "username": credentials.username,
-            "subdomain": credentials.subdomain,
             "is_active": credentials.is_active,
-            "email": credentials.email,
             "user_type": credentials.user_type,
         }
         current_user = CurrentUserSchema(**user_data)
@@ -298,73 +248,6 @@ class Account(Base, CRUD["Account"]):
         await session.commit()
         return status.HTTP_204_NO_CONTENT
 
-    @classmethod
-    async def update_subdomain(
-        cls, session: AsyncSession, user_id: int, data: AccountUpdateSubdomainSchema
-    ):
-        data_dict = data.dict()
-        to_update = {
-            key: value for key, value in data_dict.items() if value is not None
-        }
-
-        stmt = (
-            update(Account)
-            .returning(Account.subdomain)
-            .where(Account.user_id == user_id)
-            .values(to_update)
-        )
-
-        try:
-            res = await session.execute(stmt)
-            await session.commit()
-            updated_object = res.fetchone()[0]
-            return updated_object
-
-        except SQLAlchemyExceptions.IntegrityError as exc:
-            await session.rollback()
-            raise AppError.SUBDOMAIN_ALREADY_EXISTS_ERROR
-
-    async def resend_email_verification_token(
-        self, session: AsyncSession, user_id: int, username: str
-    ):
-        self.user_id = user_id
-        self.username = username
-        res = await self.select_from_username(session, self.username)
-
-        if not res.is_active:
-            await self.send_verification_email(session, res.email, self.username)
-        else:
-            raise AppError.USER_EMAIL_ALREADY_VERIFIED_ERROR
-
-    async def update_email(
-        self, session: AsyncSession, user_id: int, data: AccountUpdateEmailSchema
-    ):
-
-        stmt = select(Account).where(Account.email == data.email)
-        res = await session.execute(stmt)
-        existing_account = res.fetchone()
-        if existing_account:
-            raise AppError.EMAIL_ALREADY_EXISTS_ERROR
-
-        self.user_id = user_id
-        data_dict = data.dict()
-        data_dict["is_active"] = False
-        await self.send_verification_email(session, data.email, existing_account.username)
-
-        to_update = {
-            key: value for key, value in data_dict.items() if value is not None
-        }
-
-        stmt = (
-            update(Account)
-            .returning(Account.email)
-            .where(Account.user_id == user_id)
-            .values(to_update)
-        )
-        res = await session.execute(stmt)
-        await session.commit()
-        updated_object = res.fetchone()[0]
-        return updated_object
 
     @classmethod
     async def select_from_username(cls, session: AsyncSession, username: str):

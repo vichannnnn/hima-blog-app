@@ -14,12 +14,6 @@ class AppError:
         headers={"WWW-Authenticate": "Bearer"},
     )
 
-    INVALID_SUBDOMAIN_CREDENTIALS_ERROR = HTTPException(
-        status_code=status.HTTP_403_FORBIDDEN,
-        detail="Action to this subdomain is not allowed.",
-        headers={"WWW-Authenticate": "Bearer"},
-    )
-
     INSUFFICIENT_PERMISSION_ERROR = HTTPException(
         status_code=status.HTTP_403_FORBIDDEN,
         detail="You do not have permissions to execute this action.",
@@ -29,18 +23,6 @@ class AppError:
     USERNAME_ALREADY_EXISTS_ERROR = HTTPException(
         status_code=status.HTTP_409_CONFLICT,
         detail="Username already exists",
-        headers={"WWW-Authenticate": "Bearer"},
-    )
-
-    EMAIL_ALREADY_EXISTS_ERROR = HTTPException(
-        status_code=status.HTTP_409_CONFLICT,
-        detail="Email already exists",
-        headers={"WWW-Authenticate": "Bearer"},
-    )
-
-    SUBDOMAIN_ALREADY_EXISTS_ERROR = HTTPException(
-        status_code=status.HTTP_409_CONFLICT,
-        detail="Subdomain already exists",
         headers={"WWW-Authenticate": "Bearer"},
     )
 
@@ -95,24 +77,6 @@ class AppError:
     USER_BLOG_CATEGORY_ASSOCIATION_DOES_NOT_EXISTS_ERROR = HTTPException(
         status_code=status.HTTP_404_NOT_FOUND,
         detail="User blog post category association does not exist",
-        headers={"WWW-Authenticate": "Bearer"},
-    )
-
-    USER_EMAIL_NOT_VERIFIED_ERROR = HTTPException(
-        status_code=status.HTTP_403_FORBIDDEN,
-        detail="User email not verified yet",
-        headers={"WWW-Authenticate": "Bearer"},
-    )
-
-    USER_EMAIL_ALREADY_VERIFIED_ERROR = HTTPException(
-        status_code=status.HTTP_400_BAD_REQUEST,
-        detail="User email is already verified",
-        headers={"WWW-Authenticate": "Bearer"},
-    )
-
-    INVALID_EMAIL_VERIFICATION_TOKEN = HTTPException(
-        status_code=status.HTTP_400_BAD_REQUEST,
-        detail="Email verification token is invalid",
         headers={"WWW-Authenticate": "Bearer"},
     )
 

@@ -6,7 +6,6 @@ from app.models.auth import Account, Authenticator
 
 from sqlalchemy.ext.asyncio import AsyncSession
 from fastapi import File, UploadFile
-from typing import Optional
 from app.exceptions import AppError
 from sqlalchemy import exc as SQLAlchemyExceptions
 from app.image_handler import save_file
@@ -50,32 +49,13 @@ async def get_user_blog_by_id(
     return res
 
 
-@router.get("/get_from_subdomain", response_model=BlogSchema)
-async def get_user_blog_by_subdomain(
-    subdomain: str,
-    session: AsyncSession = Depends(get_session),
-) -> BlogSchema:
-    res = await Blog.get_one_by_filter(
-        session, join_table=Account, join_filter_conditions=[("subdomain", subdomain)]
-    )
-    if not res:
-        raise AppError.USER_BLOG_DOES_NOT_EXISTS_ERROR
-    return res
-
-
 @router.put("/update", response_model=BlogSchema)
 async def update_user_blog(
-    data: BlogUpdateSchema = Depends(),
-    favicon: Optional[UploadFile] = File(None),
+    data: BlogUpdateSchema,
     authenticated: Account = Depends(Authenticator.get_current_user),
     session: AsyncSession = Depends(get_session),
 ) -> BlogSchema:
     data_dict = data.dict()
-
-    if isinstance(favicon, StarletteUploadFile):
-        folder = "images"
-        await save_file(favicon, folder)
-        data_dict["favicon"] = favicon.filename
 
     res = await Blog.update_one_by_filter(
         session, data_dict, filter_conditions=[("user_id", authenticated.user_id)]

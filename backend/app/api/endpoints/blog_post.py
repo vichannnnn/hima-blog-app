@@ -50,23 +50,13 @@ async def get_user_blog_posts(
 
 @router.get("/get_all", response_model=List[BlogPostSchema])
 async def get_all_user_blog_posts(
-    subdomain: str = None,
     user_id: int = None,
     session: AsyncSession = Depends(get_session),
 ):
-    if not subdomain and not user_id:
-        raise AppError.INVALID_ARGUMENT_ERROR
 
-    if subdomain:
-        res = await BlogPost.get_all_by_filter(
-            session,
-            join_table=Account,
-            join_filter_conditions=[("subdomain", subdomain)],
-        )
-    else:
-        res = await BlogPost.get_all_by_filter(
-            session, filter_conditions=[("user_id", user_id)]
-        )
+    res = await BlogPost.get_all_by_filter(
+        session, filter_conditions=[("user_id", user_id)]
+    )
     if not res:
         return []
     return res

@@ -1,6 +1,5 @@
 from app.schemas.base import CustomBaseModel as BaseModel
 from typing import Optional
-from fastapi import UploadFile
 
 
 class BlogCreateSchema(BaseModel):
@@ -8,7 +7,6 @@ class BlogCreateSchema(BaseModel):
     title_tag: str
     hero_title: str
     hero_content: str
-    favicon: Optional[UploadFile] | str
 
 
 class BlogUpdateSchema(BaseModel):

@@ -50,47 +50,6 @@ services:
       - ./postgres:/var/lib/postgresql/data
       - ./db:/docker-entrypoint-initdb.d/
 
-  redis:
-    image: redis:7.0.7-alpine
-    ports:
-      - "6379:6379"
-    command: redis-server --loglevel verbose
-    restart: unless-stopped
-
-  scheduler:
-    environment:
-      CELERY_BROKER_URL: ${REDIS_URL}
-      CELERY_RESULT_BACKEND: ${REDIS_URL}
-      TASK_RUNNER_DATABASE_URL: ${TASK_RUNNER_DATABASE_URL}
-      DATABASE_URL: ${DATABASE_URL}
-      ACCESS_TOKEN_EXPIRE_MINUTES: ${ACCESS_TOKEN_EXPIRE_MINUTES}
-      ALGORITHM: ${ALGORITHM}
-      SECRET_KEY: ${SECRET_KEY}
-    depends_on:
-      - redis
-    build:
-      context: ./backend
-    command: celery -A app.worker worker -B --loglevel=info
-    restart: unless-stopped
-    healthcheck:
-      test: ["CMD-SHELL", "celery inspect ping"]
-    volumes:
-      - ./backend:/app
-      - blog-assets-volume:/app/images
-
-  scheduler-gui:
-    environment:
-      CELERY_BROKER_URL: ${REDIS_URL}
-    links:
-      - scheduler
-    ports:
-      - "5555:5555"
-    depends_on:
-      scheduler:
-        condition: service_healthy
-    image: mher/flower:1.2.0
-    restart: unless-stopped
-
   caddy:
      image: caddy:2.6.2-alpine
      networks:

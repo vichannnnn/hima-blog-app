@@ -1,5 +1,5 @@
 from app.db.base_class import Base
-from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy import ForeignKey
 from sqlalchemy.orm import Mapped, relationship, mapped_column
 from app.crud.base import CRUD
 from typing import TYPE_CHECKING
@@ -18,7 +18,6 @@ class Blog(Base, CRUD["Blog"]):
         index=True,
     )
     logo: Mapped[str] = mapped_column(nullable=False)
-    favicon: Mapped[str] = mapped_column(nullable=False)
     title_tag: Mapped[str] = mapped_column(nullable=False)
     hero_title: Mapped[str] = mapped_column(nullable=False)
     hero_content: Mapped[str] = mapped_column(nullable=False)

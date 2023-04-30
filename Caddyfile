@@ -14,10 +14,6 @@
 	reverse_proxy {$FRONTEND_CONTAINER_URL}
 }
 
-{$WILDCARD_FRONTEND_URL} {
-	reverse_proxy {$FRONTEND_CONTAINER_URL}
-}
-
 {$IMAGE_URL} {
         handle_path /images/* {
                 root * /srv
