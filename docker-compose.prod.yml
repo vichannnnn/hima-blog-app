@@ -2,7 +2,43 @@
 version: '3.8'
 
 services:
+  frontend:
+    container_name: hima-blog-frontend
+    networks:
+      - hima-blog-network
+      - default
+    depends_on:
+      - backend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.prod
+    ports:
+      - '80:80'
+      - '443:443'
+      - '8000:8000'
+      - '8001:8001'
+      - '5173:5173'
+    environment:
+      BACKEND_URL: ${BACKEND_URL}
+      BACKEND_CONTAINER_URL: ${BACKEND_CONTAINER_URL}
+      FRONTEND_URL: ${FRONTEND_URL}
+      FRONTEND_CONTAINER_URL: ${FRONTEND_CONTAINER_URL}
+      DEBUG_URL: ${DEBUG_URL}
+      DEBUG_CONTAINER_URL: ${DEBUG_CONTAINER_URL}
+      IMAGE_URL: ${IMAGE_URL}
+      VITE_API_URL: ${VITE_API_URL}
+      VITE_IMAGE_VOLUME_URL: ${VITE_IMAGE_VOLUME_URL}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - blog-assets-volume:/srv
+      - caddy_data:/data
+      - caddy_config:/config
+    restart:
+      unless-stopped
+
   backend:
+    depends_on:
+      - db
     container_name: hima-blog-backend
     build: ./backend
     command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
@@ -45,33 +81,6 @@ services:
     volumes:
       - ./postgres:/var/lib/postgresql/data
       - ./db:/docker-entrypoint-initdb.d/
-
-  caddy:
-     image: caddy:2.6.2-alpine
-     networks:
-       - hima-blog-network
-       - default
-     ports:
-       - '80:80'
-       - '443:443'
-       - '8000:8000'
-       - '8001:8001'
-       - '9000:9000'
-       - '5173:5173'
-     environment:
-       BACKEND_URL: ${BACKEND_URL}
-       BACKEND_CONTAINER_URL: ${BACKEND_CONTAINER_URL}
-       FRONTEND_URL: ${FRONTEND_URL}
-       FRONTEND_CONTAINER_URL: ${FRONTEND_CONTAINER_URL}
-       DEBUG_URL: ${DEBUG_URL}
-       DEBUG_CONTAINER_URL: ${DEBUG_CONTAINER_URL}
-       IMAGE_URL: ${IMAGE_URL}
-     restart: unless-stopped
-     volumes:
-       - blog-assets-volume:/srv
-       - ./Caddyfile:/etc/caddy/Caddyfile
-       - caddy_data:/data
-       - caddy_config:/config
 
 volumes:
   blog-assets-volume:

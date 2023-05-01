@@ -5,10 +5,17 @@ backend_container := backend
 docker_run := docker compose run --rm
 docker_backend := $(docker_run) $(backend_container)
 
+
 -include ./Makefile.properties
 
 hello:
 	echo "Hello, world!"
+
+build:
+	docker compose -f docker-compose.$(version).yml stop && docker compose -f docker-compose.$(version).yml build --no-cache && docker compose -f docker-compose.$(version).yml up -d
+
+stop:
+	docker compose -f docker-compose.$(version).yml down
 
 runserver:
 	docker exec -it $(backend_container) uvicorn app.main:app --port 9000 --host 0.0.0.0 --reload
