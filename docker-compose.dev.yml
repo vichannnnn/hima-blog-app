@@ -4,12 +4,14 @@ version: '3.8'
 services:
   frontend:
     container_name: hima-blog-frontend
+    depends_on:
+      - backend
     networks:
       - hima-blog-network
       - default
     build:
       context: ./frontend
-      dockerfile: Dockerfile.prod
+      dockerfile: Dockerfile.dev
     environment:
       VITE_API_URL: ${VITE_API_URL}
       VITE_IMAGE_VOLUME_URL: ${VITE_IMAGE_VOLUME_URL}
@@ -20,6 +22,8 @@ services:
 
   backend:
     container_name: hima-blog-backend
+    depends_on:
+      - db
     build: ./backend
     command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
     networks:
@@ -89,7 +93,7 @@ services:
      restart: unless-stopped
      volumes:
        - blog-assets-volume:/srv
-       - ./Caddyfile:/etc/caddy/Caddyfile
+       - ./Caddyfile.dev:/etc/caddy/Caddyfile
        - caddy_data:/data
        - caddy_config:/config
 
