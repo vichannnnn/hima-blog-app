@@ -4,7 +4,8 @@ SHELL = bash
 backend_container := backend
 docker_run := docker compose run --rm
 docker_backend := $(docker_run) $(backend_container)
-
+docker_compose_production_run := docker compose -f docker-compose.prod.yml run --rm $(backend_container)
+docker_compose_dev_run := docker compose -f docker-compose.dev.yml run --rm $(backend_container)
 
 -include ./Makefile.properties
 
@@ -23,11 +24,17 @@ runserver:
 runbackend:
 	docker compose -f docker-compose.yml up -d --build
 
+prodmigrate:
+	$(docker_compose_production_run) alembic upgrade head
+
+prodmigrations:
+	$(docker_compose_production_run) alembic revision --autogenerate -m $(name)
+
 migrate:
-	$(docker_backend) alembic upgrade head
+	$(docker_compose_dev_run) alembic upgrade head
 
 migrations:
-	$(docker_backend) alembic revision --autogenerate -m $(name)
+	$(docker_compose_dev_run) alembic revision --autogenerate -m $(name)
 
 migrateversion:
 	$(docker_backend) alembic upgrade $(version)
