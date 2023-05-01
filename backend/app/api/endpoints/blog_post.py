@@ -54,7 +54,7 @@ async def get_all_user_blog_posts(
     session: AsyncSession = Depends(get_session),
 ):
 
-    res = await BlogPost.get_all(session)
+    res = await BlogPost.get_all(session, order_by=("date_posted", "desc"))
     if not res:
         return []
     return res
