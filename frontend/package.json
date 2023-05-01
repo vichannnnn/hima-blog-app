@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vite --host 0.0.0.0",
-    "build": "vite build",
+    "build": "vite build --mode production",
     "test": "react-scripts test",
     "lint": "eslint .",
     "format": "prettier --write \"src/**/*.{ts,tsx}\"",
