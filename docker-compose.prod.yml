@@ -26,6 +26,7 @@ services:
       IMAGE_URL: ${IMAGE_URL}
       VITE_API_URL: ${VITE_API_URL}
       VITE_IMAGE_VOLUME_URL: ${VITE_IMAGE_VOLUME_URL}
+      PRODUCTION: ${PRODUCTION}
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile
       - blog-assets-volume:/srv
@@ -53,6 +54,7 @@ services:
       ALGORITHM: ${ALGORITHM}
       SECRET_KEY: ${SECRET_KEY}
       BACKEND_URL: ${BACKEND_URL}
+      PRODUCTION: ${PRODUCTION}
     restart: unless-stopped
     volumes:
       - ./backend:/app
