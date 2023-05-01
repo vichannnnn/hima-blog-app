@@ -65,7 +65,7 @@ const BlogPostList: React.FC<BlogPostListProps> = ({
     if (postId === null) {
       return;
     }
-    await apiClient.delete(`/post/delete?post_id=${postId}`);
+    await apiClient.delete(`/post?post_id=${postId}`);
     refreshBlogPosts();
   };
 

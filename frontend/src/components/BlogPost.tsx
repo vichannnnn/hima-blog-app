@@ -96,7 +96,7 @@ export const handleUpdateBlog = async (
 
     await handleRequest(
       "put",
-      "/blog/update",
+      "/blog",
       queryParams,
       uploadedFile,
       "favicon"
