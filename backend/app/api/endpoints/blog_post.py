@@ -73,7 +73,7 @@ async def update_user_blog_post(
     data_json["user_id"] = authenticated.user_id
 
     if isinstance(image, StarletteUploadFile):
-        folder = "images"
+        folder = "./images"
         await save_file(image, folder)
         data_json["image"] = image.filename
 

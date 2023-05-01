@@ -92,8 +92,7 @@ class CRUD(Generic[ModelType]):
             column = getattr(cls, column_name)
             if direction.lower() == "desc":
                 stmt = stmt.order_by(column.desc())
-            else:
-                stmt = stmt.order_by(asc(column))
+
 
         result = await session.execute(stmt)
         return result.scalars().all()
