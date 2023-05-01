@@ -8,12 +8,10 @@ import { materialDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 import remarkGfm from "remark-gfm";
 import "github-markdown-css/github-markdown-light.css";
 
-
 interface FullBlogPostProps {
   post: BlogPost;
   onBackClick: () => void;
 }
-
 
 const CodeBlock: React.FC<any> = ({
   node,
@@ -38,8 +36,6 @@ const CodeBlock: React.FC<any> = ({
     </code>
   );
 };
-
-
 
 const FullBlogPost: React.FC<FullBlogPostProps> = ({ post, onBackClick }) => {
   const postDate = new Intl.DateTimeFormat("en-GB", {

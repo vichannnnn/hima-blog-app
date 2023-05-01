@@ -83,24 +83,15 @@ export const handleUpdateBlog = async (
   heroTitle: string,
   heroContent: string,
   logoContent: string,
-  uploadedFile: File | null,
   toast: (options: any) => void
 ) => {
   try {
-    const queryParams = new URLSearchParams({
+    await apiClient.put("/blog", {
       logo: logoContent,
       title_tag: titleTag,
       hero_title: heroTitle,
       hero_content: heroContent,
     });
-
-    await handleRequest(
-      "put",
-      "/blog",
-      queryParams,
-      uploadedFile,
-      "favicon"
-    );
 
     toast({
       title: "Update successful.",

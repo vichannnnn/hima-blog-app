@@ -7,7 +7,7 @@ app = FastAPI(root_path="/api/v1")
 
 app.add_middleware(
     cors.CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["https://blog.himaa.me"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
