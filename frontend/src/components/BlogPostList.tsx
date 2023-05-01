@@ -29,9 +29,7 @@ import NewBlogPostModal from "./NewBlogPostModal";
 import { AddIcon } from "@chakra-ui/icons";
 import ArticleList from "./ArticleList";
 
-const VITE_IMAGE_VOLUME_URL = import.meta.env[
-  "VITE_IMAGE_VOLUME_URL"
-] as string;
+const VITE_IMAGE_VOLUME_URL = "https://image.fumi.moe/images/"
 
 interface BlogPostListProps {
   user: User | null;
