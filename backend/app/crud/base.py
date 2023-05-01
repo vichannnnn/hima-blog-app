@@ -83,8 +83,9 @@ class CRUD(Generic[ModelType]):
         return result.scalars().all()
 
     @classmethod
-    async def get_all(cls: Base, session: AsyncSession,
-                      order_by: Optional[Tuple[str, str]] = None) -> List[ModelType]:
+    async def get_all(
+        cls: Base, session: AsyncSession, order_by: Optional[Tuple[str, str]] = None
+    ) -> List[ModelType]:
         stmt = select(cls)
 
         if order_by:
@@ -92,7 +93,6 @@ class CRUD(Generic[ModelType]):
             column = getattr(cls, column_name)
             if direction.lower() == "desc":
                 stmt = stmt.order_by(column.desc())
-
 
         result = await session.execute(stmt)
         return result.scalars().all()

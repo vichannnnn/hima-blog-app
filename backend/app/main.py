@@ -1,9 +1,13 @@
 from app.api.api import api_router
 from fastapi import FastAPI
 from fastapi.middleware import cors
+import os
 
-
-app = FastAPI(root_path="/api/v1")
+app = FastAPI(
+    root_path="/api/v1",
+    docs_url=None if os.getenv("PRODUCTION") == "true" else "/docs",
+    redoc_url=None if os.getenv("PRODUCTION") == "true" else "/redoc",
+)
 
 app.add_middleware(
     cors.CORSMiddleware,

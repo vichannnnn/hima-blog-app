@@ -12,31 +12,33 @@ from app.models.blog import Blog
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 import jwt
+import os
 
 router = APIRouter()
+PRODUCTION = os.getenv("PRODUCTION")
 
+if PRODUCTION == "false":
+    @router.post("/create", response_model=CurrentUserSchema)
+    async def create_account(
+            data: AccountRegisterSchema,
+            session: AsyncSession = Depends(get_session),
+    ):
+        if data.password != data.repeat_password:
+            raise AppError.PASSWORD_MISMATCH_ERROR
 
-@router.post("/create", response_model=CurrentUserSchema)
-async def create_account(
-    data: AccountRegisterSchema,
-    session: AsyncSession = Depends(get_session),
-):
-    if data.password != data.repeat_password:
-        raise AppError.PASSWORD_MISMATCH_ERROR
+        created_user = await Account().register(session, data)
 
-    created_user = await Account().register(session, data)
+        data = {
+            "user_id": created_user.user_id,
+            "logo": created_user.username,
+            "title_tag": f"{created_user.username}'s Blog",
+            "hero_title": f"Welcome to {created_user.username}'s Blog",
+            "hero_content": "Update your blog's content here in the Admin Panel on the top-right corner!",
+        }
 
-    data = {
-        "user_id": created_user.user_id,
-        "logo": created_user.username,
-        "title_tag": f"{created_user.username}'s Blog",
-        "hero_title": f"Welcome to {created_user.username}'s Blog",
-        "hero_content": "Update your blog's content here in the Admin Panel on the top-right corner!",
-    }
-
-    BlogCreateSchema(**data)
-    await Blog.create(session, data)
-    return created_user
+        BlogCreateSchema(**data)
+        await Blog.create(session, data)
+        return created_user
 
 
 @router.post("/update_password")
