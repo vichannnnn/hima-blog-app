@@ -5,6 +5,8 @@ Blog single-page web application developed for my personal use because I couldn'
 Developed with React, TypeScript, Chakra, Vite on the frontend and FastAPI, Python, Postgres and SQLAlchemy on the backend.
 DevOps handled with Docker, Docker Compose, Caddy and Make.
 
+You are free to clone and use it for your own if you want, and maybe update the style on your own to run your own personal blog, I don't really mind lol
+
 ## Set up and Deployment
 
 - Run your Python on the shell and type in this, copy the result and paste into the `.env_example` for your `SECRET_KEY`.
