@@ -14,7 +14,7 @@ const Hero: React.FC = () => {
     <Box
       py={{ base: 24, md: 32 }}
       px={8}
-      w="100vw"
+      width="100%"
       bgColor="#f2feff"
       textAlign="center"
     >

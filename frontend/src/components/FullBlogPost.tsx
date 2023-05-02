@@ -55,6 +55,7 @@ const FullBlogPost: React.FC<FullBlogPostProps> = ({ post, onBackClick }) => {
       maxW="container.xl"
       mx="auto"
       minHeight="100vh"
+      w="100vw"
       bgColor="white"
     >
       <IconButton

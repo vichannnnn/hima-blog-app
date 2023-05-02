@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ChakraProvider } from "@chakra-ui/react";
+import { ChakraProvider, Box } from "@chakra-ui/react";
 import { AuthProvider } from "./components/authContext";
 import NavBar from "./components/NavBar";
 import Hero from "./components/Hero";
@@ -41,16 +41,18 @@ const Content: React.FC = () => {
 
   return (
     <>
-      <NavBar />
-      <Hero />
-      {showFullPost ? (
-        <FullBlogPost
-          post={selectedPost}
-          onBackClick={handleBackToBlogPostList}
-        />
-      ) : (
-        <BlogPostList user={user} onReadFullArticle={handleReadFullArticle} />
-      )}
+      <Box overflowX="hidden">
+        <NavBar />
+        <Hero />
+        {showFullPost ? (
+          <FullBlogPost
+            post={selectedPost}
+            onBackClick={handleBackToBlogPostList}
+          />
+        ) : (
+          <BlogPostList user={user} onReadFullArticle={handleReadFullArticle} />
+        )}
+      </Box>
     </>
   );
 };

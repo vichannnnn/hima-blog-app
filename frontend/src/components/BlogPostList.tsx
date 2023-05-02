@@ -162,16 +162,18 @@ const BlogPostList: React.FC<BlogPostListProps> = ({
                 spacing={4}
                 position="relative"
               >
-                <AdminActions
-                  user={user}
-                  onDelete={() => {
-                    setDeletePostId(post.post_id);
-                    setIsDeleteDialogOpen(true);
-                  }}
-                  onUpdatePost={updateBlogPost}
-                  onRefreshPosts={refreshBlogPosts}
-                  post={post}
-                />
+                {isLoggedInAndOwnsBlog && (
+                  <AdminActions
+                    user={user}
+                    onDelete={() => {
+                      setDeletePostId(post.post_id);
+                      setIsDeleteDialogOpen(true);
+                    }}
+                    onUpdatePost={updateBlogPost}
+                    onRefreshPosts={refreshBlogPosts}
+                    post={post}
+                  />
+                )}
                 <Image
                   src={`${VITE_IMAGE_VOLUME_URL}/${post.image}`}
                   alt={post.title}
