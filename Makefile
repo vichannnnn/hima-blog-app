@@ -16,7 +16,7 @@ build:
 	docker compose -f docker-compose.$(version).yml stop && docker compose -f docker-compose.$(version).yml build --no-cache && docker compose -f docker-compose.$(version).yml up -d
 
 stop:
-	docker compose -f docker-compose.$(version).yml down
+	docker compose -f docker-compose.$(version).yml stop
 
 runserver:
 	docker exec -it $(backend_container) uvicorn app.main:app --port 9000 --host 0.0.0.0 --reload

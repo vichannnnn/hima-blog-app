@@ -1,21 +1,11 @@
-# FastAPI Boilerplate
+# Hima Blog
 
-FastAPI Boilerplate is a backend boilerplate to help you get quickly started for projects of any scale without having to set up all the nitty-gritty details. 
+Blog single-page web application developed for my personal use because I couldn't be bothered using Wordpress, Medium or any other stuff like that, so I just decided to speedrun this bespoke blog for myself. You can check out my live version at https://blog.himaa.me.
 
-The boilerplate contains the following:
+Developed with React, TypeScript, Chakra, Vite on the frontend and FastAPI, Python, Postgres and SQLAlchemy on the backend.
+DevOps handled with Docker, Docker Compose, Caddy and Make.
 
-- JWT Authentication with basic authentication endpoints included with session dependencies.
-- Pytest to run unit tests for your endpoints and business logic.
-- SQLAlchemy ORM for your CRUD operations with Pydantic validation models.
-- Alembic for your ORM migrations and database version control.
-- Makefile with all the necessary deployment and set-up commands built in to quickly help you set up without having to type them all in.
-- Docker and Docker Compose for ease of deployment and containerization.
-- Postgres for the backend database running in a container.
-- Celery Task Runner running in a container for your tasks and pings.
-- Mypy and Pylint for your code quality check and type checks.
-- Caddy for your reverse proxy to handle routing between containers and your DNS.
-
-
+You are free to clone and use it for your own if you want, and maybe update the style on your own to run your own personal blog, I don't really mind lol
 
 ## Set up and Deployment
 
@@ -32,14 +22,24 @@ secret_key = secrets.token_hex(32)
 touch .env
 # Copy the content from .env_example into .env and edit based on your own needs.
 
-make runbackend
-make migrations name="init"
-make migrate
+make build version="prod"
+make prodmigrations name="init"
+make prodmigrate 
+```
+
+```
+touch .env
+# Copy the content from .env_example into .env and edit based on your own needs.
+
+make build version="dev"
+make devmigrations name="init"
+make devmigrate 
 ```
 
 ## Usage
 
 Go to `http://localhost:8000/api/v1/docs` to access the endpoints from the Swagger UI 
+Go to `http://localhost:5173` to access the frontend.
 
 You can also run `make runserver` to access the same application connected to the same database in port 9000, this is purely for debugging purpose.
 
