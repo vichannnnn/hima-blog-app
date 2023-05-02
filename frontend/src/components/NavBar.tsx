@@ -2,16 +2,9 @@ import React, { useState } from "react";
 import {
   Box,
   Flex,
-  Link,
   Text,
   Button,
   useDisclosure,
-  Collapse,
-  VStack,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
   Modal,
   ModalOverlay,
   ModalContent,
@@ -24,18 +17,15 @@ import {
   Input,
   useToast,
 } from "@chakra-ui/react";
-import { HamburgerIcon, ChevronDownIcon } from "@chakra-ui/icons";
-import UpdateBlogModal from "./UpdateBlogModal";
 import apiClient from "../api/apiClient";
 import { useBlogData } from "./BlogDataContext";
 import { handleUpdateBlog } from "./BlogPost";
 import useAuth from "../api/useAuth";
 import { AxiosError } from "axios";
-import UpdatePasswordModal from "./UpdatePasswordModal";
+import NavBarDropdown from "./NavBarDropdown";
 
-const NavBar: React.FC = () => {
+const NavBar = () => {
   const { blogData } = useBlogData();
-  const { isOpen, onToggle } = useDisclosure();
   const { user, login, logout } = useAuth();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -116,72 +106,6 @@ const NavBar: React.FC = () => {
     }
   };
 
-  const NavContent = () => (
-    <>
-      {/* {["Blog", "About", "Contact Us"].map((label) => (
-        <Link
-          key={label}
-          mx={4}
-          color="black"
-          _hover={{ textDecoration: "underline" }}
-        >
-          {label}
-        </Link>
-      ))} */}
-      {!user ? (
-        <>
-          <Button
-            bg="#3fe87c"
-            mx={4}
-            color="black"
-            size="sm"
-            _hover={{ bg: "#34d56a" }}
-            onClick={onLoginModalOpen}
-          >
-            Log in
-          </Button>
-        </>
-      ) : (
-        <Menu>
-          <MenuButton
-            as={Button}
-            bg="#3fe87c"
-            color="black"
-            size="sm"
-            _hover={{ bg: "#34d56a" }}
-            rightIcon={<ChevronDownIcon />}
-          >
-            {user.username}
-          </MenuButton>
-          <MenuList>
-            <MenuItem>
-              <UpdateBlogModal
-                onUpdateBlog={handleUpdateBlog}
-                trigger={
-                  <Box as="span" cursor="pointer">
-                    Your Blog Settings
-                  </Box>
-                }
-              />
-            </MenuItem>
-
-            <MenuItem>
-              <UpdatePasswordModal
-                onUpdatePassword={handleUpdatePassword}
-                trigger={
-                  <Box as="span" cursor="pointer">
-                    Update Password
-                  </Box>
-                }
-              />
-            </MenuItem>
-            <MenuItem onClick={handleLogout}>Log Out</MenuItem>
-          </MenuList>
-        </Menu>
-      )}
-    </>
-  );
-
   return (
     <>
       <Flex
@@ -210,30 +134,25 @@ const NavBar: React.FC = () => {
             alignItems="center"
             ml="auto"
           >
-            <NavContent />
+            <NavBarDropdown
+              user={user}
+              onLoginModalOpen={onLoginModalOpen}
+              handleLogout={handleLogout}
+              handleUpdatePassword={handleUpdatePassword}
+              handleUpdateBlog={handleUpdateBlog}
+            />
           </Box>
-          <Box
-            display={{ base: "block", md: "none" }}
-            ml="auto"
-            onClick={onToggle}
-          >
-            <HamburgerIcon boxSize={6} />
+          <Box display={{ base: "block", md: "none" }} ml="auto">
+            <NavBarDropdown
+              user={user}
+              onLoginModalOpen={onLoginModalOpen}
+              handleLogout={handleLogout}
+              handleUpdatePassword={handleUpdatePassword}
+              handleUpdateBlog={handleUpdateBlog}
+              isMobile={true}
+            />
           </Box>
         </Flex>
-        <Collapse in={isOpen} animateOpacity>
-          <VStack
-            alignItems="start"
-            spacing={4}
-            mt={4}
-            bg="#f2feff"
-            p={4}
-            rounded="md"
-            boxShadow="md"
-            w="full"
-          >
-            <NavContent />
-          </VStack>
-        </Collapse>
       </Flex>
       <Modal isOpen={isLoginModalOpen} onClose={onLoginModalClose}>
         <ModalOverlay />
