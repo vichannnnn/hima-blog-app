@@ -14,8 +14,10 @@ COPY . .
 COPY --from=dependencies /app/node_modules ./node_modules
 RUN yarn build
 
-FROM caddy:2.6.2-alpine AS deploy
-EXPOSE 443
-COPY --from=build /app/dist /usr/share/caddy
-
+FROM node:19 AS deploy
+WORKDIR /app
+COPY --from=build /app/dist ./
+RUN yarn global add http-server
+CMD ["http-server", "-p", "5173"]
+EXPOSE 5173
 

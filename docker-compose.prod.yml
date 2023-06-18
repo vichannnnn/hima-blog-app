@@ -13,8 +13,6 @@ services:
       context: ./frontend
       dockerfile: Dockerfile.prod
     ports:
-      - '80:80'
-      - '443:443'
       - '8000:8000'
       - '8001:8001'
       - '5173:5173'
@@ -28,10 +26,7 @@ services:
       VITE_IMAGE_VOLUME_URL: ${VITE_IMAGE_VOLUME_URL}
       PRODUCTION: ${PRODUCTION}
     volumes:
-      - ./Caddyfile:/etc/caddy/Caddyfile
       - blog-assets-volume:/srv
-      - caddy_data:/data
-      - caddy_config:/config
     restart:
       unless-stopped
 
@@ -84,8 +79,6 @@ services:
 
 volumes:
   blog-assets-volume:
-  caddy_config: null
-  caddy_data: null
 
 networks:
   hima-blog-network:
