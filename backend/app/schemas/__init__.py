@@ -1,4 +1,2 @@
-from . import blog
-from . import blog_post
+from . import core
 from . import auth
-from . import base

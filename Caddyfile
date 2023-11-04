@@ -4,15 +4,8 @@
 	    }
 }
 
-{$FRONTEND_URL} {
-    root * /usr/share/caddy
-    file_server
-}
-
-{$IMAGE_URL} {
-        handle_path /images/* {
-                root * /srv
-                header Access-Control-Allow-Origin *
-                file_server
-        }
+{$DEBUG_URL} {
+    handle_path /api/v1/* {
+	    reverse_proxy {$DEBUG_CONTAINER_URL}
+	    }
 }

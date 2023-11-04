@@ -1,42 +1,51 @@
-from app.schemas.base import CustomBaseModel as BaseModel
-from pydantic import constr
 from typing import Optional
-from enum import IntEnum
+from pydantic import constr
+from app.schemas.base import CustomBaseModel as BaseModel
 
-password_validator = constr(regex="^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&^])[^\s]{8,20}$")
-username_validator = constr(regex="^[a-zA-Z0-9]{4,20}$")
-
-
-class RoleEnum(IntEnum):
-    USER = 1  # pylint: disable=invalid-name
-    PREMIUM_USER = 2  # pylint: disable=invalid-name
-    DEVELOPER = 3  # pylint: disable=invalid-name
+valid_username = constr(regex="^[a-zA-Z0-9]{4,20}$")  # pylint: disable=[W1401, C0103]
+valid_password = constr(  # pylint: disable=[C0103]
+    regex="^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&^])[^\s]{8,20}$"  # pylint: disable=[W1401]
+)
 
 
 class AccountRegisterSchema(BaseModel):
-    username: username_validator  # type: ignore
-    password: password_validator  # type: ignore
-    repeat_password: password_validator  # type: ignore
+    username: valid_username  # type: ignore
+    password: valid_password  # type: ignore
+    repeat_password: valid_password  # type: ignore
+
+
+class AccountCreateSchema(BaseModel):
+    username: valid_username  # type: ignore
+    password: str
+
+
+class AccountCredentialsSchema(AccountCreateSchema):
+    user_id: int
 
 
 class AccountUpdatePasswordSchema(BaseModel):
-    before_password: Optional[password_validator]  # type: ignore
-    password: Optional[password_validator]  # type: ignore
-    repeat_password: Optional[password_validator]  # type: ignore
+    before_password: Optional[valid_password]  # type: ignore
+    password: Optional[valid_password]  # type: ignore
+    repeat_password: Optional[valid_password]  # type: ignore
 
 
 class AccountSchema(AccountRegisterSchema):
-    user_id: Optional[int] = None
-    repeat_password: str = None
+    user_id: Optional[int]
+    repeat_password: Optional[str]
 
 
 class CurrentUserSchema(BaseModel):
     user_id: int
-    username: username_validator  # type: ignore
-    user_type: RoleEnum
-    is_active: bool
+    username: valid_username  # type: ignore
+
+
+class CurrentUserWithJWTSchema(BaseModel):
+    data: CurrentUserSchema
+    access_token: str
+    token_type: str
+    exp: int
 
 
 class AuthSchema(BaseModel):
-    username: username_validator  # type: ignore
-    password: password_validator  # type: ignore
+    username: valid_username  # type: ignore
+    password: valid_password  # type: ignore

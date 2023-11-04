@@ -1,8 +1,8 @@
-"""init
+"""timezone-update
 
-Revision ID: 58f8f97b373d
-Revises: 57aa2fa4e523
-Create Date: 2023-05-01 18:25:53.176603
+Revision ID: 16bfd0c31f8d
+Revises: acd891fba842
+Create Date: 2023-11-04 05:55:42.686925
 
 """
 from alembic import op
@@ -10,8 +10,8 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = "58f8f97b373d"
-down_revision = "57aa2fa4e523"
+revision = "16bfd0c31f8d"
+down_revision = "acd891fba842"
 branch_labels = None
 depends_on = None
 

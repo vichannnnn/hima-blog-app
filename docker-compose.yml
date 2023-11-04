@@ -2,32 +2,12 @@
 version: '3.8'
 
 services:
-  frontend:
-    container_name: hima-blog-frontend
-    depends_on:
-      - backend
-    networks:
-      - hima-blog-network
-      - default
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile.dev
-    environment:
-      VITE_API_URL: ${VITE_API_URL}
-      VITE_IMAGE_VOLUME_URL: ${VITE_IMAGE_VOLUME_URL}
-    volumes:
-      - ./frontend/src:/app/src
-    restart:
-      unless-stopped
-
   backend:
-    container_name: hima-blog-backend
-    depends_on:
-      - db
+    container_name: backend
     build: ./backend
     command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
     networks:
-      - hima-blog-network
+      - internal-network
       - default
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
@@ -38,16 +18,13 @@ services:
       ACCESS_TOKEN_EXPIRE_MINUTES: ${ACCESS_TOKEN_EXPIRE_MINUTES}
       ALGORITHM: ${ALGORITHM}
       SECRET_KEY: ${SECRET_KEY}
-      BACKEND_URL: ${BACKEND_URL}
     restart: unless-stopped
     volumes:
       - ./backend:/app
-      - blog-assets-volume:/app/images
 
   db:
-    container_name: hima-blog-db
     networks:
-      - hima-blog-network
+      - internal-network
       - default
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
@@ -67,43 +44,31 @@ services:
       - ./db:/docker-entrypoint-initdb.d/
 
   caddy:
-     container_name: hima-blog-caddy
      image: caddy:2.6.2-alpine
      networks:
-       - hima-blog-network
+       - internal-network
        - default
-     depends_on:
-       - frontend
-       - backend
      ports:
        - '80:80'
        - '443:443'
        - '8000:8000'
-       - '8001:8001'
        - '9000:9000'
-       - '5173:5173'
      environment:
        BACKEND_URL: ${BACKEND_URL}
        BACKEND_CONTAINER_URL: ${BACKEND_CONTAINER_URL}
-       FRONTEND_URL: ${FRONTEND_URL}
-       FRONTEND_CONTAINER_URL: ${FRONTEND_CONTAINER_URL}
        DEBUG_URL: ${DEBUG_URL}
        DEBUG_CONTAINER_URL: ${DEBUG_CONTAINER_URL}
-       IMAGE_URL: ${IMAGE_URL}
-     restart: unless-stopped
      volumes:
-       - blog-assets-volume:/srv
-       - ./Caddyfile.dev:/etc/caddy/Caddyfile
+       - ./Caddyfile:/etc/caddy/Caddyfile
        - caddy_data:/data
        - caddy_config:/config
 
 volumes:
-  blog-assets-volume:
   caddy_config: null
   caddy_data: null
 
 networks:
-  hima-blog-network:
-    name: hima-blog-network
+  internal-network:
+    name: internal-network
     driver: bridge
 

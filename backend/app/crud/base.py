@@ -1,132 +1,87 @@
-from typing import TypeVar, Generic, List, Tuple, Any, Type, Optional
+from typing import TypeVar, Generic, Optional, Sequence, Type, Dict, Any
+from fastapi import Response as FastAPIResponse
+from sqlalchemy import update, delete, select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import declared_attr
-from sqlalchemy import update, delete, select, and_, BinaryExpression
-from sqlalchemy.orm.decl_api import DeclarativeMeta
-from app.db.base_class import Base
+from sqlalchemy import exc as SQLAlchemyExceptions, and_
 
-ModelType = TypeVar("ModelType")
+from app.db.base_class import Base
+from app.utils.exceptions import AppError
+
+ModelType = TypeVar("ModelType", bound=Base)
 
 
 class CRUD(Generic[ModelType]):
-    @declared_attr
+    @declared_attr  # type: ignore
     def __tablename__(self) -> str:
         return self.__class__.__name__.lower()
 
     @classmethod
-    async def create(
-        cls: DeclarativeMeta, session: AsyncSession, data: dict
+    async def create(  # type: ignore
+        cls: Type[ModelType], session: AsyncSession, data: Dict[str, Any]
     ) -> ModelType:
-        obj = cls(**data)
-        session.add(obj)
-        await session.commit()
-        return obj
+        try:
+            obj = cls(**data)
+            session.add(obj)
+            # import pdb
+            # pdb.set_trace()
+            await session.commit()
+            return obj
+
+        except SQLAlchemyExceptions.IntegrityError as exc:
+            await session.rollback()
+            if str(exc).find("ForeignKeyViolationError") != -1:
+                raise AppError.RESOURCES_NOT_FOUND_ERROR
+            elif str(exc).find("UniqueViolationError") != -1:
+                raise AppError.RESOURCES_ALREADY_EXISTS_ERROR from exc
 
     @classmethod
-    async def get_one(cls: Base, session: AsyncSession) -> ModelType:
-        stmt = select(cls)
+    async def get(cls: Type[ModelType], session: AsyncSession, id: int) -> ModelType:  # type: ignore
+        stmt = select(cls).where(cls.id == id)
         result = await session.execute(stmt)
-        return result.scalar()
+        instance = result.scalar()
+
+        if instance is None:
+            raise AppError.RESOURCES_NOT_FOUND_ERROR
+        return instance
 
     @classmethod
-    async def get_one_by_filter(
-        cls: Base,
-        session: AsyncSession,
-        filter_conditions: List[Tuple[str, Any]] = None,
-        join_table: Type[Base] = None,
-        join_filter_conditions: List[Tuple[str, Any]] = None,
+    async def update(  # type: ignore
+        cls: Type[ModelType], session: AsyncSession, id: int, data: Dict[str, Any]
     ) -> ModelType:
-
-        stmt = select(cls)
-
-        if join_table:
-            stmt = stmt.join(join_table)
-
-        if filter_conditions:
-            stmt = stmt.where(
-                and_(*(getattr(cls, k) == v for k, v in filter_conditions))
-            )
-
-        if join_table and join_filter_conditions:
-            stmt = stmt.where(
-                and_(*(getattr(join_table, k) == v for k, v in join_filter_conditions))
-            )
-
-        result = await session.execute(stmt)
-        return result.scalar()
-
-    @classmethod
-    async def get_all_by_filter(
-        cls: Base,
-        session: AsyncSession,
-        filter_conditions: List[Tuple[str, Any]] = None,
-        join_table: Type[Base] = None,
-        join_filter_conditions: List[Tuple[str, Any]] = None,
-    ) -> List[ModelType]:
-
-        stmt = select(cls)
-
-        if join_table:
-            stmt = stmt.join(join_table)
-
-        if filter_conditions:
-            stmt = stmt.where(
-                and_(*(getattr(cls, k) == v for k, v in filter_conditions))
-            )
-
-        if join_table and join_filter_conditions:
-            stmt = stmt.where(
-                and_(*(getattr(join_table, k) == v for k, v in join_filter_conditions))
-            )
-
-        result = await session.execute(stmt)
-        return result.scalars().all()
-
-    @classmethod
-    async def get_all(
-        cls: Base, session: AsyncSession, order_by: Optional[Tuple[str, str]] = None
-    ) -> List[ModelType]:
-        stmt = select(cls)
-
-        if order_by:
-            column_name, direction = order_by
-            column = getattr(cls, column_name)
-            if direction.lower() == "desc":
-                stmt = stmt.order_by(column.desc())
-
-        result = await session.execute(stmt)
-        return result.scalars().all()
-
-    @classmethod
-    async def update_one_by_filter(
-        cls: Base,
-        session: AsyncSession,
-        data: dict,
-        filter_conditions: List[Tuple[str, Any]],
-    ) -> ModelType:
-        data = {key: value for key, value in data.items() if value is not None}
-        stmt = (
-            update(cls)
-            .returning(cls)
-            .where(and_(*(getattr(cls, k) == v for k, v in filter_conditions)))
-            .values(**data)
-        )
+        stmt = update(cls).returning(cls).where(cls.id == id).values(**data)
         res = await session.execute(stmt)
         await session.commit()
-        updated_object = res.fetchone()
+        updated_instance = res.scalar()
 
-        return updated_object
+        if updated_instance is None:
+            await session.rollback()
+            raise AppError.RESOURCES_NOT_FOUND_ERROR
+        return updated_instance
 
     @classmethod
-    async def delete_one_by_filter(
-        cls: Base, session: AsyncSession, filter_conditions: List[Tuple[str, Any]]
-    ) -> ModelType:
-        stmt = (
-            delete(cls)
-            .returning(cls)
-            .where(and_(*(getattr(cls, k) == v for k, v in filter_conditions)))
-        )
+    async def delete(  # type: ignore
+        cls: Type[ModelType], session: AsyncSession, id: int
+    ) -> FastAPIResponse:
+        stmt = delete(cls).returning(cls).where(cls.id == id)
         res = await session.execute(stmt)
         await session.commit()
-        deleted_object = res.fetchone()
-        return deleted_object
+        deleted_instance = res.scalar()
+
+        if not deleted_instance:
+            await session.rollback()
+            raise AppError.RESOURCES_NOT_FOUND_ERROR
+        return FastAPIResponse(status_code=204)
+
+    @classmethod
+    async def get_all(  # type: ignore
+        cls: Type[ModelType],
+        session: AsyncSession,
+        filter_: Optional[Dict[str, Any]] = None,
+    ) -> Sequence[ModelType]:
+        stmt = select(cls)
+        if filter_:
+            conditions = [getattr(cls, key) == value for key, value in filter_.items()]
+            stmt = stmt.where(and_(*conditions))
+        result = await session.execute(stmt)
+        return result.scalars().all()
