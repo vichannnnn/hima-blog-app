@@ -90,24 +90,25 @@ def test_get_one_blog_post_valid(
     assert response.json()["title"] == test_blog_insert.title
 
 
-# def test_update_blog(
-#         create_valid_user,
-#         test_logged_in_client: TestClient,
-#         test_blog_insert: schemas.core.BlogCreateSchema,
-#         test_blog_update: schemas.core.BlogUpdateSchema,
-# ) -> None:
-#     payload = jsonable_encoder(test_blog_insert)
-#     response = test_logged_in_client.post(BLOG_URL, json=payload)
-#     assert response.status_code == status.HTTP_200_OK
-#     blog_id = response.json()["blog_id"]
-#
-#     payload = jsonable_encoder(test_blog_update)
-#     response = test_logged_in_client.put(BLOG_URL + "/" + str(blog_id), json=payload)
-#     assert response.status_code == status.HTTP_200_OK
-#     assert response.json()["id"] == 1
-#     assert response.json()["title"] == test_blog_update.title
-#     assert response.json()["content"] == test_blog_update.content
-#     assert response.json()["last_edited_date"] is not None
+def test_update_blog(
+        create_valid_user,
+        test_logged_in_client: TestClient,
+        test_blog_insert: schemas.core.BlogCreateSchema,
+        test_blog_update: schemas.core.BlogUpdateSchema,
+) -> None:
+
+    payload = jsonable_encoder(test_blog_insert)
+    response = test_logged_in_client.post(BLOG_URL, json=payload)
+    assert response.status_code == status.HTTP_200_OK
+    blog_id = response.json()["blog_id"]
+
+    payload = jsonable_encoder(test_blog_update.dict(exclude_unset=True))
+    response = test_logged_in_client.put(BLOG_URL + "/" + str(blog_id), json=payload)
+    assert response.status_code == status.HTTP_200_OK
+    assert response.json()["blog_id"] == blog_id
+    assert response.json()["title"] == test_blog_update.title
+    assert response.json()["content"] == test_blog_update.content
+    assert response.json()["last_edited_date"] is not None
 
 
 def test_update_blog_not_found(

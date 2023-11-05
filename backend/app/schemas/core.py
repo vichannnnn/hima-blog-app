@@ -12,7 +12,6 @@ class BlogCreateSchema(BaseModel):
 
 class BlogUpdateSchema(BaseModel):
     title: Optional[str]
-    preview: Optional[str]
     content: Optional[str]
     image: Optional[str]
     category: Optional[str]
