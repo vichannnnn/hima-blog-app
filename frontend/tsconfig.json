@@ -14,7 +14,15 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "baseUrl": ".",
+    "paths": {
+      "@apiClient": ["src/api/apiClient.ts"],
+      "@api/auth": ["src/api/auth/"],
+      "@components": ["src/components/"],
+      "@features": ["src/features/"],
+      "@providers": ["src/providers/"],
+    }
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]

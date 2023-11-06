@@ -1,17 +1,17 @@
-import axios from "axios";
+import axios from 'axios';
 
-const API_URL = "https://api.fumi.moe/api/v1";
+const VITE_APP_API_URL = import.meta.env.VITE_APP_API_URL;
 
-const apiClient = axios.create({
-  baseURL: API_URL,
+export const apiClient = axios.create({
+  baseURL: VITE_APP_API_URL,
   headers: {
-    "Content-Type": "application/json",
+    'Content-Type': 'application/json',
   },
 });
 
 apiClient.interceptors.request.use(
   (config) => {
-    const accessToken = localStorage.getItem("access_token");
+    const accessToken = localStorage.getItem('access_token');
     if (accessToken) {
       config.headers.Authorization = `Bearer ${accessToken}`;
     }
@@ -19,7 +19,32 @@ apiClient.interceptors.request.use(
   },
   (error) => {
     return Promise.reject(error);
-  }
+  },
 );
 
-export default apiClient;
+apiClient.interceptors.request.use(
+  (config) => {
+    const accessToken = localStorage.getItem('access_token');
+    if (accessToken) {
+      config.headers.Authorization = `Bearer ${accessToken}`;
+    } else {
+      localStorage.removeItem('user');
+      localStorage.removeItem('access_token');
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  },
+);
+
+apiClient.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response && error.response.status === 401) {
+      localStorage.removeItem('user');
+      localStorage.removeItem('access_token');
+    }
+    return Promise.reject(error);
+  },
+);
