@@ -12,6 +12,7 @@ export default ({ mode }) => {
         '@components': path.resolve(__dirname, 'src/components/'),
         '@features': path.resolve(__dirname, 'src/features/'),
         '@providers': path.resolve(__dirname, 'src/providers/'),
+        '@utils': path.resolve(__dirname, 'src/utils/'),
       },
     },
   });

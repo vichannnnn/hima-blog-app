@@ -1,0 +1,53 @@
+.header {
+    width: 100%;
+    top: 0;
+    left: 0;
+    background-color: transparent;
+    padding: 0 2rem;
+}
+
+.nav {
+    height:  5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    column-gap: 1rem;
+    grid-template-columns: auto auto;
+}
+
+.nav_list {
+    display: flex;
+    column-gap: 2rem;
+}
+
+.nav_link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.nav_logo {
+    display: flex;
+}
+
+.nav_logo_image {
+    height: 128px;
+    width: 128px;
+    margin: auto 0.5rem auto 0;
+}
+
+.nav_logo_text {
+    margin: auto 0 auto 0.5rem;
+}
+
+.nav_divider {
+    margin: auto 0;
+}
+
+
+@media screen and (max-width: 913px) {
+    .nav__logo_image {
+        width: 64px;
+        height: 64px;
+    }
+}

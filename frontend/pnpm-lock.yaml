@@ -20,6 +20,7 @@ specifiers:
   prettier: ^3.0.3
   react: ^18.2.0
   react-dom: ^18.2.0
+  react-router-dom: ^6.18.0
   typescript: ^5.0.2
   vite: ^4.4.5
 
@@ -35,6 +36,7 @@ dependencies:
   prettier: 3.0.3
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
+  react-router-dom: 6.18.0_react-dom@18.2.0+react@18.2.0
 
 devDependencies:
   '@types/react': 18.2.34
@@ -908,6 +910,11 @@ packages:
 
   /@popperjs/core/2.11.8:
     resolution: {integrity: sha512-P1st0aksCrn9sGZhp8GMYwBnQsbvAWsZAX44oXNNvLHGqAOcoVxmjZiohstwQ7SqKnbR47akdNi+uleWD8+g6A==}
+    dev: false
+
+  /@remix-run/router/1.11.0:
+    resolution: {integrity: sha512-BHdhcWgeiudl91HvVa2wxqZjSHbheSgIiDvxrF1VjFzBzpTtuDPkOdOi3Iqvc08kXtFkLjhbS+ML9aM8mJS+wQ==}
+    engines: {node: '>=14.0.0'}
     dev: false
 
   /@types/babel__core/7.20.3:
@@ -2065,6 +2072,29 @@ packages:
     resolution: {integrity: sha512-wViHqhAd8OHeLS/IRMJjTSDHF3U9eWi62F/MledQGPdJGDhodXJ9PBLNGr6WWL7qlH12Mt3TyTpbS+hGXMjCzQ==}
     engines: {node: '>=0.10.0'}
     dev: true
+
+  /react-router-dom/6.18.0_react-dom@18.2.0+react@18.2.0:
+    resolution: {integrity: sha512-Ubrue4+Ercc/BoDkFQfc6og5zRQ4A8YxSO3Knsne+eRbZ+IepAsK249XBH/XaFuOYOYr3L3r13CXTLvYt5JDjw==}
+    engines: {node: '>=14.0.0'}
+    peerDependencies:
+      react: '>=16.8'
+      react-dom: '>=16.8'
+    dependencies:
+      '@remix-run/router': 1.11.0
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      react-router: 6.18.0_react@18.2.0
+    dev: false
+
+  /react-router/6.18.0_react@18.2.0:
+    resolution: {integrity: sha512-vk2y7Dsy8wI02eRRaRmOs9g2o+aE72YCx5q9VasT1N9v+lrdB79tIqrjMfByHiY5+6aYkH2rUa5X839nwWGPDg==}
+    engines: {node: '>=14.0.0'}
+    peerDependencies:
+      react: '>=16.8'
+    dependencies:
+      '@remix-run/router': 1.11.0
+      react: 18.2.0
+    dev: false
 
   /react-transition-group/4.4.5_react-dom@18.2.0+react@18.2.0:
     resolution: {integrity: sha512-pZcd1MCJoiKiBR2NRxeCRg13uCXbydPnmB4EOeRrY7480qNWO8IIgQG6zlDkm6uRMsURXPuKq0GWtiM59a5Q6g==}
