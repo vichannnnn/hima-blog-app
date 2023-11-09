@@ -1,7 +1,8 @@
 import { Route, Routes, BrowserRouter } from 'react-router-dom';
-import { Footer, Header, LandingPage } from '@features';
+import { Footer, Header, LandingPage } from './features/LoginPage';
 import { AuthProvider, MediaQueryProvider } from '@providers';
 import { createTheme, ThemeProvider } from '@mui/material';
+import { LoginPage } from './features/LoginPage/LoginPage';
 
 const posts = [
   {
@@ -31,9 +32,6 @@ const posts = [
 ];
 
 const customMuiTheme = {
-  shape: {
-    borderRadius: 50,
-  },
   components: {
     MuiLink: {
       styleOverrides: {
@@ -60,6 +58,7 @@ export function App() {
             <Header />
             <Routes>
               <Route path='/' element={<LandingPage posts={posts} />} />
+              <Route path='/login' element={<LoginPage />} />
               {/*<Route path='*' element={<NotFound />} />*/}
             </Routes>
             <Footer />

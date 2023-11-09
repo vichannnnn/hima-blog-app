@@ -2,7 +2,7 @@ import { forwardRef, MouseEvent } from 'react';
 import { Button, ButtonProps } from '@mui/material';
 
 interface ButtonBaseProps extends ButtonProps {
-  onClick: (event: MouseEvent<HTMLButtonElement>) => void;
+  onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
 }
 
 export const ButtonBase = forwardRef<HTMLButtonElement, ButtonBaseProps>(
@@ -20,6 +20,7 @@ export const ButtonBase = forwardRef<HTMLButtonElement, ButtonBaseProps>(
           paddingX: '30px',
           textTransform: 'capitalize',
           fontFamily: "font-family: 'Nunito Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif",
+          borderRadius: '50px',
           '&:hover': {
             backgroundColor: '#D0BFFF',
             border: 'none',
