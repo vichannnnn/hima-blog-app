@@ -1,0 +1,22 @@
+.blog-post {
+    display: flex;
+    flex-direction: column;
+}
+
+.date-container p {
+    font-size: small;
+    color: gray;
+}
+
+.blog-post h2 {
+    font-size: x-large;
+}
+
+.blog-post p {
+    font-size: small
+}
+
+.button-container {
+    margin-top: 12px;
+    width: 50%;
+}

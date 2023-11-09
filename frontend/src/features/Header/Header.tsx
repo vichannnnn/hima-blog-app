@@ -37,16 +37,7 @@ export const Header = () => {
         <RouterLink className='nav_logo' to='/'>
           <img src='https://document.grail.moe/grail-chan-happy.png' alt='Placeholder Logo' />
         </RouterLink>
-        {/*{isDesktop ? (*/}
-        {/*  <div className='nav_menu'>*/}
-        {/*    <ul className='nav_list grid'>*/}
-        {/*      <li className='nav_item'></li>*/}
-        {/*    </ul>*/}
-        {/*  </div>*/}
-        {/*) : null}*/}
-        <div>
-          <UserButton />
-        </div>
+        <UserButton />
       </div>
     </header>
   );
