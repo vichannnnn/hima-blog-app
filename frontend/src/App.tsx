@@ -2,9 +2,11 @@ import { Route, Routes, BrowserRouter } from 'react-router-dom';
 import { Footer, Header, LandingPage } from '@features';
 import { AuthProvider, MediaQueryProvider } from '@providers';
 import { createTheme, ThemeProvider } from '@mui/material';
-import './App.css';
 
 const customMuiTheme = {
+  shape: {
+    borderRadius: 50,
+  },
   components: {
     MuiLink: {
       styleOverrides: {
@@ -20,7 +22,7 @@ const customMuiTheme = {
   },
 };
 
-function App() {
+export function App() {
   const muiTheme = createTheme(customMuiTheme);
 
   return (
@@ -40,5 +42,3 @@ function App() {
     </BrowserRouter>
   );
 }
-
-export default App;
