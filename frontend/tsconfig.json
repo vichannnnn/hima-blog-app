@@ -19,6 +19,7 @@
     "paths": {
       "@apiClient": ["src/api/apiClient.ts"],
       "@api/auth": ["src/api/auth/"],
+      "@api/blog": ["src/api/blog/"],
       "@components": ["src/components/"],
       "@features": ["src/features/"],
       "@providers": ["src/providers/"],

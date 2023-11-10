@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState, ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -65,7 +65,7 @@ export const LoginPage = () => {
                 label='Username'
                 type='text'
                 error={Boolean(errors.username)}
-                helperText={errors.username?.message as unknown as React.ReactNode}
+                helperText={errors.username?.message as unknown as ReactNode}
                 {...register('username')}
                 required
                 fullWidth
@@ -76,7 +76,7 @@ export const LoginPage = () => {
                 label='Password'
                 type='password'
                 error={Boolean(errors.password)}
-                helperText={errors.username?.message as unknown as React.ReactNode}
+                helperText={errors.username?.message as unknown as ReactNode}
                 {...register('password')}
                 required
               />

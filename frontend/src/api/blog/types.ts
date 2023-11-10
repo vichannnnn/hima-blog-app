@@ -12,14 +12,15 @@ export interface BlogPost {
 
 export interface CreateBlogPost {
   title: string;
+  preview: string;
   content: string;
-  image: string;
-  category: string;
+  image: File | null;
+  category: string | null;
 }
 
 export interface UpdateBlogPost {
   title: string;
   content: string;
-  image: string;
-  category: string;
+  image: string | null;
+  category: string | null;
 }
