@@ -3,21 +3,21 @@ from typing import Optional
 import datetime
 
 
-class BlogCreateSchema(BaseModel):
+class BlogCreateRequestModel(BaseModel):
     title: str
     content: str
     image: Optional[str]
     category: Optional[str]
 
 
-class BlogUpdateSchema(BaseModel):
+class BlogUpdateRequestModel(BaseModel):
     title: Optional[str]
     content: Optional[str]
     image: Optional[str]
     category: Optional[str]
 
 
-class BlogSchema(BlogCreateSchema):
+class BlogResponseModel(BlogCreateRequestModel):
     blog_id: int
     user_id: int
     preview: str

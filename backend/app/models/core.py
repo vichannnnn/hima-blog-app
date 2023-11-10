@@ -1,6 +1,6 @@
 from app.crud.base import CRUD
 from app.db.base_class import Base
-from app.schemas.core import BlogCreateSchema, BlogUpdateSchema, BlogSchema
+from app.schemas.core import BlogCreateRequestModel, BlogUpdateRequestModel, BlogResponseModel
 from sqlalchemy.orm import synonym, relationship, Mapped, mapped_column
 from app.db.database import AsyncSession
 from sqlalchemy import ForeignKey, func, DateTime
@@ -44,8 +44,8 @@ class Blog(Base, CRUD["Blog"]):
 
     @classmethod
     async def create_blog_post(
-        cls, session: AsyncSession, data: BlogCreateSchema, user_id: int
-    ) -> BlogSchema:
+        cls, session: AsyncSession, data: BlogCreateRequestModel, user_id: int
+    ) -> BlogResponseModel:
         insert = data.dict()
         insert["user_id"] = user_id
         insert["date_posted"] = datetime.datetime.now(TIMEZONE)
@@ -57,8 +57,8 @@ class Blog(Base, CRUD["Blog"]):
 
     @classmethod
     async def update_blog_post(
-        cls, session: AsyncSession, blog_id: int, user_id: int, data: BlogUpdateSchema
-    ) -> BlogSchema:
+        cls, session: AsyncSession, blog_id: int, user_id: int, data: BlogUpdateRequestModel
+    ) -> BlogResponseModel:
         existing_blog: Optional[Blog] = await cls.get(session, blog_id)
         if existing_blog is None or existing_blog.user_id != user_id:
             raise HTTPException(
