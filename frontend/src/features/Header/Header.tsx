@@ -1,14 +1,13 @@
 import { useContext, useEffect } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
-import { AuthContext, MediaQueryContext } from '@providers';
+import { MediaQueryContext } from '@providers';
 import { useNavigation } from '@utils';
 import HomeIcon from '@mui/icons-material/Home';
-import { UserButton } from './UserButton';
+import { HeaderButton } from './HeaderButton';
 import './Header.css';
 
 export const Header = () => {
-  const { goToHome, goToLoginPage } = useNavigation();
-  const { user, logout } = useContext(AuthContext);
+  const { goToHome } = useNavigation();
   const { isDesktop } = useContext(MediaQueryContext);
 
   useEffect(() => {
@@ -37,7 +36,7 @@ export const Header = () => {
         <RouterLink className='nav_logo' to='/'>
           <img src='https://document.grail.moe/grail-chan-happy.png' alt='Placeholder Logo' />
         </RouterLink>
-        <UserButton />
+        <HeaderButton />
       </div>
     </header>
   );

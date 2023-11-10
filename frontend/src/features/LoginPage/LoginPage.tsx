@@ -1,17 +1,18 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { ButtonBase } from '@components';
 import { AuthContext, LogInDetails } from '@providers';
 import { useNavigation, SignInValidation } from '@utils';
-import { Button, FormControl, Stack, TextField } from '@mui/material';
-
+import { FormControl, Stack, TextField } from '@mui/material';
+import { AxiosError } from 'axios';
 import './LoginPage.css';
 
 export const LoginPage = () => {
   const { goToHome } = useNavigation();
   const { user, isLoading, login } = useContext(AuthContext);
+  const [loginError, setLoginError] = useState(' ');
   const navigate = useNavigate();
   const {
     register,
@@ -38,7 +39,17 @@ export const LoginPage = () => {
       await login(formData);
       goToHome();
     } catch (error) {
-      console.log(error);
+      const axiosError = error as AxiosError;
+
+      if (axiosError.response) {
+        if (axiosError.response.status === 401) {
+          setLoginError('Invalid username or password. Please try again.');
+        } else if (axiosError.response.status === 422) {
+          setLoginError('Invalid username or password. Please try again.');
+        } else {
+          setLoginError('An unexpected error occurred. Please try again later.');
+        }
+      }
     }
   };
 
@@ -70,6 +81,7 @@ export const LoginPage = () => {
                 required
               />
             </FormControl>
+            {loginError && <div className='login-error-message'>{loginError}</div>}
             <div className='login-button-container'>
               <ButtonBase type='submit' variant='contained'>
                 Log In

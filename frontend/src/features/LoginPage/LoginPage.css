@@ -33,3 +33,7 @@
     display: flex;
     justify-content: center;
 }
+
+.login-error-message {
+    color: red;
+}

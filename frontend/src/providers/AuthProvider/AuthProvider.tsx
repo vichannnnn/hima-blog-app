@@ -1,5 +1,5 @@
 import { createContext, useEffect, useMemo, useState, useCallback } from 'react';
-import { apiClient } from '@apiClient';
+import { login as logInAPI } from '@api/auth';
 import { AuthContextType, AuthProviderProps, User, LogInDetails } from '@providers';
 import jwt_decode from 'jwt-decode';
 
@@ -42,8 +42,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   }, []);
 
   const login = useCallback(async (formData: LogInDetails) => {
-    const response = await apiClient.post('/auth/login', formData);
-    const { data, access_token } = response.data;
+    const { data, access_token } = await logInAPI(formData);
     setUser(data);
     localStorage.setItem('user', JSON.stringify(data));
     localStorage.setItem('access_token', access_token);
