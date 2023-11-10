@@ -1,4 +1,3 @@
-// @ts-ignore
 import * as Yup from 'yup';
 
 export const SignInValidation = Yup.object().shape({
