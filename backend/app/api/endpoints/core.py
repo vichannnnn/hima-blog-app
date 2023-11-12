@@ -1,5 +1,6 @@
-from typing import List, Sequence, Optional
-from fastapi import APIRouter, Response as FastAPIResponse, UploadFile, Depends, File
+from typing import Sequence, Optional
+from fastapi import APIRouter, Response as FastAPIResponse, UploadFile, Depends, Query
+from fastapi_pagination import Page
 from app.models.core import Blog
 from app.schemas.core import (
     BlogCreateRequestModel,
@@ -50,9 +51,16 @@ async def update_blog(
     return updated_blog
 
 
-@blogs_router.get("", response_model=List[BlogResponseModel])
-async def read_blogs(session: CurrentSession) -> Sequence[Blog]:
-    blogs = await Blog.get_all(session)
+@blogs_router.get("", response_model=Page[BlogResponseModel])
+async def read_blogs(
+    session: CurrentSession,
+    page: int = Query(1, title="Page number", gt=0),
+    size: int = Query(50, title="Page size", gt=0, le=50),
+    sorted_by_date_posted: Optional[str] = "desc",
+) -> Sequence[Blog]:
+    blogs = await Blog.get_all_blog_posts(
+        session, page=page, size=size, sorted_by_date_posted=sorted_by_date_posted
+    )
     return blogs
 
 

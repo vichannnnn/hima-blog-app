@@ -1,7 +1,7 @@
 import { apiClient } from '@apiClient';
-import { BlogPost } from './types';
+import { PaginatedBlogPosts } from './types';
 
-export const getAllBlogPosts = async (): Promise<BlogPost[]> => {
+export const getAllBlogPosts = async (): Promise<PaginatedBlogPosts> => {
   const response = await apiClient.get(`/blogs`);
   return response.data;
 };

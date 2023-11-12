@@ -16,6 +16,10 @@
     position: relative;
 }
 
+.blog-post-image-container img {
+    border-radius: 12px;
+}
+
 
 .date-container p {
     font-size: small;

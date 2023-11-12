@@ -1,13 +1,11 @@
+import { useEffect, useState } from 'react';
+import { getAllBlogPosts, BlogPost as BlogPostObject } from '@api/blog';
 import { BlogPost } from '@components';
 import { Hero } from '../Hero';
-import { useContext, useEffect, useState } from 'react';
-import { getAllBlogPosts, BlogPost as BlogPostObject } from '@api/blog';
 import './LandingPage.css';
-import { MediaQueryContext } from '@providers';
 
 export const LandingPage = () => {
   const [blogPosts, setBlogPosts] = useState<BlogPostObject[]>([]);
-  const isDesktop = useContext(MediaQueryContext);
 
   useEffect(() => {
     let isMounted = true;
@@ -16,7 +14,7 @@ export const LandingPage = () => {
       try {
         const getBlogPosts = await getAllBlogPosts();
         if (isMounted) {
-          setBlogPosts(getBlogPosts);
+          setBlogPosts(getBlogPosts.items);
         }
       } catch (error) {
         console.error('Error fetching blog posts', error);

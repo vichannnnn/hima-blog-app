@@ -8,7 +8,7 @@ from app.schemas.core import (
     BlogResponseModel,
 )
 from sqlalchemy.orm import synonym, relationship, Mapped, mapped_column
-from sqlalchemy import ForeignKey, func, DateTime
+from sqlalchemy import ForeignKey, func, DateTime, select
 from fastapi import HTTPException, UploadFile
 from typing import TYPE_CHECKING, Optional
 import datetime
@@ -107,3 +107,33 @@ class Blog(Base, CRUD["Blog"]):
                 status_code=403, detail="Not authorized to delete this blog post"
             )
         await super().delete(session, blog_id)
+
+    @classmethod
+    async def get_all_blog_posts(
+        cls,
+        session: AsyncSession,
+        page: int,
+        size: int,
+        sorted_by_date_posted: Optional[str] = "desc",
+    ):
+        stmt = select(cls)
+
+        if sorted_by_date_posted == "asc":
+            stmt = stmt.order_by(cls.date_posted.asc())
+        else:
+            stmt = stmt.order_by(cls.date_posted.desc())
+
+        count_stmt = select(func.count()).select_from(stmt)  # pylint: disable=E1102
+        total = await session.scalar(count_stmt)
+
+        stmt = stmt.limit(size).offset((page - 1) * size)
+
+        result = await session.execute(stmt)
+        pages = total // size if total % size == 0 else (total // size) + 1
+        return {
+            "items": result.scalars().all(),
+            "page": page,
+            "pages": pages,
+            "size": size,
+            "total": total,
+        }
