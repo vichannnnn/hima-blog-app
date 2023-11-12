@@ -98,7 +98,7 @@ export function App() {
           <AuthProvider>
             <Header />
             <Routes>
-              <Route path='/' element={<LandingPage posts={posts} />} />
+              <Route path='/' element={<LandingPage />} />
               <Route path='/login' element={<LoginPage />} />
               <Route path='/create' element={<CreateBlogPostPage />} />
               {/*<Route path='*' element={<NotFound />} />*/}

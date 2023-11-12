@@ -1,23 +1,46 @@
-import { BlogPost, BlogPostType } from '@components';
-import './LandingPage.css';
+import { BlogPost } from '@components';
 import { Hero } from '../Hero';
+import { useEffect, useState } from 'react';
+import { getAllBlogPosts, BlogPost as BlogPostObject } from '@api/blog';
+import './LandingPage.css';
 
-interface LandingPageProps {
-  posts: BlogPostType[];
-}
+export const LandingPage = () => {
+  const [blogPosts, setBlogPosts] = useState<BlogPostObject[]>([]);
 
-export const LandingPage = ({ posts }: LandingPageProps) => {
+  useEffect(() => {
+    let isMounted = true;
+
+    (async () => {
+      try {
+        const getBlogPosts = await getAllBlogPosts();
+        if (isMounted) {
+          setBlogPosts(getBlogPosts);
+        }
+      } catch (error) {
+        console.error('Error fetching blog posts', error);
+      }
+    })();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
   return (
     <>
       <Hero />
       <div className='landing-page'>
-        {posts.map((post, index) => (
+        {blogPosts.map((post, index) => (
           <BlogPost
             key={index}
             title={post.title}
-            date={post.date}
-            summary={post.summary}
-            imageUrl={post.imageUrl}
+            date={Intl.DateTimeFormat('en-GB', {
+              day: 'numeric',
+              month: 'long',
+              year: 'numeric',
+            }).format(new Date(post.date_posted))}
+            summary={post.preview}
+            imageUrl={post.image}
           />
         ))}
       </div>
