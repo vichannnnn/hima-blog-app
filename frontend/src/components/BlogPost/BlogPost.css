@@ -8,7 +8,8 @@
     top: 8px;
     right: 8px;
     border: none;
-    /*background-color: transparent;*/
+    border-radius: 8px;
+    background-color: lightsteelblue;
 }
 
 .blog-post-image-container {

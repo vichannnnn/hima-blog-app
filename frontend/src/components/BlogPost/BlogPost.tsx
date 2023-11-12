@@ -33,9 +33,11 @@ export const BlogPost = ({
   return (
     <div className='blog-post'>
       <div className='blog-post-image-container'>
-        <button className='edit-icon' onClick={handleGetUpdatePage}>
-          <EditIcon />
-        </button>
+        {user ? (
+          <button className='edit-icon' onClick={handleGetUpdatePage}>
+            <EditIcon />
+          </button>
+        ) : null}
         <img src={`${VITE_APP_AWS_CLOUDFRONT_URL}${image}`} alt={title} />
       </div>
       <div className='date-container'>
