@@ -2,7 +2,9 @@ import { useState, MouseEvent } from 'react';
 import { ButtonBase } from '@components';
 import { User } from '@providers';
 import { useNavigation } from '@utils';
-import { Menu, MenuItem } from '@mui/material';
+import { ListItemIcon, Menu, MenuItem } from '@mui/material';
+import CreateIcon from '@mui/icons-material/Create';
+import LogoutIcon from '@mui/icons-material/ExitToApp';
 
 interface UserButtonProps {
   user: User | null;
@@ -45,8 +47,18 @@ export const UserButton = ({ user, logout }: UserButtonProps) => {
           'aria-labelledby': 'user-button',
         }}
       >
-        <MenuItem onClick={goToCreateBlogPost}>Create a new blog post</MenuItem>
-        <MenuItem onClick={handleLogout}>Log Out</MenuItem>
+        <MenuItem onClick={goToCreateBlogPost}>
+          <ListItemIcon>
+            <CreateIcon fontSize='small' />
+          </ListItemIcon>
+          New blog post
+        </MenuItem>
+        <MenuItem onClick={handleLogout}>
+          <ListItemIcon>
+            <LogoutIcon fontSize='small' />
+          </ListItemIcon>
+          Log Out
+        </MenuItem>
       </Menu>
     </div>
   );
