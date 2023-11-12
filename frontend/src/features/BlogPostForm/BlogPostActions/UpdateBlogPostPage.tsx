@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { BlogPost, getBlogPost, UpdateBlogPost } from '@api/blog';
+import { BlogPost, getBlogPost, updateBlogPost, UpdateBlogPost } from '@api/blog';
 import { useNavigation } from '@utils';
 import { BlogPostForm } from '../BlogPostForm';
 import { Action } from '../types';
@@ -29,13 +29,13 @@ export const UpdateBlogPostPage = () => {
     }
   }, []);
 
-  const updateBlogPost = async (formData: UpdateBlogPost) => {
+  const submitUpdateBlogPost = async (formData: UpdateBlogPost) => {
     try {
       const payload = {
         ...formData,
-        image: formData.image instanceof File ? formData.image : null,
+        image: formData.image instanceof File ? formData.image : undefined,
       };
-      await updateBlogPost(payload);
+      await updateBlogPost(Number(blog_id), payload);
       goToHome();
     } catch (error) {
       console.error('Error creating blog post', error);
@@ -43,6 +43,6 @@ export const UpdateBlogPostPage = () => {
   };
 
   return !isLoading ? (
-    <BlogPostForm initialData={blogPost} onSubmit={updateBlogPost} action={Action.UPDATE} />
+    <BlogPostForm initialData={blogPost} onSubmit={submitUpdateBlogPost} action={Action.UPDATE} />
   ) : null;
 };

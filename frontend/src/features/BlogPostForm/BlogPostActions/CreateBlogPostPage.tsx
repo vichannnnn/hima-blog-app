@@ -10,7 +10,7 @@ export const CreateBlogPostPage = () => {
     try {
       const payload = {
         ...formData,
-        image: formData.image ? formData.image : null,
+        image: formData.image ? formData.image : undefined,
       };
 
       await addNewBlogPost(payload);

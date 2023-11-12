@@ -40,7 +40,6 @@ export const BlogPostForm = ({ initialData, onSubmit, action }: BlogPostFormProp
   });
 
   const watchAll = watch();
-  console.log(initialData);
   console.log(watchAll);
 
   useEffect(() => {
@@ -59,7 +58,7 @@ export const BlogPostForm = ({ initialData, onSubmit, action }: BlogPostFormProp
   return (
     <div className='blog-post-form-container'>
       <div>
-        <Title>Create new blog post</Title>
+        <Title>{action == Action.CREATE ? 'Create' : 'Update'} new blog post</Title>
         <Description>Lorem ipsum dolor sit amet.</Description>
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -116,7 +115,7 @@ export const BlogPostForm = ({ initialData, onSubmit, action }: BlogPostFormProp
         </div>
         <div className='blog-post-form-button-container'>
           <ButtonBase variant='contained' type='submit'>
-            Create
+            {action == Action.CREATE ? 'Create' : 'Update'}
           </ButtonBase>
         </div>
       </form>

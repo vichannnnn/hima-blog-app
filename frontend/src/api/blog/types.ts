@@ -7,21 +7,21 @@ export interface BlogPost {
   category: string;
   preview: string;
   date_posted: Date;
-  last_edited_date: Date | null;
+  last_edited_date?: Date;
 }
 
 export interface CreateBlogPost {
   title: string;
   preview: string;
   content: string;
-  image?: File | null;
-  category?: string | null;
+  image?: File;
+  category?: string;
 }
 
 export interface UpdateBlogPost {
-  title?: string | null;
-  preview?: string | null;
-  content?: string | null;
-  image?: File | null;
-  category?: string | null;
+  title?: string;
+  preview?: string;
+  content?: string;
+  image?: File;
+  category?: string;
 }

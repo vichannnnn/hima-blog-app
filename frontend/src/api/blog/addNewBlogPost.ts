@@ -15,13 +15,9 @@ export const addNewBlogPost = async (data: CreateBlogPost): Promise<BlogPost> =>
   }
 
   try {
-    if (data.image) {
-      return await apiClient.post(`/blog?${queryParams}`, formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-      });
-    } else {
-      return await apiClient.post(`/blog?${queryParams}`, formData);
-    }
+    return await apiClient.post(`/blog?${queryParams}`, formData, {
+      headers: data.image ? { 'Content-Type': 'multipart/form-data' } : undefined,
+    });
   } catch (error) {
     throw error as AxiosError;
   }
