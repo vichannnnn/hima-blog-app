@@ -3,6 +3,19 @@
     flex-direction: column;
 }
 
+.edit-icon {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    border: none;
+    /*background-color: transparent;*/
+}
+
+.blog-post-image-container {
+    position: relative;
+}
+
+
 .date-container p {
     font-size: small;
     color: gray;

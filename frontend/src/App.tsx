@@ -1,7 +1,14 @@
 import { Route, Routes, BrowserRouter } from 'react-router-dom';
 import { AuthProvider, MediaQueryProvider } from '@providers';
 import { createTheme, ThemeProvider } from '@mui/material';
-import { CreateBlogPostPage, LoginPage, Footer, Header, LandingPage } from '@features';
+import {
+  CreateBlogPostPage,
+  LoginPage,
+  Footer,
+  Header,
+  LandingPage,
+  UpdateBlogPostPage,
+} from '@features';
 
 const customMuiTheme = {
   components: {
@@ -32,6 +39,7 @@ export function App() {
               <Route path='/' element={<LandingPage />} />
               <Route path='/login' element={<LoginPage />} />
               <Route path='/create' element={<CreateBlogPostPage />} />
+              <Route path='/update/:blog_id' element={<UpdateBlogPostPage />} />
               {/*<Route path='*' element={<NotFound />} />*/}
             </Routes>
             <Footer />

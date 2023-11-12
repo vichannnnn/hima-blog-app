@@ -33,14 +33,15 @@ export const LandingPage = () => {
         {blogPosts.map((post, index) => (
           <BlogPost
             key={index}
+            blog_id={post.blog_id}
+            user_id={post.user_id}
             title={post.title}
-            date={Intl.DateTimeFormat('en-GB', {
-              day: 'numeric',
-              month: 'long',
-              year: 'numeric',
-            }).format(new Date(post.date_posted))}
-            summary={post.preview}
-            imageUrl={post.image}
+            content={post.content}
+            category={post.category}
+            date_posted={post.date_posted}
+            last_edited_date={post.last_edited_date}
+            preview={post.preview}
+            image={post.image}
           />
         ))}
       </div>

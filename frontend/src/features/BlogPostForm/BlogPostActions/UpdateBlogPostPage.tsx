@@ -1,23 +1,48 @@
-import { addNewBlogPost, CreateBlogPost } from '@api/blog';
+import { useEffect, useState } from 'react';
+import { BlogPost, getBlogPost, UpdateBlogPost } from '@api/blog';
 import { useNavigation } from '@utils';
 import { BlogPostForm } from '../BlogPostForm';
 import { Action } from '../types';
+import { useParams } from 'react-router-dom';
 
 export const UpdateBlogPostPage = () => {
+  const { blog_id } = useParams();
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [blogPost, setBlogPost] = useState<BlogPost | null>(null);
   const { goToHome } = useNavigation();
 
-  const submitNewBlogPost = async (formData: CreateBlogPost) => {
+  useEffect(() => {
+    const fetchBlogPostData = async () => {
+      try {
+        const data = await getBlogPost(Number(blog_id));
+        setBlogPost(data);
+        setIsLoading(false);
+      } catch (error) {
+        console.error('Error fetching blog post data', error);
+      }
+    };
+
+    if (blog_id) {
+      fetchBlogPostData().catch((err) => {
+        console.error('Failed to fetch blog post:', err);
+      });
+    }
+  }, []);
+
+  const updateBlogPost = async (formData: UpdateBlogPost) => {
     try {
       const payload = {
         ...formData,
         image: formData.image instanceof File ? formData.image : null,
       };
-      await addNewBlogPost(payload);
+      await updateBlogPost(payload);
       goToHome();
     } catch (error) {
       console.error('Error creating blog post', error);
     }
   };
 
-  return <BlogPostForm onSubmit={submitNewBlogPost} action={Action.UPDATE} />;
+  return !isLoading ? (
+    <BlogPostForm initialData={blogPost} onSubmit={updateBlogPost} action={Action.UPDATE} />
+  ) : null;
 };

@@ -1,7 +1,7 @@
 import { useContext, useEffect, ChangeEvent } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { CreateBlogPost } from '@api/blog';
+import { BlogPost, CreateBlogPost } from '@api/blog';
 import { ButtonBase, Description, ErrorText, Title } from '@components';
 import { AuthContext } from '@providers';
 import { BlogPostValidation, useNavigation } from '@utils';
@@ -11,7 +11,7 @@ import { Action } from './types';
 import './BlogPostForm.css';
 
 interface BlogPostFormProps {
-  initialData?: CreateBlogPost;
+  initialData?: BlogPost | null;
   onSubmit: (data: CreateBlogPost) => Promise<void>;
   action: Action;
 }
@@ -25,18 +25,23 @@ export const BlogPostForm = ({ initialData, onSubmit, action }: BlogPostFormProp
     handleSubmit,
     control,
     setValue,
-    reset,
+    watch,
     formState: { errors },
   } = useForm<CreateBlogPost>({
     resolver: yupResolver(BlogPostValidation),
-    defaultValues: initialData ? initialData : {},
+    defaultValues: initialData
+      ? {
+          title: initialData.title,
+          preview: initialData.preview,
+          content: initialData.content,
+          category: initialData.category,
+        }
+      : {},
   });
 
-  useEffect(() => {
-    if (action === Action.UPDATE && initialData) {
-      reset(initialData);
-    }
-  }, [initialData, action, reset]);
+  const watchAll = watch();
+  console.log(initialData);
+  console.log(watchAll);
 
   useEffect(() => {
     if (!isLoading && !user) {

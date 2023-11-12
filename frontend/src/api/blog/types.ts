@@ -20,7 +20,8 @@ export interface CreateBlogPost {
 
 export interface UpdateBlogPost {
   title?: string | null;
+  preview?: string | null;
   content?: string | null;
-  image?: string | null;
+  image?: File | null;
   category?: string | null;
 }
