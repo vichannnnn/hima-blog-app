@@ -6,8 +6,11 @@ services:
     container_name: backend
     build: ./backend
     command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    ports:
+      - '8000:8000'
+      - '9000:9000'
     networks:
-      - internal-network
+      - hima-blog-network
       - default
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
@@ -18,13 +21,17 @@ services:
       ACCESS_TOKEN_EXPIRE_MINUTES: ${ACCESS_TOKEN_EXPIRE_MINUTES}
       ALGORITHM: ${ALGORITHM}
       SECRET_KEY: ${SECRET_KEY}
+      AWS_CLOUDFRONT_URL: ${AWS_CLOUDFRONT_URL}
+      AWS_S3_BUCKET_NAME: ${AWS_S3_BUCKET_NAME}
+      AWS_S3_SECRET_ACCESS_KEY: ${AWS_S3_SECRET_ACCESS_KEY}
+      AWS_S3_ACCESS_KEY_ID: ${AWS_S3_ACCESS_KEY_ID}
     restart: unless-stopped
     volumes:
       - ./backend:/app
 
   db:
     networks:
-      - internal-network
+      - hima-blog-network
       - default
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
@@ -43,32 +50,7 @@ services:
       - ./postgres:/var/lib/postgresql/data
       - ./db:/docker-entrypoint-initdb.d/
 
-  caddy:
-     image: caddy:2.6.2-alpine
-     networks:
-       - internal-network
-       - default
-     ports:
-       - '80:80'
-       - '443:443'
-       - '8000:8000'
-       - '9000:9000'
-     environment:
-       BACKEND_URL: ${BACKEND_URL}
-       BACKEND_CONTAINER_URL: ${BACKEND_CONTAINER_URL}
-       DEBUG_URL: ${DEBUG_URL}
-       DEBUG_CONTAINER_URL: ${DEBUG_CONTAINER_URL}
-     volumes:
-       - ./Caddyfile:/etc/caddy/Caddyfile
-       - caddy_data:/data
-       - caddy_config:/config
-
-volumes:
-  caddy_config: null
-  caddy_data: null
-
 networks:
-  internal-network:
-    name: internal-network
+  hima-blog-network:
+    name: hima-blog-network
     driver: bridge
-

@@ -6,13 +6,14 @@ import datetime
 class BlogCreateRequestModel(BaseModel):
     title: str
     content: str
-    image: Optional[str]
+    preview: str
     category: Optional[str]
 
 
 class BlogUpdateRequestModel(BaseModel):
     title: Optional[str]
     content: Optional[str]
+    preview: Optional[str]
     image: Optional[str]
     category: Optional[str]
 
@@ -21,5 +22,6 @@ class BlogResponseModel(BlogCreateRequestModel):
     blog_id: int
     user_id: int
     preview: str
+    image: str
     date_posted: datetime.datetime
     last_edited_date: Optional[datetime.datetime]
