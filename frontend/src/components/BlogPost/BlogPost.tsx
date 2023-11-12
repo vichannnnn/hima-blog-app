@@ -47,8 +47,10 @@ export const BlogPost = ({
           }).format(new Date(date_posted))}
         </p>
       </div>
-      <h2>{title}</h2>
-      <p>{preview}</p>
+
+      <h2 className='blog-post-title'>{title}</h2>
+      <p className='blog-post-preview'>{preview}</p>
+
       <div className='button-container'>
         <ButtonBase onClick={() => console.log(`Read more about ${title}`)}>
           Read full article

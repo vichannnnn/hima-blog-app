@@ -20,7 +20,7 @@ export const ButtonBase = forwardRef<HTMLButtonElement, ButtonBaseProps>(
           paddingX: '30px',
           textTransform: 'capitalize',
           fontFamily: "font-family: 'Nunito Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif",
-          borderRadius: '50px',
+          borderRadius: '10px',
           '&:hover': {
             backgroundColor: '#D0BFFF',
             border: 'none',

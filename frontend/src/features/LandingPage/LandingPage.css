@@ -19,3 +19,14 @@
     height: 225px;
     object-fit: cover;
 }
+
+@media screen and (max-width: 913px) {
+    .landing-page {
+        width: 75%;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        grid-gap: 1rem;
+        padding: 1rem;
+    }
+}

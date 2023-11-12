@@ -21,15 +21,20 @@
     color: gray;
 }
 
-.blog-post h2 {
+
+.blog-post-title {
     font-size: x-large;
+    min-height: 3rem;
+    max-height: 3rem;
 }
 
-.blog-post p {
-    font-size: small
+.blog-post-preview {
+    min-height: 6rem;
+    font-size: small;
+    text-overflow: ellipsis;
 }
 
 .button-container {
-    margin-top: 12px;
+    margin: auto;
     width: 50%;
 }
