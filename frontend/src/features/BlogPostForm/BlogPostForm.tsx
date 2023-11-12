@@ -1,16 +1,23 @@
 import { useContext, useEffect, ChangeEvent } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { addNewBlogPost, CreateBlogPost } from '@api/blog';
+import { CreateBlogPost } from '@api/blog';
 import { ButtonBase, Description, ErrorText, Title } from '@components';
 import { AuthContext } from '@providers';
 import { BlogPostValidation, useNavigation } from '@utils';
 import { TextField } from '@mui/material';
 import MDEditor from '@uiw/react-md-editor';
-import './CreateBlogPostPage.css';
+import { Action } from './types';
+import './BlogPostForm.css';
 
-export const CreateBlogPostPage = () => {
-  const { goToHome, goToLoginPage } = useNavigation();
+interface BlogPostFormProps {
+  initialData?: CreateBlogPost;
+  onSubmit: (data: CreateBlogPost) => Promise<void>;
+  action: Action;
+}
+
+export const BlogPostForm = ({ initialData, onSubmit, action }: BlogPostFormProps) => {
+  const { goToLoginPage } = useNavigation();
   const { user, isLoading } = useContext(AuthContext);
 
   const {
@@ -18,10 +25,18 @@ export const CreateBlogPostPage = () => {
     handleSubmit,
     control,
     setValue,
+    reset,
     formState: { errors },
   } = useForm<CreateBlogPost>({
     resolver: yupResolver(BlogPostValidation),
+    defaultValues: initialData ? initialData : {},
   });
+
+  useEffect(() => {
+    if (action === Action.UPDATE && initialData) {
+      reset(initialData);
+    }
+  }, [initialData, action, reset]);
 
   useEffect(() => {
     if (!isLoading && !user) {
@@ -36,26 +51,13 @@ export const CreateBlogPostPage = () => {
     }
   };
 
-  const submitNewBlogPost = async (formData: CreateBlogPost) => {
-    try {
-      const payload = {
-        ...formData,
-        image: formData.image instanceof File ? formData.image : null,
-      };
-      await addNewBlogPost(payload);
-      goToHome();
-    } catch (error) {
-      console.error('Error creating blog post', error);
-    }
-  };
-
   return (
     <div className='blog-post-form-container'>
       <div>
         <Title>Create new blog post</Title>
         <Description>Lorem ipsum dolor sit amet.</Description>
       </div>
-      <form onSubmit={handleSubmit(submitNewBlogPost)}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <TextField
           label='Title'
           type='text'
@@ -98,7 +100,6 @@ export const CreateBlogPostPage = () => {
         {errors.content && <ErrorText>{errors.content.message}</ErrorText>}
         <div className='blog-post-image-upload-container'>
           <TextField
-            {...register('image')}
             type='file'
             onChange={handleImageChange}
             fullWidth
