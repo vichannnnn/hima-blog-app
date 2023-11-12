@@ -96,14 +96,19 @@ def test_invalid_user() -> Generator[schemas.auth.AccountSchema, None, None]:
 @pytest.fixture(name="test_blog_insert")
 def test_blog_insert() -> Generator[schemas.core.BlogCreateRequestModel, None, None]:
     yield schemas.core.BlogCreateRequestModel(
-        title="Testing Blog 1", content="This is the content."
+        title="Testing Blog 1",
+        content="This is the content.",
+        preview="This is the preview.",
     )
 
 
 @pytest.fixture(name="test_blog_insert_with_category")
 def test_blog_insert_2() -> Generator[schemas.core.BlogCreateRequestModel, None, None]:
     yield schemas.core.BlogCreateRequestModel(
-        title="Testing Blog 2", content="This is another content.", category="Category"
+        title="Testing Blog 2",
+        content="This is another content.",
+        preview="This is another preview.",
+        category="Category",
     )
 
 

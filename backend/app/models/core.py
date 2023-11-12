@@ -2,7 +2,6 @@ from app.crud.base import CRUD
 from app.db.base_class import Base
 from app.db.database import AsyncSession
 from app.utils.file_handler import save_file
-from app.api.deps import SessionBucket
 from app.schemas.core import (
     BlogCreateRequestModel,
     BlogUpdateRequestModel,
@@ -15,6 +14,7 @@ from typing import TYPE_CHECKING, Optional
 import datetime
 import pytz
 import uuid
+import boto3
 
 if TYPE_CHECKING:
     from app.models.auth import Account
@@ -53,7 +53,7 @@ class Blog(Base, CRUD["Blog"]):
     async def create_blog_post(
         cls,
         session: AsyncSession,
-        s3_bucket: SessionBucket,
+        s3_bucket: boto3.client,
         data: BlogCreateRequestModel,
         user_id: int,
         image: Optional[UploadFile] = None,
@@ -74,7 +74,7 @@ class Blog(Base, CRUD["Blog"]):
     async def update_blog_post(
         cls,
         session: AsyncSession,
-        s3_bucket: SessionBucket,
+        s3_bucket: boto3.client,
         data: BlogUpdateRequestModel,
         blog_id: int,
         user_id: int,
