@@ -1,0 +1,7 @@
+.error-description {
+    display: block;
+    font-size: 1rem;
+    margin-bottom: 2%;
+    margin-top: 8px;
+    color: red;
+}

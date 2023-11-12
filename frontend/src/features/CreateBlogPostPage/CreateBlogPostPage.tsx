@@ -2,7 +2,7 @@ import { useContext, useEffect, ChangeEvent } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { addNewBlogPost, CreateBlogPost } from '@api/blog';
-import { ButtonBase, Description, Title } from '@components';
+import { ButtonBase, Description, ErrorText, Title } from '@components';
 import { AuthContext } from '@providers';
 import { BlogPostValidation, useNavigation } from '@utils';
 import { TextField } from '@mui/material';
@@ -95,7 +95,7 @@ export const CreateBlogPostPage = () => {
             />
           )}
         />
-        {errors.content && <p>{errors.content.message}</p>}
+        {errors.content && <ErrorText>{errors.content.message}</ErrorText>}
         <div className='blog-post-image-upload-container'>
           <TextField
             {...register('image')}
