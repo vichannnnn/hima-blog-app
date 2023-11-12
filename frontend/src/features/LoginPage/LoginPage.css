@@ -6,19 +6,6 @@
     margin-right: auto;
 }
 
-.login-title {
-    font-size: calc(1.75rem * 1.5);
-    font-weight: 600;
-    margin-top: 48px;
-}
-
-.login-description {
-    display: block;
-    font-size: 1rem;
-    color: hsl(0, 0%, 50%);
-    margin-bottom: 2%;
-}
-
 .login-container {
     text-align: left;
     margin-bottom: 24px;

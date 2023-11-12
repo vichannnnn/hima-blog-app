@@ -6,7 +6,8 @@ export const SignInValidation = Yup.object().shape({
 });
 
 export const BlogPostValidation = Yup.object({
-  title: Yup.string().required('Title is required'),
-  content: Yup.string().required('Content is required'),
-  preview: Yup.string().required('Preview is required'),
+  title: Yup.string().required('Title is required.'),
+  content: Yup.string().required('Content is required.'),
+  preview: Yup.string().required('Preview is required.'),
+  category: Yup.string().nullable(),
 }).required();

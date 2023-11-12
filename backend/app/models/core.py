@@ -63,7 +63,7 @@ class Blog(Base, CRUD["Blog"]):
         insert["date_posted"] = datetime.datetime.now(TIMEZONE)
 
         if image:
-            file_name = uuid.uuid4().hex
+            file_name = uuid.uuid4().hex + ".png"
             await save_file(image, file_name, s3_bucket)
             insert["image"] = file_name
 
@@ -90,7 +90,7 @@ class Blog(Base, CRUD["Blog"]):
         update["last_edited_date"] = datetime.datetime.now(TIMEZONE)
 
         if image:
-            file_name = uuid.uuid4().hex
+            file_name = uuid.uuid4().hex + ".png"
             await save_file(image, file_name, s3_bucket)
             update["image"] = file_name
 

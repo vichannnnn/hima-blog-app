@@ -22,9 +22,11 @@ async def save_file(file: UploadFile, file_name: str, s3_client: boto3.client) -
     file_content = await file.read()
     file_obj = BytesIO(file_content)
 
-    CommonArgs = {"CacheControl": "max-age=31536000, public, immutable"}
-    ExtraArgs = {"ContentDisposition": "inline"}
-    HeaderArgs = {**CommonArgs, **ExtraArgs}
+    HeaderArgs = {
+        "CacheControl": "max-age=31536000, public, immutable",
+        "ContentDisposition": "inline",
+        "ContentType": "image/png",
+    }
 
     s3_client.upload_fileobj(
         Fileobj=file_obj,

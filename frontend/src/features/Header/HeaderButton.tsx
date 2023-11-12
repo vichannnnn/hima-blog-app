@@ -33,6 +33,7 @@ const LogInButton = ({ user }: LogInButtonProps) => {
 };
 
 const UserButton = ({ user, logout }: UserButtonProps) => {
+  const { goToCreateBlogPost } = useNavigation();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
@@ -67,6 +68,7 @@ const UserButton = ({ user, logout }: UserButtonProps) => {
           'aria-labelledby': 'user-button',
         }}
       >
+        <MenuItem onClick={goToCreateBlogPost}>Create a new blog post</MenuItem>
         <MenuItem onClick={handleLogout}>Log Out</MenuItem>
       </Menu>
     </div>

@@ -2,7 +2,7 @@ import { useContext, useEffect, useState, ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { ButtonBase } from '@components';
+import { ButtonBase, Description, Title } from '@components';
 import { AuthContext, LogInDetails } from '@providers';
 import { useNavigation, SignInValidation } from '@utils';
 import { FormControl, Stack, TextField } from '@mui/material';
@@ -56,8 +56,8 @@ export const LoginPage = () => {
   return (
     <div className='login-page'>
       <div className='login-container'>
-        <div className='login-title'>Log in</div>
-        <div className='login-description'>Enter your credentials to access your account.</div>
+        <Title>Log in</Title>
+        <Description>Enter your credentials to access your account.</Description>
         <form className='login-form-container' onSubmit={handleSubmit(handleLogin)}>
           <Stack direction='column' spacing={2} sx={{ width: '100%' }}>
             <FormControl id='username'>

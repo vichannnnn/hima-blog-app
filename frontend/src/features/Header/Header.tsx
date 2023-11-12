@@ -10,26 +10,6 @@ export const Header = () => {
   const { goToHome } = useNavigation();
   const { isDesktop } = useContext(MediaQueryContext);
 
-  useEffect(() => {
-    const children = [];
-
-    if (!isDesktop) {
-      children.push({
-        label: 'Home',
-        icon: <HomeIcon />,
-        callback: () => {
-          const homeElement = document.querySelector('#home');
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-          if (homeElement) {
-            homeElement.scrollIntoView({ behavior: 'smooth' });
-          } else {
-            goToHome();
-          }
-        },
-      });
-    }
-  });
-
   return (
     <header className='header'>
       <div className='header-container'>

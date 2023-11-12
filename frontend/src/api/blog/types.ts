@@ -14,13 +14,13 @@ export interface CreateBlogPost {
   title: string;
   preview: string;
   content: string;
-  image: File | null;
-  category: string | null;
+  image?: File | null;
+  category?: string | null;
 }
 
 export interface UpdateBlogPost {
-  title: string;
-  content: string;
-  image: string | null;
-  category: string | null;
+  title?: string | null;
+  content?: string | null;
+  image?: string | null;
+  category?: string | null;
 }
