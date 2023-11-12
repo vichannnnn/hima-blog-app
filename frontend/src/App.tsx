@@ -8,6 +8,7 @@ import {
   Header,
   LandingPage,
   UpdateBlogPostPage,
+  FullBlogPost,
 } from '@features';
 
 const customMuiTheme = {
@@ -40,6 +41,7 @@ export function App() {
               <Route path='/login' element={<LoginPage />} />
               <Route path='/create' element={<CreateBlogPostPage />} />
               <Route path='/update/:blog_id' element={<UpdateBlogPostPage />} />
+              <Route path='/post/:blog_id' element={<FullBlogPost />} />
               {/*<Route path='*' element={<NotFound />} />*/}
             </Routes>
             <Footer />

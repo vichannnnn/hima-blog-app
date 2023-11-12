@@ -25,7 +25,6 @@ export const BlogPostForm = ({ initialData, onSubmit, action }: BlogPostFormProp
     handleSubmit,
     control,
     setValue,
-    watch,
     formState: { errors },
   } = useForm<CreateBlogPost>({
     resolver: yupResolver(BlogPostValidation),
@@ -38,9 +37,6 @@ export const BlogPostForm = ({ initialData, onSubmit, action }: BlogPostFormProp
         }
       : {},
   });
-
-  const watchAll = watch();
-  console.log(watchAll);
 
   useEffect(() => {
     if (!isLoading && !user) {

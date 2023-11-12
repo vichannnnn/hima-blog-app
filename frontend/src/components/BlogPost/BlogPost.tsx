@@ -20,7 +20,7 @@ export const BlogPost = ({
   last_edited_date,
 }: BlogPostObject) => {
   const { user } = useContext(AuthContext);
-  const { goToLoginPage, goToUpdateBlogPost } = useNavigation();
+  const { goToLoginPage, goToUpdateBlogPost, goToBlogPost } = useNavigation();
 
   const handleGetUpdatePage = () => {
     if (user) {
@@ -28,6 +28,10 @@ export const BlogPost = ({
     } else {
       goToLoginPage();
     }
+  };
+
+  const handleNavigateToBlogPost = () => {
+    goToBlogPost(blog_id);
   };
 
   return (
@@ -54,9 +58,7 @@ export const BlogPost = ({
       <p className='blog-post-preview'>{preview}</p>
 
       <div className='button-container'>
-        <ButtonBase onClick={() => console.log(`Read more about ${title}`)}>
-          Read full article
-        </ButtonBase>
+        <ButtonBase onClick={handleNavigateToBlogPost}>Read full article</ButtonBase>
       </div>
     </div>
   );

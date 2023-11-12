@@ -5,6 +5,7 @@ export const useNavigation = () => {
 
   const goToHome = (options = {}) => navigate('/', options);
   const goToLoginPage = (options = {}) => navigate('/login', options);
+  const goToBlogPost = (blog_id: number, options = {}) => navigate(`/post/${blog_id}`, options);
   const goToCreateBlogPost = (options = {}) => navigate('/create', options);
   const goToUpdateBlogPost = (blog_id: number, options = {}) =>
     navigate(`/update/${blog_id}`, options);
@@ -12,6 +13,7 @@ export const useNavigation = () => {
   return {
     goToHome,
     goToLoginPage,
+    goToBlogPost,
     goToCreateBlogPost,
     goToUpdateBlogPost,
   };
