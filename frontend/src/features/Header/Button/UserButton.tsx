@@ -1,38 +1,15 @@
-import { useContext, useState, MouseEvent } from 'react';
+import { useState, MouseEvent } from 'react';
 import { ButtonBase } from '@components';
-import { AuthContext, User } from '@providers';
+import { User } from '@providers';
 import { useNavigation } from '@utils';
 import { Menu, MenuItem } from '@mui/material';
-import './UserButton.css';
-
-interface LogInButtonProps {
-  user: User | null;
-}
 
 interface UserButtonProps {
   user: User | null;
   logout: () => void;
 }
 
-const LogInButton = ({ user }: LogInButtonProps) => {
-  const { goToLoginPage } = useNavigation();
-
-  const handleLoginRedirect = () => {
-    if (!user) {
-      goToLoginPage();
-    }
-  };
-
-  return (
-    <>
-      <ButtonBase className='user-button' onClick={handleLoginRedirect}>
-        Log in
-      </ButtonBase>
-    </>
-  );
-};
-
-const UserButton = ({ user, logout }: UserButtonProps) => {
+export const UserButton = ({ user, logout }: UserButtonProps) => {
   const { goToCreateBlogPost } = useNavigation();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -72,16 +49,5 @@ const UserButton = ({ user, logout }: UserButtonProps) => {
         <MenuItem onClick={handleLogout}>Log Out</MenuItem>
       </Menu>
     </div>
-  );
-};
-
-export const HeaderButton = () => {
-  const { user, logout } = useContext(AuthContext);
-
-  return (
-    <>
-      {!user && <LogInButton user={user} />}
-      {user && <UserButton user={user} logout={logout} />}
-    </>
   );
 };

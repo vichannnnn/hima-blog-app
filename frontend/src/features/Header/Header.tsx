@@ -1,15 +1,8 @@
-import { useContext, useEffect } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
-import { MediaQueryContext } from '@providers';
-import { useNavigation } from '@utils';
-import HomeIcon from '@mui/icons-material/Home';
-import { HeaderButton } from './HeaderButton';
+import { HeaderButton } from './Button/HeaderButton';
 import './Header.css';
 
 export const Header = () => {
-  const { goToHome } = useNavigation();
-  const { isDesktop } = useContext(MediaQueryContext);
-
   return (
     <header className='header'>
       <div className='header-container'>
