@@ -1,11 +1,13 @@
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { BlogPost, getBlogPost } from '@api/blog';
-import { Description, Title } from '@components';
 import ReactMarkdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { materialDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import remarkGfm from 'remark-gfm';
+import { BlogPost, getBlogPost } from '@api/blog';
+import { Description, Title } from '@components';
+import { ArrowBack } from '@mui/icons-material';
+import { useNavigation } from '@utils';
 import 'github-markdown-css/github-markdown-light.css';
 import './FullBlogPost.css';
 
@@ -24,6 +26,7 @@ const CodeBlock = ({ node, inline, className, children, ...props }) => {
 
 export const FullBlogPost = () => {
   const { blog_id } = useParams();
+  const { goToHome } = useNavigation();
   const [blogPostData, setBlogPostData] = useState<BlogPost | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -53,7 +56,12 @@ export const FullBlogPost = () => {
     <>
       {!isLoading && (
         <div className='full-blog-post-container'>
-          <Title className='full-blog-post-title'>{blogPostData?.title}</Title>
+          <div className='full-blog-post-header'>
+            <button className='back-button' onClick={goToHome}>
+              <ArrowBack />
+            </button>
+            <Title className='full-blog-post-title'>{blogPostData?.title}</Title>
+          </div>
           <Description className='full-blog-post-date'>
             Post created on{' '}
             {blogPostData &&

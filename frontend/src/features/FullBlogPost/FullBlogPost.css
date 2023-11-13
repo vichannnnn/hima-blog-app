@@ -3,13 +3,24 @@
 .full-blog-post-container {
     width: 75%;
     display: flex;
+    align-items: center;
     flex-direction: column;
     margin: auto;
 }
 
+.full-blog-post-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+
+
 .full-blog-post-title {
     display: flex;
     justify-content: center;
+    flex-grow: 1;
     margin-bottom: 48px;
 }
 
