@@ -1,5 +1,4 @@
 
-
 .full-blog-post-container {
     width: 75%;
     display: flex;
@@ -9,13 +8,19 @@
 }
 
 .full-blog-post-header {
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 100%;
+    gap: 48px
 }
 
-
+@media screen and (max-width: 913px) {
+    .full-blog-post-header {
+        flex-direction: column;
+        gap: 0;
+    }
+}
 
 .full-blog-post-title {
     display: flex;
@@ -30,5 +35,16 @@
 }
 
 .content-container {
+    width: 100%;
     font-family: 'Calibri', sans-serif;
 }
+
+/*@media screen and (max-width: 913px) {*/
+/*    .full-blog-post-container {*/
+/*        width: 100%;*/
+/*        display: flex;*/
+/*        align-items: center;*/
+/*        flex-direction: column;*/
+/*        margin: auto;*/
+/*    }*/
+/*}*/
