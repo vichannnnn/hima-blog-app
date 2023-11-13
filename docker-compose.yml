@@ -29,7 +29,8 @@ services:
     volumes:
       - ./backend:/app
 
-  db:
+  hima-blog-db:
+    container_name: hima-blog-db
     networks:
       - hima-blog-network
       - default
