@@ -3,10 +3,16 @@
     flex-direction: column;
 }
 
-.edit-icon {
+.action-icons {
+    display: flex;
+    flex-direction: row;
+    gap: 2px;
     position: absolute;
     top: 8px;
     right: 8px;
+}
+
+.edit-icon, .delete-icon {
     border: none;
     border-radius: 8px;
     background-color: lightsteelblue;

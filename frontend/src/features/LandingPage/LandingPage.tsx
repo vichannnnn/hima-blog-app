@@ -26,6 +26,10 @@ export const LandingPage = () => {
     };
   }, []);
 
+  const handlePostDeletion = (deletedBlogId: number) => {
+    setBlogPosts((currentPosts) => currentPosts.filter((post) => post.blog_id !== deletedBlogId));
+  };
+
   return (
     <>
       <Hero />
@@ -42,6 +46,7 @@ export const LandingPage = () => {
             last_edited_date={post.last_edited_date}
             preview={post.preview}
             image={post.image}
+            onPostDelete={handlePostDeletion}
           />
         ))}
       </div>

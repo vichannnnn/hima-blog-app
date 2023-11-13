@@ -55,7 +55,7 @@ async def update_blog(
 async def read_blogs(
     session: CurrentSession,
     page: int = Query(1, title="Page number", gt=0),
-    size: int = Query(50, title="Page size", gt=0, le=50),
+    size: int = Query(12, title="Page size", gt=0, le=50),
     sorted_by_date_posted: Optional[str] = "desc",
 ) -> Sequence[Blog]:
     blogs = await Blog.get_all_blog_posts(
