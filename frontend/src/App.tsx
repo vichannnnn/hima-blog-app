@@ -24,6 +24,23 @@ const customMuiTheme = {
         },
       },
     },
+    MuiMenuItem: {
+      styleOverrides: {
+        root: {
+          fontFamily: 'PatrickHandSC, sans-serif',
+          fontSize: '24px',
+          backgroundColor: '#fcfbf8',
+        },
+      },
+    },
+    MuiPaper: {
+      styleOverrides: {
+        root: {
+          backgroundColor: '#fcfbf8',
+          borderRadius: '24px',
+        },
+      },
+    },
   },
 };
 
