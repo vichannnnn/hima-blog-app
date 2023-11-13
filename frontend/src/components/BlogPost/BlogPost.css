@@ -1,0 +1,51 @@
+.blog-post {
+    display: flex;
+    flex-direction: column;
+}
+
+.action-icons {
+    display: flex;
+    flex-direction: row;
+    gap: 2px;
+    position: absolute;
+    top: 8px;
+    right: 8px;
+}
+
+.edit-icon, .delete-icon {
+    border: none;
+    border-radius: 8px;
+    background-color: lightsteelblue;
+}
+
+.blog-post-image-container {
+    position: relative;
+}
+
+.blog-post-image-container img {
+    border-radius: 12px;
+}
+
+
+.date-container p {
+    font-size: small;
+    color: gray;
+}
+
+
+.blog-post-title {
+    font-size: x-large;
+    min-height: 3rem;
+    max-height: 3rem;
+}
+
+.blog-post-preview {
+    min-height: 6rem;
+    font-size: small;
+    text-overflow: ellipsis;
+}
+
+.button-container {
+    margin: auto;
+    width: 50%;
+}

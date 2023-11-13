@@ -1,0 +1,26 @@
+.login-page {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.login-container {
+    text-align: left;
+    margin-bottom: 24px;
+}
+
+.login-form-container {
+    margin-top: 24px;
+}
+
+.login-button-container {
+    padding-top: 12px;
+    display: flex;
+    justify-content: center;
+}
+
+.login-error-message {
+    color: red;
+}

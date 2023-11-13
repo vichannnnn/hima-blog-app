@@ -8,7 +8,7 @@ BLOGS_URL = "/blogs"
 
 
 def test_add_blog_unauthorized(
-        test_client: TestClient, test_blog_insert: schemas.core.BlogCreateSchema
+    test_client: TestClient, test_blog_insert: schemas.core.BlogCreateRequestModel
 ) -> None:
     payload = jsonable_encoder(test_blog_insert)
     response = test_client.post(BLOG_URL, json=payload)
@@ -16,12 +16,13 @@ def test_add_blog_unauthorized(
 
 
 def test_add_blog_authorized(
-        create_valid_user,
-        test_logged_in_client: TestClient,
-        test_blog_insert: schemas.core.BlogCreateSchema,
+    create_valid_user,
+    test_logged_in_client: TestClient,
+    test_blog_insert: schemas.core.BlogCreateRequestModel,
 ) -> None:
-    payload = jsonable_encoder(test_blog_insert)
-    response = test_logged_in_client.post(BLOG_URL, json=payload)
+    payload = test_blog_insert.dict(exclude_none=True)
+
+    response = test_logged_in_client.post(BLOG_URL, params=payload)
 
     assert response.status_code == status.HTTP_200_OK
     assert response.json()["blog_id"] == 1
@@ -31,7 +32,7 @@ def test_add_blog_authorized(
 
 
 def test_get_blog_posts(
-        test_client: TestClient, test_blog_insert: schemas.core.BlogCreateSchema
+    test_client: TestClient, test_blog_insert: schemas.core.BlogCreateRequestModel
 ) -> None:
     response = test_client.get(BLOGS_URL)
     assert response.status_code == status.HTTP_200_OK
@@ -39,18 +40,20 @@ def test_get_blog_posts(
 
 
 def test_insert_two_blog_posts_and_blog_posts(
-        create_valid_user,
-        test_logged_in_client: TestClient,
-        test_blog_insert: schemas.core.BlogCreateSchema,
-        test_blog_insert_with_category: schemas.core.BlogCreateSchema,
+    create_valid_user,
+    test_logged_in_client: TestClient,
+    test_blog_insert: schemas.core.BlogCreateRequestModel,
+    test_blog_insert_with_category: schemas.core.BlogCreateRequestModel,
 ) -> None:
-    payload = jsonable_encoder(test_blog_insert)
-    response = test_logged_in_client.post(BLOG_URL, json=payload)
+    response = test_logged_in_client.post(
+        BLOG_URL, params=test_blog_insert.dict(exclude_none=True)
+    )
 
     assert response.status_code == status.HTTP_200_OK
 
-    payload = jsonable_encoder(test_blog_insert_with_category)
-    response = test_logged_in_client.post(BLOG_URL, json=payload)
+    response = test_logged_in_client.post(
+        BLOG_URL, params=test_blog_insert_with_category.dict(exclude_none=True)
+    )
 
     assert response.status_code == status.HTTP_200_OK
     assert response.json()["blog_id"] == 2
@@ -67,19 +70,20 @@ def test_insert_two_blog_posts_and_blog_posts(
 
 
 def test_get_one_blog_post_not_valid(
-        create_valid_user, test_client: TestClient
+    create_valid_user, test_client: TestClient
 ) -> None:
     response = test_client.get(BLOG_URL + "/" + str(1))
     assert response.status_code == status.HTTP_404_NOT_FOUND
 
 
 def test_get_one_blog_post_valid(
-        create_valid_user,
-        test_logged_in_client: TestClient,
-        test_blog_insert: schemas.core.BlogCreateSchema,
+    create_valid_user,
+    test_logged_in_client: TestClient,
+    test_blog_insert: schemas.core.BlogCreateRequestModel,
 ) -> None:
-    payload = jsonable_encoder(test_blog_insert)
-    post_response = test_logged_in_client.post(BLOG_URL, json=payload)
+    post_response = test_logged_in_client.post(
+        BLOG_URL, params=test_blog_insert.dict(exclude_unset=True)
+    )
     assert post_response.status_code == status.HTTP_200_OK
 
     blog_id = post_response.json()["blog_id"]
@@ -91,19 +95,19 @@ def test_get_one_blog_post_valid(
 
 
 def test_update_blog(
-        create_valid_user,
-        test_logged_in_client: TestClient,
-        test_blog_insert: schemas.core.BlogCreateSchema,
-        test_blog_update: schemas.core.BlogUpdateSchema,
+    create_valid_user,
+    test_logged_in_client: TestClient,
+    test_blog_insert: schemas.core.BlogCreateRequestModel,
+    test_blog_update: schemas.core.BlogUpdateRequestModel,
 ) -> None:
-
-    payload = jsonable_encoder(test_blog_insert)
-    response = test_logged_in_client.post(BLOG_URL, json=payload)
+    response = test_logged_in_client.post(
+        BLOG_URL, params=test_blog_insert.dict(exclude_none=True)
+    )
     assert response.status_code == status.HTTP_200_OK
     blog_id = response.json()["blog_id"]
-
-    payload = jsonable_encoder(test_blog_update.dict(exclude_unset=True))
-    response = test_logged_in_client.put(BLOG_URL + "/" + str(blog_id), json=payload)
+    response = test_logged_in_client.put(
+        BLOG_URL + "/" + str(blog_id), params=test_blog_update.dict(exclude_none=True)
+    )
     assert response.status_code == status.HTTP_200_OK
     assert response.json()["blog_id"] == blog_id
     assert response.json()["title"] == test_blog_update.title
@@ -112,37 +116,40 @@ def test_update_blog(
 
 
 def test_update_blog_not_found(
-        create_valid_user,
-        test_logged_in_client: TestClient,
-        test_blog_insert: schemas.core.BlogCreateSchema,
-        test_blog_update: schemas.core.BlogUpdateSchema,
+    create_valid_user,
+    test_logged_in_client: TestClient,
+    test_blog_insert: schemas.core.BlogCreateRequestModel,
+    test_blog_update: schemas.core.BlogUpdateRequestModel,
 ) -> None:
-    payload = jsonable_encoder(test_blog_insert)
-    response = test_logged_in_client.post(BLOG_URL, json=payload)
+    response = test_logged_in_client.post(
+        BLOG_URL, params=test_blog_insert.dict(exclude_none=True)
+    )
     assert response.status_code == status.HTTP_200_OK
 
-    payload = jsonable_encoder(test_blog_update)
-    response = test_logged_in_client.put(BLOG_URL + "/" + str(2), json=payload)
+    response = test_logged_in_client.put(
+        BLOG_URL + "/" + str(2), params=test_blog_update.dict(exclude_none=True)
+    )
     assert response.status_code == status.HTTP_404_NOT_FOUND
 
 
 def test_update_blog_not_authorized(
-        test_client: TestClient,
-        test_blog_update: schemas.core.BlogUpdateSchema,
+    test_client: TestClient,
+    test_blog_update: schemas.core.BlogUpdateRequestModel,
 ) -> None:
-
-    payload = jsonable_encoder(test_blog_update)
-    response = test_client.put(BLOG_URL + "/" + str(2), json=payload)
+    response = test_client.put(
+        BLOG_URL + "/" + str(2), params=test_blog_update.dict(exclude_none=True)
+    )
     assert response.status_code == status.HTTP_401_UNAUTHORIZED
 
 
 def test_delete_blog(
-        create_valid_user,
-        test_logged_in_client: TestClient,
-        test_blog_insert: schemas.core.BlogCreateSchema,
+    create_valid_user,
+    test_logged_in_client: TestClient,
+    test_blog_insert: schemas.core.BlogCreateRequestModel,
 ) -> None:
-    payload = jsonable_encoder(test_blog_insert)
-    response = test_logged_in_client.post(BLOG_URL, json=payload)
+    response = test_logged_in_client.post(
+        BLOG_URL, params=test_blog_insert.dict(exclude_none=True)
+    )
     assert response.status_code == status.HTTP_200_OK
 
     exist_blog_id = 1
@@ -154,10 +161,14 @@ def test_delete_blog(
     assert response.status_code == status.HTTP_404_NOT_FOUND
 
 
-def test_delete_blog_unauthorized(
-        test_client: TestClient,
-        test_blog_insert: schemas.core.BlogCreateSchema,
-) -> None:
-    payload = jsonable_encoder(test_blog_insert)
-    response = test_client.post(BLOG_URL, json=payload)
-    assert response.status_code == status.HTTP_401_UNAUTHORIZED
+# def test_delete_blog_unauthorized(
+#     create_valid_user,
+#     test_logged_in_client: TestClient,
+#     test_client: TestClient,
+#     test_blog_insert: schemas.core.BlogCreateRequestModel,
+# ) -> None:
+#     response = test_logged_in_client.post(BLOG_URL, params=test_blog_insert.dict(exclude_none=True))
+#     assert response.status_code == status.HTTP_200_OK
+#
+#     delete = test_client.delete(BLOG_URL + "/" + str(response.json()["blog_id"]))
+#     assert delete.status_code == status.HTTP_401_UNAUTHORIZED

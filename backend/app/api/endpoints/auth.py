@@ -7,17 +7,19 @@ from app.schemas.auth import (
 )
 from app.api.deps import CurrentSession, CurrentUser
 from fastapi import APIRouter
+import os
 
 router = APIRouter()
 
+if not os.getenv("PRODUCTION"):
 
-@router.post("/create", response_model=CurrentUserSchema)
-async def create_account(
-    session: CurrentSession,
-    data: AccountRegisterSchema,
-) -> CurrentUserSchema:
-    created_user = await Account.register(session, data)
-    return created_user
+    @router.post("/create", response_model=CurrentUserSchema)
+    async def create_account(
+        session: CurrentSession,
+        data: AccountRegisterSchema,
+    ) -> CurrentUserSchema:
+        created_user = await Account.register(session, data)
+        return created_user
 
 
 @router.get("/get", response_model=CurrentUserSchema)
