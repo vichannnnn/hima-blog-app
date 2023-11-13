@@ -2,8 +2,8 @@
 version: '3.8'
 
 services:
-  backend:
-    container_name: backend
+  hima-blog-backend:
+    container_name: hima-blog-backend
     build: ./backend
     command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
     ports:
