@@ -1,0 +1,18 @@
+
+
+.full-blog-post-container {
+    width: 75%;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+}
+
+.blog-post-title {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 48px;
+}
+
+.content-container {
+    font-family: 'Calibri', sans-serif;
+}

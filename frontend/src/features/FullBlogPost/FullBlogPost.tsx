@@ -7,6 +7,7 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { materialDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import remarkGfm from 'remark-gfm';
 import 'github-markdown-css/github-markdown-light.css';
+import './FullBlogPost.css';
 
 const CodeBlock = ({ node, inline, className, children, ...props }) => {
   const match = /language-(\w+)/.exec(className || '');
@@ -51,9 +52,9 @@ export const FullBlogPost = () => {
   return (
     <>
       {!isLoading && (
-        <div>
-          <Title>{blogPostData?.title}</Title>
-          <div style={{ fontFamily: 'Calibri, sans-serif' }}>
+        <div className='full-blog-post-container'>
+          <Title className='blog-post-title'>{blogPostData?.title}</Title>
+          <div className='content-container'>
             <div
               className='markdown-body'
               style={{
