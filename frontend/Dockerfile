@@ -12,6 +12,7 @@ FROM base AS build
 WORKDIR /app
 COPY . .
 COPY --from=dependencies /app/node_modules ./node_modules
+RUN npm install -g pnpm
 RUN pnpm build
 
 FROM caddy:2.6.2-alpine AS deploy
