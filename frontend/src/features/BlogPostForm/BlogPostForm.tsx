@@ -55,7 +55,9 @@ export const BlogPostForm = ({ initialData, onSubmit, action }: BlogPostFormProp
     <div className='blog-post-form-container'>
       <div>
         <Title>{action == Action.CREATE ? 'Create' : 'Update'} new blog post</Title>
-        <Description>Lorem ipsum dolor sit amet.</Description>
+        <Description>
+          This is where Hima {action == Action.CREATE ? 'creates' : 'updates'} their blog post!
+        </Description>
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <TextField

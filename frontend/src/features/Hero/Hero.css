@@ -9,6 +9,8 @@
 }
 
 .hero-subtitle {
+    width: 75%;
+    margin: auto;
     font-size: 1.5rem;
     color: #666;
     margin-bottom: 2rem;

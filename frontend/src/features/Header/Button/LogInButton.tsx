@@ -18,7 +18,7 @@ export const LogInButton = ({ user }: LogInButtonProps) => {
   return (
     <>
       <ButtonBase className='user-button' onClick={handleLoginRedirect}>
-        Log in
+        Hima
       </ButtonBase>
     </>
   );
