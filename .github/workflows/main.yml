@@ -63,11 +63,12 @@ jobs:
           username: ${{ secrets.MASTER_REMOTE_USER }}
           key: ${{ secrets.MASTER_SSH_PRIVATE_KEY }}
           script: |
+              cd hima-blog-app
               docker compose pull
               docker compose up -d
               make migrate
               rm -r ../api-gateway/hima-blog-app
-              docker cp frontend:/usr/share/caddy/hima-blog-app ../api-gateway/hima-blog-app/
+              docker cp hima-blog-frontend:/usr/share/caddy/hima-blog-app ../api-gateway/hima-blog-app/
               docker compose stop hima-blog-frontend
               docker restart api-gateway
               fi
