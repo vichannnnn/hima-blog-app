@@ -94,6 +94,7 @@ export const BlogPostForm = ({ initialData, onSubmit, action }: BlogPostFormProp
               onChange={(value) => field.onChange(value)}
               placeholder='Blog post content'
               data-color-mode='light'
+              height='512px'
             />
           )}
         />
