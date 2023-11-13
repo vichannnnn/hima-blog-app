@@ -71,4 +71,3 @@ jobs:
               docker cp hima-blog-frontend:/usr/share/caddy/hima-blog-app ../api-gateway/hima-blog-app/
               docker compose stop hima-blog-frontend
               docker restart api-gateway
-              fi
