@@ -37,14 +37,14 @@ jobs:
       - name: Build and push Backend Docker image
         uses: docker/build-push-action@v2
         with:
-          context: ./hima-blog-app/backend
+          context: ./backend
           push: true
           tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/hima-blog-backend:latest
 
       - name: Build and push Frontend Docker image
         uses: docker/build-push-action@v2
         with:
-          context: ./hima-blog-app/frontend
+          context: ./frontend
           push: true
           tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/hima-blog-frontend:latest
 
