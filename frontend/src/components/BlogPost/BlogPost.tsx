@@ -2,18 +2,17 @@ import { useContext, useState } from 'react';
 import { BlogPost as BlogPostObject, deleteBlogPost } from '@api/blog';
 import { AuthContext } from '@providers';
 import { useNavigation } from '@utils';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
-import { ButtonBase } from '../Button';
-import './BlogPost.css';
 import {
-  Button,
   Dialog,
   DialogActions,
   DialogContent,
   DialogContentText,
   DialogTitle,
 } from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { ButtonBase } from '../Button';
+import './BlogPost.css';
 
 const VITE_APP_AWS_CLOUDFRONT_URL = import.meta.env.VITE_APP_AWS_CLOUDFRONT_URL;
 
@@ -84,18 +83,17 @@ export const BlogPost = ({
               aria-labelledby='alert-dialog-title'
               aria-describedby='alert-dialog-description'
             >
-              <DialogTitle id='alert-dialog-title'>{"Use Google's location service?"}</DialogTitle>
+              <DialogTitle id='alert-dialog-title'>Delete this blog post?</DialogTitle>
               <DialogContent>
                 <DialogContentText id='alert-dialog-description'>
-                  Let Google help apps determine location. This means sending anonymous location
-                  data to Google, even when no apps are running.
+                  Please confirm that you want to delete this blog post.
                 </DialogContentText>
               </DialogContent>
               <DialogActions>
-                <Button onClick={handleCloseAlert}>Disagree</Button>
-                <Button onClick={handleDeleteBlogPost} autoFocus>
-                  Agree
-                </Button>
+                <button onClick={handleCloseAlert}>Cancel</button>
+                <button onClick={handleDeleteBlogPost} autoFocus>
+                  Delete
+                </button>
               </DialogActions>
             </Dialog>
           </div>
