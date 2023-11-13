@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { BlogPost, getBlogPost } from '@api/blog';
-import { Title } from '@components';
+import { Description, Title } from '@components';
 import ReactMarkdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { materialDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
@@ -53,7 +53,16 @@ export const FullBlogPost = () => {
     <>
       {!isLoading && (
         <div className='full-blog-post-container'>
-          <Title className='blog-post-title'>{blogPostData?.title}</Title>
+          <Title className='full-blog-post-title'>{blogPostData?.title}</Title>
+          <Description className='full-blog-post-date'>
+            Post created on{' '}
+            {blogPostData &&
+              Intl.DateTimeFormat('en-GB', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric',
+              }).format(new Date(blogPostData?.date_posted))}
+          </Description>
           <div className='content-container'>
             <div
               className='markdown-body'

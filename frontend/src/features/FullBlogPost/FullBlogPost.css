@@ -7,10 +7,15 @@
     margin: auto;
 }
 
-.blog-post-title {
+.full-blog-post-title {
     display: flex;
     justify-content: center;
     margin-bottom: 48px;
+}
+
+.full-blog-post-date {
+    display: flex;
+    justify-content: center;
 }
 
 .content-container {
