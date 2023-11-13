@@ -5,7 +5,7 @@ from fastapi.middleware import cors
 
 
 app = FastAPI(
-    root_path="/api/v1" if os.getenv("PRODUCTION") in ["true", "dev"] else None,
+    root_path="" if os.getenv("PRODUCTION") in ["true", "dev"] else None,
     docs_url=None if os.getenv("PRODUCTION") == "true" else "/docs",
     redoc_url=None if os.getenv("PRODUCTION") == "true" else "/redoc",
 )
