@@ -80,6 +80,7 @@ export const FullBlogPost = () => {
                 fontSize: '16px',
                 lineHeight: '1.6',
                 marginTop: '1rem',
+                backgroundColor: '#fcfbf8',
               }}
             >
               <ReactMarkdown

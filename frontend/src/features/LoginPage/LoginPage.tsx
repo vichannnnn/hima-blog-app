@@ -83,9 +83,7 @@ export const LoginPage = () => {
             </FormControl>
             {loginError && <ErrorText>{loginError}</ErrorText>}
             <div className='login-button-container'>
-              <ButtonBase type='submit' variant='contained'>
-                Log In
-              </ButtonBase>
+              <ButtonBase type='submit'>Log In</ButtonBase>
             </div>
           </Stack>
         </form>

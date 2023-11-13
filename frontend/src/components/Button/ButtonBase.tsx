@@ -1,12 +1,13 @@
 import { forwardRef, MouseEvent } from 'react';
-import { Button, ButtonProps } from '@mui/material';
+import { Button, ButtonProps, SxProps, Theme } from '@mui/material';
 
 interface ButtonBaseProps extends ButtonProps {
   onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
+  sx?: SxProps<Theme>;
 }
 
 export const ButtonBase = forwardRef<HTMLButtonElement, ButtonBaseProps>(
-  ({ onClick, children, ...props }, ref) => {
+  ({ onClick, sx, children, ...props }, ref) => {
     return (
       <Button
         onClick={onClick}
@@ -15,14 +16,15 @@ export const ButtonBase = forwardRef<HTMLButtonElement, ButtonBaseProps>(
         variant='outlined'
         sx={{
           border: 'none',
-          backgroundColor: '#BEADFA',
+          backgroundColor: 'none',
           color: 'black',
-          paddingX: '30px',
           textTransform: 'capitalize',
-          fontFamily: "font-family: 'Nunito Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif",
-          borderRadius: '10px',
+          fontFamily: 'PatrickHandSC, sans-serif',
+          padding: '8px 36px',
+          fontSize: '36px',
+          borderRadius: '50px',
           '&:hover': {
-            backgroundColor: '#D0BFFF',
+            backgroundColor: '#aed1ca',
             border: 'none',
           },
           '&:focus': {
@@ -30,6 +32,7 @@ export const ButtonBase = forwardRef<HTMLButtonElement, ButtonBaseProps>(
             outline: 'none',
             boxShadow: 'none',
           },
+          ...sx,
         }}
         {...props}
       >

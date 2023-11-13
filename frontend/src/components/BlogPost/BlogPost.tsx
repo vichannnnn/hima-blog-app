@@ -98,7 +98,11 @@ export const BlogPost = ({
             </Dialog>
           </div>
         ) : null}
-        <img src={`${VITE_APP_AWS_CLOUDFRONT_URL}${image}`} alt={title} />
+        <img
+          src={`${VITE_APP_AWS_CLOUDFRONT_URL}${image}`}
+          alt={title}
+          onClick={handleNavigateToBlogPost}
+        />
       </div>
       <div className='date-container'>
         <p>
@@ -114,7 +118,9 @@ export const BlogPost = ({
       <p className='blog-post-preview'>{preview}</p>
 
       <div className='button-container'>
-        <ButtonBase onClick={handleNavigateToBlogPost}>Read full article</ButtonBase>
+        <ButtonBase sx={{ fontSize: '24px' }} onClick={handleNavigateToBlogPost}>
+          Read full article
+        </ButtonBase>
       </div>
     </div>
   );

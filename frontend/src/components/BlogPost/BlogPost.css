@@ -24,6 +24,7 @@
 
 .blog-post-image-container img {
     border-radius: 12px;
+    cursor: pointer;
 }
 
 
@@ -34,18 +35,20 @@
 
 
 .blog-post-title {
-    font-size: x-large;
+    font-size: 36px;
     min-height: 3rem;
     max-height: 3rem;
 }
 
 .blog-post-preview {
     min-height: 6rem;
-    font-size: small;
+    font-size: 18px;
     text-overflow: ellipsis;
 }
 
 .button-container {
+    display: flex;
     margin: auto;
     width: 50%;
+
 }

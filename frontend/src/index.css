@@ -1,11 +1,19 @@
+@font-face {
+  font-family: PatrickHandSC;
+  src: local('PatrickHandSC-Regular'), url('./fonts/PatrickHandSC-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: PatrickHandSC, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
   color-scheme: light dark;
   color: #213547;
-  background-color: white;
+  background-color: #fcfbf8;
+
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
