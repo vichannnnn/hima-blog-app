@@ -40,6 +40,13 @@
     max-height: 3rem;
 }
 
+@media screen and (max-width: 913px) {
+    .blog-post-title {
+        padding-bottom: 24px;
+    }
+}
+
+
 .blog-post-preview {
     min-height: 6rem;
     font-size: 18px;
