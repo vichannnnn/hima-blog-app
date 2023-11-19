@@ -7,10 +7,7 @@ export const Header = () => {
     <header className='header'>
       <div className='header-container'>
         <RouterLink className='nav_logo' to='/'>
-          <img
-            src='https://document.grail.moe/grail-chan-happy.png'
-            alt='Will change next week~ Placeholder!'
-          />
+          <img src='https://image.himaa.me/hima_oc.png' alt='Hima!' />
         </RouterLink>
         <HeaderButton />
       </div>
