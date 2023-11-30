@@ -5,9 +5,16 @@ import './Hero.css';
 export const Hero = () => {
   return (
     <div className='hero-container'>
+      <FadeIn>
+        <img src='https://image.himaa.me/hima-chan-posing.png' alt='Hima!' width='225' />
+      </FadeIn>
       <div className='hero-content'>
         <h1 className='hero-title'>
-          <TypeAnimation sequence={["Welcome to Hima's Blog", 100]} speed={50} cursor={false} />
+          <TypeAnimation
+            sequence={["Welcome to Hima's Blog", 3000, "Welcome to Violet's Blog", 3000]}
+            speed={50}
+            cursor={false}
+          />
         </h1>
         <p className='hero-subtitle'>
           <FadeIn>
