@@ -1,0 +1,13 @@
+{
+  "name": "Hima's Blog",
+  "short_name": "Hima's Blog",
+  "start_url": "/",
+  "display": "standalone",
+  "description": "Random ramblings of Hima's engineerings~",
+  "background_color": "#fcfbf8",
+  "theme_color": "#ffe1f0",
+  "icons": [
+    { "src": "/android-chrome-192x192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/android-chrome-512x512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
