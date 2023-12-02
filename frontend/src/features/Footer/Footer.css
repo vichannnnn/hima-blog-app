@@ -1,0 +1,12 @@
+.footer-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 36px;
+    margin-bottom: 24px;
+}
+
+.footer-container img {
+    width: 128px;
+    height: 128px;
+}
