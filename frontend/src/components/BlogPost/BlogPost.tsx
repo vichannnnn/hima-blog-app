@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react';
 import { BlogPost as BlogPostObject, deleteBlogPost } from '@api/blog';
-import { AuthContext } from '@providers';
+import { AuthContext, MediaQueryContext } from '@providers';
 import { useNavigation } from '@utils';
 import {
   Dialog,
@@ -32,6 +32,7 @@ export const BlogPost = ({
   last_edited_date,
   onPostDelete,
 }: BlogPostProps) => {
+  const { isDesktop } = useContext(MediaQueryContext);
   const { user } = useContext(AuthContext);
   const { goToLoginPage, goToUpdateBlogPost, goToBlogPost } = useNavigation();
   const [open, setOpen] = useState<boolean>(false);
@@ -121,7 +122,7 @@ export const BlogPost = ({
         <Button
           sx={{
             backgroundColor: '#b8e9f7',
-            fontSize: '22px',
+            fontSize: isDesktop ? '22px' : '16px',
             '&:hover': {
               backgroundColor: '#a6d2de',
               border: 'none',
