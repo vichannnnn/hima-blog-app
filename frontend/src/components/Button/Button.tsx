@@ -24,7 +24,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonBaseProps>(
           fontSize: '36px',
           borderRadius: '50px',
           '&:hover': {
-            backgroundColor: '#aed1ca',
+            backgroundColor: '#b8e9f7',
             border: 'none',
           },
           '&:focus': {

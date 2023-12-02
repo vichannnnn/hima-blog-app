@@ -118,7 +118,17 @@ export const BlogPost = ({
       <p className='blog-post-preview'>{preview}</p>
 
       <div className='button-container'>
-        <Button sx={{ fontSize: '24px' }} onClick={handleNavigateToBlogPost}>
+        <Button
+          sx={{
+            backgroundColor: '#b8e9f7',
+            fontSize: '22px',
+            '&:hover': {
+              backgroundColor: '#a6d2de',
+              border: 'none',
+            },
+          }}
+          onClick={handleNavigateToBlogPost}
+        >
           Read full article
         </Button>
       </div>
