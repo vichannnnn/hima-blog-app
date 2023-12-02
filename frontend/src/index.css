@@ -20,7 +20,18 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+
+  --blog-post-font-size-title: 32px;
+  --blog-post-line-height-title: 1.5;
 }
+
+@media screen and (max-width: 913px) {
+  :root {
+    --blog-post-font-size-title: 24px;
+    --blog-post-line-height-title: 1.5;
+  }
+}
+
 
 a {
   font-weight: 500;

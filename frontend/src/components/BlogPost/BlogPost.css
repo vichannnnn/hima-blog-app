@@ -30,32 +30,36 @@
 
 .date-container p {
     font-size: small;
-    color: gray;
+    color: rgb(128, 128, 128);
 }
 
 
 .blog-post-title {
-    font-size: 36px;
-    min-height: 3rem;
-    max-height: 3rem;
-}
-
-@media screen and (max-width: 913px) {
-    .blog-post-title {
-        padding-bottom: 24px;
-    }
+    font-size: var(--blog-post-font-size-title);
+    line-height: var(--blog-post-line-height-title);
+    height: calc(var(--blog-post-font-size-title) * var(--blog-post-line-height-title) * 2);
+    margin: 0 0 8px;
+    overflow: hidden;
 }
 
 
 .blog-post-preview {
-    min-height: 6rem;
     font-size: 18px;
-    text-overflow: ellipsis;
 }
+
 
 .button-container {
     display: flex;
     margin: auto;
     width: 50%;
 
+}
+
+
+@media screen and (max-width: 913px) {
+    .blog-post-title {
+        height: auto;
+        margin: 0 0 8px;
+        overflow: hidden;
+    }
 }

@@ -1,17 +1,15 @@
 .hero-container {
     width: 75%;
-    margin: auto;
     display: flex;
     flex-direction: column;
     text-align: center;
     align-items: center;
-    padding-bottom: 128px;
+    margin: auto auto 36px;
 }
 
 .hero-subtitle {
     width: 75%;
-    margin: auto;
     font-size: 1.5rem;
     color: #666;
-    margin-bottom: 2rem;
+    margin: auto auto 24px;
 }
