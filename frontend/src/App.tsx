@@ -1,4 +1,4 @@
-import { Route, Routes, BrowserRouter } from 'react-router-dom';
+import { Route, Routes, BrowserRouter, Navigate } from 'react-router-dom';
 import { AuthProvider, MediaQueryProvider } from '@providers';
 import { createTheme, ThemeProvider } from '@mui/material';
 import {
@@ -10,6 +10,7 @@ import {
   UpdateBlogPostPage,
   FullBlogPost,
 } from '@features';
+import { NotFound } from './features/NotFound/NotFound';
 
 const customMuiTheme = {
   components: {
@@ -55,11 +56,12 @@ export function App() {
             <Header />
             <Routes>
               <Route path='/' element={<LandingPage />} />
+              <Route path='/not-found' element={<NotFound />} />
               <Route path='/login' element={<LoginPage />} />
               <Route path='/create' element={<CreateBlogPostPage />} />
               <Route path='/update/:blog_id' element={<UpdateBlogPostPage />} />
               <Route path='/post/:blog_id' element={<FullBlogPost />} />
-              {/*<Route path='*' element={<NotFound />} />*/}
+              <Route path='*' element={<Navigate to='/not-found' replace />} />
             </Routes>
             <Footer />
           </AuthProvider>

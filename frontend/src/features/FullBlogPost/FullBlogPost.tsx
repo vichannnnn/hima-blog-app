@@ -4,9 +4,10 @@ import ReactMarkdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { materialDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import remarkGfm from 'remark-gfm';
+import { AxiosError } from 'axios';
 import { BlogPost, getBlogPost } from '@api/blog';
 import { Button, Description, Title } from '@components';
-import { ArrowBack, Home } from '@mui/icons-material';
+import { Home } from '@mui/icons-material';
 import { useNavigation } from '@utils';
 import 'github-markdown-css/github-markdown-light.css';
 import './FullBlogPost.css';
@@ -26,7 +27,7 @@ const CodeBlock = ({ node, inline, className, children, ...props }) => {
 
 export const FullBlogPost = () => {
   const { blog_id } = useParams();
-  const { goToHome } = useNavigation();
+  const { goToHome, goToNotFound } = useNavigation();
   const [blogPostData, setBlogPostData] = useState<BlogPost | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -41,7 +42,10 @@ export const FullBlogPost = () => {
         setBlogPostData(data);
         setIsLoading(false);
       } catch (error) {
-        console.error('Error fetching blog post data', error);
+        const axiosError = error as AxiosError;
+        if (axiosError.response && axiosError.response.status === 404) {
+          goToNotFound();
+        }
       }
     };
 
