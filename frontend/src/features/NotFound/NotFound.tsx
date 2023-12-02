@@ -15,7 +15,7 @@ export const NotFound = () => {
             probably doesn't exist here.. yet.
           </p>
           <p>But I guess you can enjoy a picture of me posing here in the meantime!</p>
-          <img src='https://image.himaa.me/hima-chan-posing.png' alt='Hima!' width='640' />
+          <img src='https://image.himaa.me/hima-chan-posing.png' alt='Hima!' />
         </div>
 
         <RouterLink to='/'>

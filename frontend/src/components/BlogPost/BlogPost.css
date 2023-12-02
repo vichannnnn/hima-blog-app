@@ -45,6 +45,7 @@
 
 .blog-post-preview {
     font-size: 18px;
+    height: calc(18px * var(--blog-post-line-height-title) * 3);
 }
 
 
