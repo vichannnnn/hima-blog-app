@@ -2,7 +2,7 @@ import { useContext, useEffect, ChangeEvent } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { BlogPost, CreateBlogPost } from '@api/blog';
-import { ButtonBase, Description, ErrorText, Title } from '@components';
+import { Button, Description, ErrorText, Title } from '@components';
 import { AuthContext } from '@providers';
 import { BlogPostValidation, useNavigation } from '@utils';
 import { TextField } from '@mui/material';
@@ -113,9 +113,9 @@ export const BlogPostForm = ({ initialData, onSubmit, action }: BlogPostFormProp
           />
         </div>
         <div className='blog-post-form-button-container'>
-          <ButtonBase variant='contained' type='submit'>
+          <Button variant='contained' type='submit'>
             {action == Action.CREATE ? 'Create' : 'Update'}
-          </ButtonBase>
+          </Button>
         </div>
       </form>
     </div>

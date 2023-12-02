@@ -10,8 +10,8 @@
 .full-blog-post-header {
     width: 100%;
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    text-align: center;
 
 }
 
@@ -37,6 +37,13 @@
 .content-container {
     width: 100%;
     font-family: 'Calibri', sans-serif;
+    margin-bottom: 72px;
+}
+
+.full-blog-post-button-container {
+    display: flex;
+    flex-direction: row;
+
 }
 
 /*@media screen and (max-width: 913px) {*/

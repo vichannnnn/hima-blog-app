@@ -5,8 +5,8 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { materialDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import remarkGfm from 'remark-gfm';
 import { BlogPost, getBlogPost } from '@api/blog';
-import { Description, Title } from '@components';
-import { ArrowBack } from '@mui/icons-material';
+import { Button, Description, Title } from '@components';
+import { ArrowBack, Home } from '@mui/icons-material';
 import { useNavigation } from '@utils';
 import 'github-markdown-css/github-markdown-light.css';
 import './FullBlogPost.css';
@@ -57,9 +57,6 @@ export const FullBlogPost = () => {
       {!isLoading && (
         <div className='full-blog-post-container'>
           <div className='full-blog-post-header'>
-            <button className='back-button' onClick={goToHome}>
-              <ArrowBack />
-            </button>
             <Title className='full-blog-post-title'>{blogPostData?.title}</Title>
           </div>
           <Description className='full-blog-post-date'>
@@ -89,6 +86,33 @@ export const FullBlogPost = () => {
                 children={blogPostData?.content}
               />
             </div>
+          </div>
+          <div className='full-blog-post-button-container'>
+            {/*<Button*/}
+            {/*  className='back-button'*/}
+            {/*  onClick={() => {*/}
+            {/*    if (blogIdInt && blogIdInt > 1) {*/}
+            {/*      goToBlogPost(blogIdInt - 1);*/}
+            {/*    }*/}
+            {/*  }}*/}
+            {/*  disabled={!blogIdInt || blogIdInt <= 1}*/}
+            {/*>*/}
+            {/*  <ArrowBack />*/}
+            {/*</Button>*/}
+            <Button className='home-button' onClick={goToHome}>
+              <Home />
+            </Button>
+            {/*<Button*/}
+            {/*  className='next-button'*/}
+            {/*  onClick={() => {*/}
+            {/*    if (blogIdInt) {*/}
+            {/*      goToBlogPost(blogIdInt + 1);*/}
+            {/*    }*/}
+            {/*  }}*/}
+            {/*  disabled={!blogIdInt}*/}
+            {/*>*/}
+            {/*  <ArrowForward />*/}
+            {/*</Button>*/}
           </div>
         </div>
       )}

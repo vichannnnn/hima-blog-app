@@ -11,7 +11,7 @@ import {
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { ButtonBase } from '../Button';
+import { Button } from '../Button';
 import './BlogPost.css';
 
 const VITE_APP_AWS_CLOUDFRONT_URL = import.meta.env.VITE_APP_AWS_CLOUDFRONT_URL;
@@ -118,9 +118,9 @@ export const BlogPost = ({
       <p className='blog-post-preview'>{preview}</p>
 
       <div className='button-container'>
-        <ButtonBase sx={{ fontSize: '24px' }} onClick={handleNavigateToBlogPost}>
+        <Button sx={{ fontSize: '24px' }} onClick={handleNavigateToBlogPost}>
           Read full article
-        </ButtonBase>
+        </Button>
       </div>
     </div>
   );

@@ -1,15 +1,15 @@
 import { forwardRef, MouseEvent } from 'react';
-import { Button, ButtonProps, SxProps, Theme } from '@mui/material';
+import { Button as ButtonBase, ButtonProps, SxProps, Theme } from '@mui/material';
 
 interface ButtonBaseProps extends ButtonProps {
   onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
   sx?: SxProps<Theme>;
 }
 
-export const ButtonBase = forwardRef<HTMLButtonElement, ButtonBaseProps>(
+export const Button = forwardRef<HTMLButtonElement, ButtonBaseProps>(
   ({ onClick, sx, children, ...props }, ref) => {
     return (
-      <Button
+      <ButtonBase
         onClick={onClick}
         className=''
         ref={ref}
@@ -37,7 +37,7 @@ export const ButtonBase = forwardRef<HTMLButtonElement, ButtonBaseProps>(
         {...props}
       >
         <div>{children}</div>
-      </Button>
+      </ButtonBase>
     );
   },
 );

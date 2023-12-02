@@ -2,7 +2,7 @@ import { useContext, useEffect, useState, ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { ButtonBase, Description, ErrorText, Title } from '@components';
+import { Button, Description, ErrorText, Title } from '@components';
 import { AuthContext, LogInDetails } from '@providers';
 import { useNavigation, SignInValidation } from '@utils';
 import { FormControl, Stack, TextField } from '@mui/material';
@@ -83,7 +83,7 @@ export const LoginPage = () => {
             </FormControl>
             {loginError && <ErrorText>{loginError}</ErrorText>}
             <div className='login-button-container'>
-              <ButtonBase type='submit'>Log In</ButtonBase>
+              <Button type='submit'>Log In</Button>
             </div>
           </Stack>
         </form>

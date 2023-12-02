@@ -1,5 +1,5 @@
 import { useState, MouseEvent } from 'react';
-import { ButtonBase } from '@components';
+import { Button } from '@components';
 import { User } from '@providers';
 import { useNavigation } from '@utils';
 import { ListItemIcon, Menu, MenuItem } from '@mui/material';
@@ -28,7 +28,7 @@ export const UserButton = ({ user, logout }: UserButtonProps) => {
 
   return (
     <div className='user-button-container'>
-      <ButtonBase
+      <Button
         id='user-button'
         className='user-button'
         aria-controls={open ? 'basic-menu' : undefined}
@@ -37,7 +37,7 @@ export const UserButton = ({ user, logout }: UserButtonProps) => {
         onClick={handleClick}
       >
         {user ? user.username : 'Account'}
-      </ButtonBase>
+      </Button>
       <Menu
         id='basic-menu'
         anchorEl={anchorEl}

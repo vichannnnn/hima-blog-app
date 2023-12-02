@@ -1,4 +1,4 @@
-import { ButtonBase } from '@components';
+import { Button } from '@components';
 import { User } from '@providers';
 import { useNavigation } from '@utils';
 
@@ -17,9 +17,9 @@ export const LogInButton = ({ user }: LogInButtonProps) => {
 
   return (
     <>
-      <ButtonBase className='user-button' onClick={handleLoginRedirect}>
+      <Button className='user-button' onClick={handleLoginRedirect}>
         Hima
-      </ButtonBase>
+      </Button>
     </>
   );
 };
