@@ -1,5 +1,6 @@
 import { TypeAnimation } from 'react-type-animation';
 import FadeIn from 'react-fade-in';
+import { Counter } from '@features';
 import './Hero.css';
 
 export const Hero = () => {
@@ -23,6 +24,7 @@ export const Hero = () => {
             post every week to document down my engineering journey but we shall see how it goes!
           </FadeIn>
         </p>
+        <Counter />
       </div>
     </div>
   );

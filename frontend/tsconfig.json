@@ -20,6 +20,7 @@
       "@apiClient": ["src/api/apiClient.ts"],
       "@api/auth": ["src/api/auth/"],
       "@api/blog": ["src/api/blog/"],
+      "@api/count": ["src/api/count/"],
       "@components": ["src/components/"],
       "@features": ["src/features/"],
       "@providers": ["src/providers/"],

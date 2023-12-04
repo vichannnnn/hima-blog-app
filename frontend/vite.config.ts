@@ -9,6 +9,7 @@ export default ({ mode }) => {
       alias: {
         '@api/auth': path.resolve(__dirname, 'src/api/auth/'),
         '@api/blog': path.resolve(__dirname, 'src/api/blog/'),
+        '@api/count': path.resolve(__dirname, 'src/api/count/'),
         '@apiClient': path.resolve(__dirname, 'src/api/apiClient.ts'),
         '@components': path.resolve(__dirname, 'src/components/'),
         '@features': path.resolve(__dirname, 'src/features/'),

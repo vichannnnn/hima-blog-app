@@ -1,0 +1,11 @@
+.counter {
+    text-align: center;
+}
+
+.digit {
+    margin-right: 16px;
+}
+
+.digit:last-child {
+    margin-right: 0;
+}

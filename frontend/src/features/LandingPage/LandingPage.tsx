@@ -33,6 +33,7 @@ export const LandingPage = () => {
   return (
     <>
       <Hero />
+
       <div className='landing-page'>
         {blogPosts.map((post, index) => (
           <BlogPost
