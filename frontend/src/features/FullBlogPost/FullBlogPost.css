@@ -46,12 +46,8 @@
 
 }
 
-/*@media screen and (max-width: 913px) {*/
-/*    .full-blog-post-container {*/
-/*        width: 100%;*/
-/*        display: flex;*/
-/*        align-items: center;*/
-/*        flex-direction: column;*/
-/*        margin: auto;*/
-/*    }*/
-/*}*/
+@media screen and (max-width: 913px) {
+    .full-blog-post-container {
+        width: 90%;
+    }
+}
