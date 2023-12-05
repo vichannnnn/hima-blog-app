@@ -6,6 +6,11 @@
     margin-right: 16px;
 }
 
+.counter .digit {
+    display: inline-block; /* Or 'inline', depending on your layout needs */
+    margin-right: 10px; /* Adjust the spacing between digits */
+}
+
 .digit:last-child {
     margin-right: 0;
 }

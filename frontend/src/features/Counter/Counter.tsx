@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { getCount, Count, addCount } from '@api/count';
 import { Button } from '@components';
+import AnimatedNumbers from 'react-animated-numbers';
 import './Counter.css';
 
 export const Counter = () => {
@@ -24,8 +25,14 @@ export const Counter = () => {
     <div className='counter'>
       <h1>
         {formattedCount.map((digit, index) => (
-          <span key={index} className='digit'>
-            {digit}
+          <span className='digit' key={index}>
+            <AnimatedNumbers
+              transitions={(index) => ({
+                type: 'spring',
+                duration: index + 0.2,
+              })}
+              animateToNumber={parseInt(digit, 10)}
+            />
           </span>
         ))}
       </h1>
