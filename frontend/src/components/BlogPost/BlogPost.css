@@ -63,4 +63,8 @@
         margin: 0 0 8px;
         overflow: hidden;
     }
+
+    .blog-post-preview {
+        height: auto;
+    }
 }
