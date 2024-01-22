@@ -1,15 +1,14 @@
-name: Deploy
+name: Deployment
 
 on:
   workflow_run:
-    workflows: ["Frontend build", "Backend build"]
-    branches: [master]
+    workflows:
+      - "Build Docker Images"
+    branches:
+      - master
     types:
       - completed
 
-env:
-  REGISTRY: ghcr.io
-  IMAGE_NAME: vichannnnn/hima-blog-app
 
 jobs:
   authenticate:
