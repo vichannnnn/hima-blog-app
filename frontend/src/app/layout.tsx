@@ -27,11 +27,12 @@ export default function RootLayout({
         <meta name='msapplication-TileColor' content='#ffffff' />
         <meta name='theme-color' content='#ffffff' />
         <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+        <meta property='og:title' content="Hima&apos;s Blog" />
+        <meta property='og:description' content='Random ramblings of Hima&apos;s engineerings~' />
         <meta property='og:type' content='website' />
         <meta property='og:url' content='https://blog.himaa.me' />
         <meta property='og:image' content='https://image.himaa.me/hima-chan-original.png' />
-        <meta property='og:title' content="Hima&apos;s Blog" />
-        <meta property='og:description' content='Random ramblings of Hima&apos;s engineerings~' />
+        <title>Hima&apos;s Blog</title>
       </Head>
       <body className={inter.className}>{children}</body>
     </html>
