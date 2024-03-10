@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import { Counter } from '../Counter';
 import styles from '../../styles/components/Hero.module.css';
 
 export const Hero = () => {
@@ -18,7 +17,6 @@ export const Hero = () => {
           personal projects, or anything really. I would ideally like to update the blog with new
           post every week to document down my engineering journey but we shall see how it goes!
         </p>
-        {/*<Counter />*/}
       </div>
     </div>
   );

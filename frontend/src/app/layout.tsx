@@ -7,8 +7,8 @@ const inter = Inter({ subsets: ['latin'] });
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const metadata: Metadata = {
-  title: "Hima's Blog",
-  description: "Random ramblings of Hima's engineerings~",
+  title: "Hima&apos;s Blog",
+  description: "Random ramblings of Hima&apos;s engineerings~",
 };
 
 export default function RootLayout({
@@ -29,10 +29,7 @@ export default function RootLayout({
         <meta name='viewport' content='width=device-width, initial-scale=1.0' />
         <meta property='og:type' content='website' />
         <meta property='og:url' content='https://blog.himaa.me' />
-        <meta property='og:title' content="Hima's Blog" />
-        <meta property='og:description' content="Random ramblings of Hima's engineerings~" />
         <meta property='og:image' content='https://image.himaa.me/hima-chan-original.png' />
-        <title>Hima's Blog</title>
       </Head>
       <body className={inter.className}>{children}</body>
     </html>
