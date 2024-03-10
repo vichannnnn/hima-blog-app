@@ -30,6 +30,8 @@ export default function RootLayout({
         <meta property='og:type' content='website' />
         <meta property='og:url' content='https://blog.himaa.me' />
         <meta property='og:image' content='https://image.himaa.me/hima-chan-original.png' />
+        <meta property='og:title' content="Hima&apos;s Blog" />
+        <meta property='og:description' content='Random ramblings of Hima&apos;s engineerings~' />
       </Head>
       <body className={inter.className}>{children}</body>
     </html>
