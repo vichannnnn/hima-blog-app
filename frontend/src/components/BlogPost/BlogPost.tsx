@@ -1,7 +1,6 @@
-import { useContext, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { BlogPost as BlogPostObject, deleteBlogPost } from '@api/blog';
-import { AuthContext, MediaQueryContext } from '@providers';
-import { useNavigation } from '@utils';
+import { Button } from '../index';
 import {
   Dialog,
   DialogActions,
@@ -11,13 +10,17 @@ import {
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { Button } from '../Button';
-import './BlogPost.css';
+import styles from '../../styles/components/BlogPost.module.css';
 
-const VITE_APP_AWS_CLOUDFRONT_URL = import.meta.env.VITE_APP_AWS_CLOUDFRONT_URL;
+const NEXT_PUBLIC_AWS_CLOUDFRONT_URL = process.env.NEXT_PUBLIC_AWS_CLOUDFRONT_URL;
 
 interface BlogPostProps extends BlogPostObject {
   onPostDelete: (deletedBlogId: number) => void;
+  isDesktop: boolean;
+  isAuthenticated: boolean;
+  isOpen: boolean;
+  onOpenDialog: () => void;
+  onCloseDialog: () => void;
 }
 
 export const BlogPost = ({
@@ -31,56 +34,52 @@ export const BlogPost = ({
   date_posted,
   last_edited_date,
   onPostDelete,
+  isDesktop,
+  isAuthenticated,
+  isOpen,
+  onOpenDialog,
+  onCloseDialog,
 }: BlogPostProps) => {
-  const { isDesktop } = useContext(MediaQueryContext);
-  const { user } = useContext(AuthContext);
-  const { goToLoginPage, goToUpdateBlogPost, goToBlogPost } = useNavigation();
-  const [open, setOpen] = useState<boolean>(false);
+  const router = useRouter();
 
   const handleGetUpdatePage = () => {
-    if (user) {
-      goToUpdateBlogPost(blog_id);
+    if (isAuthenticated) {
+      const updatePagePath = `/update/${blog_id}`;
+      router.push(updatePagePath);
     } else {
-      goToLoginPage();
+      router.push('/login');
     }
   };
 
   const handleDeleteBlogPost = async () => {
-    if (user) {
+    if (isAuthenticated) {
       await deleteBlogPost(blog_id);
       onPostDelete(blog_id);
-      setOpen(false);
+      onCloseDialog();
     } else {
-      goToLoginPage();
+      router.push('/login');
     }
   };
 
-  const handleOpenAlert = () => {
-    setOpen(true);
-  };
-
-  const handleCloseAlert = () => {
-    setOpen(false);
-  };
-
   const handleNavigateToBlogPost = () => {
-    goToBlogPost(blog_id);
+    const pagePath = `/post/${blog_id}`;
+    router.push(pagePath);
   };
 
   return (
-    <div className='blog-post'>
-      <div className='blog-post-image-container'>
-        {user ? (
-          <div className='action-icons'>
-            <button className='edit-icon' onClick={handleGetUpdatePage}>
+    <div className={styles.blogPost}>
+      <div className={styles.blogPostImageContainer}>
+        {isAuthenticated && (
+          <div className={styles.actionIcons}>
+            <button className={styles.editIcon} onClick={handleGetUpdatePage}>
               <EditIcon />
             </button>
-            <button className='delete-icon' onClick={handleOpenAlert}>
+            <button className={styles.deleteIcon} onClick={onOpenDialog}>
               <DeleteIcon />
             </button>
             <Dialog
-              open={open}
-              onClose={handleCloseAlert}
+              open={isOpen}
+              onClose={onCloseDialog}
               aria-labelledby='alert-dialog-title'
               aria-describedby='alert-dialog-description'
             >
@@ -91,21 +90,28 @@ export const BlogPost = ({
                 </DialogContentText>
               </DialogContent>
               <DialogActions>
-                <button onClick={handleCloseAlert}>Cancel</button>
+                <button onClick={onCloseDialog}>Cancel</button>
                 <button onClick={handleDeleteBlogPost} autoFocus>
                   Delete
                 </button>
               </DialogActions>
             </Dialog>
           </div>
-        ) : null}
+        )}
         <img
-          src={`${VITE_APP_AWS_CLOUDFRONT_URL}${image}`}
+          src={`${NEXT_PUBLIC_AWS_CLOUDFRONT_URL}${image}`}
           alt={title}
           onClick={handleNavigateToBlogPost}
+          style={{
+            width: '100%',
+            height: '320px',
+            objectFit: 'cover',
+            borderRadius: '12px',
+            cursor: 'pointer',
+          }}
         />
       </div>
-      <div className='date-container'>
+      <div className={styles.dateContainer}>
         <p>
           {Intl.DateTimeFormat('en-GB', {
             day: 'numeric',
@@ -115,10 +121,10 @@ export const BlogPost = ({
         </p>
       </div>
 
-      <h2 className='blog-post-title'>{title}</h2>
-      <p className='blog-post-preview'>{preview}</p>
+      <h2 className={styles.blogPostTitle}>{title}</h2>
+      <p className={styles.blogPostPreview}>{preview}</p>
 
-      <div className='button-container'>
+      <div className={styles.buttonContainer}>
         <Button
           sx={{
             backgroundColor: '#b8e9f7',

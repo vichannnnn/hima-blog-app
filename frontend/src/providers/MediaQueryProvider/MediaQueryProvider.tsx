@@ -1,3 +1,5 @@
+'use client';
+
 import { createContext, ReactNode, useMemo } from 'react';
 import { useMediaQuery } from '@mui/material';
 

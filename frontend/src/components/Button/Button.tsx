@@ -4,15 +4,17 @@ import { Button as ButtonBase, ButtonProps, SxProps, Theme } from '@mui/material
 interface ButtonBaseProps extends ButtonProps {
   onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
   sx?: SxProps<Theme>;
+  href?: string;
 }
 
 export const Button = forwardRef<HTMLButtonElement, ButtonBaseProps>(
-  ({ onClick, sx, children, ...props }, ref) => {
+  ({ onClick, sx, href, children, ...props }, ref) => {
     return (
       <ButtonBase
         onClick={onClick}
         className=''
         ref={ref}
+        href={href}
         variant='outlined'
         sx={{
           border: 'none',
@@ -41,3 +43,5 @@ export const Button = forwardRef<HTMLButtonElement, ButtonBaseProps>(
     );
   },
 );
+
+Button.displayName = 'Button';

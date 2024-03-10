@@ -2,8 +2,8 @@ FROM oven/bun:1.0.14 as base
 
 FROM base AS build
 
-ENV VITE_APP_API_URL="https://api.blog.himaa.me/"
-ENV VITE_APP_AWS_CLOUDFRONT_URL="https://image.himaa.me/"
+ENV NEXT_PUBLIC_API_URLL="https://api.blog.himaa.me/"
+ENV NEXT_PUBLIC_AWS_CLOUDFRONT_URL="https://image.himaa.me/"
 
 WORKDIR /app
 COPY package.json bun.lockb ./

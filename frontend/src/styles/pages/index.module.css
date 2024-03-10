@@ -1,0 +1,26 @@
+.page {
+    width: 75%;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-gap: 1rem;
+    padding: 1rem;
+}
+
+.page > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 1rem;
+}
+
+@media screen and (max-width: 913px) {
+    .page {
+        width: 75%;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+        grid-gap: 1rem;
+        padding: 1rem;
+    }
+}

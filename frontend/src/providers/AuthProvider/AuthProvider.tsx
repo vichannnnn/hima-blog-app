@@ -1,3 +1,5 @@
+'use client';
+
 import { createContext, useEffect, useMemo, useState, useCallback } from 'react';
 import { login as logInAPI } from '@api/auth';
 import { AuthContextType, AuthProviderProps, User, LogInDetails } from '@providers';

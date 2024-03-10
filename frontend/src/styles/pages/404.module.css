@@ -1,0 +1,37 @@
+.notFoundContainer {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    align-items: center;
+    text-align: center;
+}
+
+.notFoundContainer h1 {
+    margin-bottom: 16px;
+    margin-top: 16px;
+}
+
+.notFoundTextContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+.notFoundTextContainer p {
+    font-size: 24px;
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+
+.notFoundImageContainer {
+    width: 640px;
+}
+
+
+@media screen and (max-width: 913px) {
+    .notFoundImageContainer {
+        width: 320px;
+    }
+}

@@ -22,8 +22,8 @@ export interface CreateBlogPost {
   title: string;
   preview: string;
   content: string;
+  category: string;
   image?: File;
-  category?: string;
 }
 
 export interface UpdateBlogPost {

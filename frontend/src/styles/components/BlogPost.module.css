@@ -1,0 +1,65 @@
+.blogPost {
+    display: flex;
+    flex-direction: column;
+}
+
+.actionIcons {
+    display: flex;
+    flex-direction: row;
+    gap: 2px;
+    position: absolute;
+    top: 8px;
+    right: 8px;
+}
+
+.editIcon, .deleteIcon {
+    border: none;
+    border-radius: 8px;
+    background-color: lightsteelblue;
+}
+
+.blogPostImageContainer {
+    position: relative;
+}
+
+
+.dateContainer p {
+    font-size: small;
+    color: rgb(128, 128, 128);
+}
+
+
+.blogPostTitle {
+    font-size: var(--blog-post-font-size-title);
+    line-height: var(--blog-post-line-height-title);
+    height: calc(var(--blog-post-font-size-title) * var(--blog-post-line-height-title) * 2);
+    margin: 0 0 8px;
+    overflow: hidden;
+}
+
+
+.blogPostPreview {
+    font-size: 18px;
+    height: calc(18px * var(--blog-post-line-height-title) * 3);
+}
+
+
+.buttonContainer {
+    display: flex;
+    margin: auto;
+    width: 50%;
+
+}
+
+
+@media screen and (max-width: 913px) {
+    .blog-post-title {
+        height: auto;
+        margin: 0 0 8px;
+        overflow: hidden;
+    }
+
+    .blog-post-preview {
+        height: auto;
+    }
+}

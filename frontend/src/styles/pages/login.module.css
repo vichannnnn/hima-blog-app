@@ -1,0 +1,26 @@
+.loginPage {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.loginContainer {
+    text-align: left;
+    margin-bottom: 24px;
+}
+
+.loginFormContainer {
+    margin-top: 24px;
+}
+
+.loginButtonContainer {
+    padding-top: 12px;
+    display: flex;
+    justify-content: center;
+}
+
+.loginErrorMessage {
+    color: red;
+}
