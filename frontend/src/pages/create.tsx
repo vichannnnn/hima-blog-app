@@ -1,4 +1,5 @@
 import { useRouter } from 'next/navigation';
+import Head from 'next/head';
 import { addNewBlogPost, CreateBlogPost } from '@api/blog';
 import { BlogPostForm } from '@components/BlogPostForm';
 import { Action } from '@components/BlogPostForm/types';
@@ -20,7 +21,14 @@ const Create = () => {
     }
   };
 
-  return <BlogPostForm onSubmit={submitNewBlogPost} action={Action.CREATE} />;
+  return (
+    <>
+      <Head>
+        <title>Create New Blog Post - Hima&apos;s Blog</title>
+      </Head>
+      <BlogPostForm onSubmit={submitNewBlogPost} action={Action.CREATE} />
+    </>
+  );
 };
 
 export default Create;

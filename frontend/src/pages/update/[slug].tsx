@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import Head from "next/head";
 import { useRouter } from 'next/router';
 import { BlogPost, getBlogPost, updateBlogPost, UpdateBlogPost } from '@api/blog';
 import { BlogPostForm } from '@components/BlogPostForm';
@@ -42,7 +43,12 @@ const Update = () => {
   };
 
   return !isLoading ? (
-    <BlogPostForm initialData={blogPost} onSubmit={submitUpdateBlogPost} action={Action.UPDATE} />
+    <>
+      <Head>
+        <title>Update Blog Post - Hima&apos;s Blog</title>
+      </Head>
+      <BlogPostForm initialData={blogPost} onSubmit={submitUpdateBlogPost} action={Action.UPDATE} />
+    </>
   ) : null;
 };
 

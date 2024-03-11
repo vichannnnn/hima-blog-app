@@ -8,6 +8,7 @@ import { AuthContext, LogInDetails } from '@providers';
 import { SignInValidation } from '@utils';
 import { FormControl, Stack, TextField } from '@mui/material';
 import styles from '@styles/pages/login.module.css';
+import Head from 'next/head';
 
 const Login = () => {
   const { user, isLoading, login } = useContext(AuthContext);
@@ -53,41 +54,46 @@ const Login = () => {
   };
 
   return (
-    <div className={styles.loginPage}>
-      <div className={styles.loginContainer}>
-        <Title>Log in</Title>
-        <Description>Enter your credentials to access your account.</Description>
-        <form className={styles.loginFormContainer} onSubmit={handleSubmit(handleLogin)}>
-          <Stack direction='column' spacing={2} sx={{ width: '100%' }}>
-            <FormControl id='username'>
-              <TextField
-                label='Username'
-                type='text'
-                error={Boolean(errors.username)}
-                helperText={errors.username?.message as unknown as ReactNode}
-                {...register('username')}
-                required
-                fullWidth
-              />
-            </FormControl>
-            <FormControl id='password'>
-              <TextField
-                label='Password'
-                type='password'
-                error={Boolean(errors.password)}
-                helperText={errors.username?.message as unknown as ReactNode}
-                {...register('password')}
-                required
-              />
-            </FormControl>
-            {loginError && <ErrorText>{loginError}</ErrorText>}
-            <div className={styles.loginButtonContainer}>
-              <Button type='submit'>Log In</Button>
-            </div>
-          </Stack>
-        </form>
+    <>
+      <Head>
+        <title>Log In - Hima&apos;s Blog</title>
+      </Head>
+      <div className={styles.loginPage}>
+        <div className={styles.loginContainer}>
+          <Title>Log in</Title>
+          <Description>Enter your credentials to access your account.</Description>
+          <form className={styles.loginFormContainer} onSubmit={handleSubmit(handleLogin)}>
+            <Stack direction='column' spacing={2} sx={{ width: '100%' }}>
+              <FormControl id='username'>
+                <TextField
+                  label='Username'
+                  type='text'
+                  error={Boolean(errors.username)}
+                  helperText={errors.username?.message as unknown as ReactNode}
+                  {...register('username')}
+                  required
+                  fullWidth
+                />
+              </FormControl>
+              <FormControl id='password'>
+                <TextField
+                  label='Password'
+                  type='password'
+                  error={Boolean(errors.password)}
+                  helperText={errors.username?.message as unknown as ReactNode}
+                  {...register('password')}
+                  required
+                />
+              </FormControl>
+              {loginError && <ErrorText>{loginError}</ErrorText>}
+              <div className={styles.loginButtonContainer}>
+                <Button type='submit'>Log In</Button>
+              </div>
+            </Stack>
+          </form>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

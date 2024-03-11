@@ -1,5 +1,6 @@
 // @ts-nocheck
 import { useEffect, ReactNode } from 'react';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 import 'github-markdown-css/github-markdown-light.css';
@@ -56,6 +57,10 @@ const FullBlogPost = ({ blogPostData, mdxSource }: FullBlogPostProps) => {
 
   return (
     <>
+      <Head>
+        <title>{blogPostData.title} - Hima&apos;s Blog</title>
+        <meta name='description' content={blogPostData.preview} />
+      </Head>
       <div className={styles.fullBlogPostContainer}>
         <div className={styles.fullBlogPostHeader}>
           <Title className={styles.fullBlogPostTitle}>{blogPostData?.title}</Title>
