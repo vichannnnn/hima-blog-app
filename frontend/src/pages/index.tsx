@@ -49,6 +49,7 @@ const HomePage = () => {
       <div className={styles.page}>
         {blogPosts.map((post, index) => (
           <BlogPost
+            blog_id={post.blog_id}
             key={index}
             slug={post.slug}
             user_id={post.user_id}
