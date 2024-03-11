@@ -33,7 +33,7 @@ class Blog(Base, CRUD["Blog"]):
         ForeignKey("account.user_id", ondelete="CASCADE"),
     )
     title: Mapped[str] = mapped_column(unique=True, nullable=False)
-    slug: Mapped[str] = mapped_column(unique=True, nullable=False, index=True
+    slug: Mapped[str] = mapped_column(nullable=False, index=True
     )
     preview: Mapped[str] = mapped_column(nullable=False)
     content: Mapped[str] = mapped_column(nullable=False)

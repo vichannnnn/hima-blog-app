@@ -33,7 +33,7 @@ def upgrade():
 
 def downgrade():
     # Commands to revert the changes made in upgrade()
-    op.alter_column('your_table_name', 'last_edited_date',
+    op.alter_column('blogs', 'last_edited_date',
                     existing_type=sa.DateTime(timezone=True),
                     onupdate=None,
                     server_default=None,
