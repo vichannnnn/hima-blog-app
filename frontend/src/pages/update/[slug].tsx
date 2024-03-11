@@ -6,14 +6,14 @@ import { Action } from '../../components/BlogPostForm/types';
 
 const Update = () => {
   const router = useRouter();
-  const { blog_id } = router.query;
+  const { slug } = router.query;
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [blogPost, setBlogPost] = useState<BlogPost | null>(null);
 
   useEffect(() => {
     const fetchBlogPostData = async () => {
       try {
-        const data = await getBlogPost(Number(blog_id));
+        const data = await getBlogPost(slug as string);
         setBlogPost(data);
         setIsLoading(false);
       } catch (error) {
@@ -21,7 +21,7 @@ const Update = () => {
       }
     };
 
-    if (blog_id) {
+    if (slug) {
       fetchBlogPostData().catch((err) => {
         console.error('Failed to fetch blog post:', err);
       });
@@ -34,7 +34,7 @@ const Update = () => {
         ...formData,
         image: formData.image instanceof File ? formData.image : undefined,
       };
-      await updateBlogPost(Number(blog_id), payload);
+      await updateBlogPost(slug as string, payload);
       router.push('/');
     } catch (error) {
       console.error('Error creating blog post', error);

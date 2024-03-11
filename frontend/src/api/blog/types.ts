@@ -2,6 +2,7 @@ export interface BlogPost {
   blog_id: number;
   user_id: number;
   title: string;
+  slug: string;
   content: string;
   image: string;
   category: string;

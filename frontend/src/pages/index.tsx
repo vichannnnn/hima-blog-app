@@ -7,7 +7,7 @@ import { Hero } from '../components/Hero';
 
 const HomePage = () => {
   const [blogPosts, setBlogPosts] = useState<BlogPostObject[]>([]);
-  const [openDialogBlogId, setOpenDialogBlogId] = useState<number | null>(null);
+  const [openDialogSlug, setOpenDialogSlug] = useState<string | null>(null);
   const { isDesktop } = useContext(MediaQueryContext);
   const { user } = useContext(AuthContext);
   const isAuthenticated = !!user;
@@ -31,16 +31,16 @@ const HomePage = () => {
     };
   }, []);
 
-  const handlePostDeletion = (deletedBlogId: number) => {
-    setBlogPosts((currentPosts) => currentPosts.filter((post) => post.blog_id !== deletedBlogId));
+  const handlePostDeletion = (slug: string) => {
+    setBlogPosts((currentPosts) => currentPosts.filter((post) => post.slug !== slug));
   };
 
-  const handleOpenDialog = (blogId: number) => {
-    setOpenDialogBlogId(blogId);
+  const handleOpenDialog = (slug: string) => {
+    setOpenDialogSlug(slug);
   };
 
   const handleCloseDialog = () => {
-    setOpenDialogBlogId(null);
+    setOpenDialogSlug(null);
   };
 
   return (
@@ -50,7 +50,7 @@ const HomePage = () => {
         {blogPosts.map((post, index) => (
           <BlogPost
             key={index}
-            blog_id={post.blog_id}
+            slug={post.slug}
             user_id={post.user_id}
             title={post.title}
             content={post.content}
@@ -60,8 +60,8 @@ const HomePage = () => {
             preview={post.preview}
             image={post.image}
             onPostDelete={handlePostDeletion}
-            isOpen={openDialogBlogId === post.blog_id}
-            onOpenDialog={() => handleOpenDialog(post.blog_id)}
+            isOpen={openDialogSlug === post.slug}
+            onOpenDialog={() => handleOpenDialog(post.slug)}
             onCloseDialog={handleCloseDialog}
             isAuthenticated={isAuthenticated}
             isDesktop={isDesktop}

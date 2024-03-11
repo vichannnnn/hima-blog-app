@@ -95,10 +95,10 @@ const FullBlogPost = ({ blogPostData, mdxSource }: FullBlogPostProps) => {
 };
 
 export async function getServerSideProps(context) {
-  const { blog_id } = context.params;
+  const { slug } = context.params;
 
   try {
-    const data = await getBlogPost(Number(blog_id));
+    const data = await getBlogPost(slug);
     const mdxSource = await serialize(data.content);
     return { props: { blogPostData: data, mdxSource } };
   } catch (error) {

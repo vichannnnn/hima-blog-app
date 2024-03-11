@@ -15,7 +15,7 @@ import styles from '../../styles/components/BlogPost.module.css';
 const NEXT_PUBLIC_AWS_CLOUDFRONT_URL = process.env.NEXT_PUBLIC_AWS_CLOUDFRONT_URL;
 
 interface BlogPostProps extends BlogPostObject {
-  onPostDelete: (deletedBlogId: number) => void;
+  onPostDelete: (slug: string) => void;
   isDesktop: boolean;
   isAuthenticated: boolean;
   isOpen: boolean;
@@ -24,7 +24,7 @@ interface BlogPostProps extends BlogPostObject {
 }
 
 export const BlogPost = ({
-  blog_id,
+  slug,
   user_id,
   title,
   content,
@@ -44,7 +44,7 @@ export const BlogPost = ({
 
   const handleGetUpdatePage = () => {
     if (isAuthenticated) {
-      const updatePagePath = `/update/${blog_id}`;
+      const updatePagePath = `/update/${slug}`;
       router.push(updatePagePath);
     } else {
       router.push('/login');
@@ -53,8 +53,8 @@ export const BlogPost = ({
 
   const handleDeleteBlogPost = async () => {
     if (isAuthenticated) {
-      await deleteBlogPost(blog_id);
-      onPostDelete(blog_id);
+      await deleteBlogPost(slug);
+      onPostDelete(slug);
       onCloseDialog();
     } else {
       router.push('/login');
@@ -62,7 +62,7 @@ export const BlogPost = ({
   };
 
   const handleNavigateToBlogPost = () => {
-    const pagePath = `/post/${blog_id}`;
+    const pagePath = `/post/${slug}`;
     router.push(pagePath);
   };
 

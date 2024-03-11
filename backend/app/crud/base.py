@@ -36,8 +36,8 @@ class CRUD(Generic[ModelType]):
                 raise AppError.RESOURCES_ALREADY_EXISTS_ERROR from exc
 
     @classmethod
-    async def get(cls: Type[ModelType], session: AsyncSession, id: int) -> ModelType:  # type: ignore
-        stmt = select(cls).where(cls.id == id)
+    async def get(cls: Type[ModelType], session: AsyncSession, slug: str) -> ModelType:  # type: ignore
+        stmt = select(cls).where(cls.slug == slug)
         result = await session.execute(stmt)
         instance = result.scalar()
 
@@ -47,9 +47,9 @@ class CRUD(Generic[ModelType]):
 
     @classmethod
     async def update(  # type: ignore
-        cls: Type[ModelType], session: AsyncSession, id: int, data: Dict[str, Any]
+        cls: Type[ModelType], session: AsyncSession, slug: str, data: Dict[str, Any]
     ) -> ModelType:
-        stmt = update(cls).returning(cls).where(cls.id == id).values(**data)
+        stmt = update(cls).returning(cls).where(cls.slug == slug).values(**data)
         res = await session.execute(stmt)
         await session.commit()
         updated_instance = res.scalar()
@@ -61,9 +61,9 @@ class CRUD(Generic[ModelType]):
 
     @classmethod
     async def delete(  # type: ignore
-        cls: Type[ModelType], session: AsyncSession, id: int
+        cls: Type[ModelType], session: AsyncSession, slug: str
     ) -> FastAPIResponse:
-        stmt = delete(cls).returning(cls).where(cls.id == id)
+        stmt = delete(cls).returning(cls).where(cls.slug == slug)
         res = await session.execute(stmt)
         await session.commit()
         deleted_instance = res.scalar()

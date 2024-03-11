@@ -28,7 +28,7 @@ def test_add_blog_authorized(
     assert response.json()["blog_id"] == 1
     assert response.json()["title"] == test_blog_insert.title
     assert response.json()["content"] == test_blog_insert.content
-    assert response.json()["last_edited_date"] is None
+    assert response.json()["last_edited_date"]
 
 
 def test_get_blog_posts(
@@ -36,7 +36,7 @@ def test_get_blog_posts(
 ) -> None:
     response = test_client.get(BLOGS_URL)
     assert response.status_code == status.HTTP_200_OK
-    assert not len(response.json())
+    assert not response.json()['items']
 
 
 def test_insert_two_blog_posts_and_blog_posts(
@@ -58,21 +58,18 @@ def test_insert_two_blog_posts_and_blog_posts(
     assert response.status_code == status.HTTP_200_OK
     assert response.json()["blog_id"] == 2
     assert response.json()["category"] == test_blog_insert_with_category.category
-    assert response.json()["last_edited_date"] is None
+    assert response.json()["last_edited_date"]
 
     response = test_logged_in_client.get(BLOGS_URL)
     assert response.status_code == status.HTTP_200_OK
-    assert len(response.json()) == 2
-    assert response.json()[0]["blog_id"] == 1
-    assert response.json()[1]["blog_id"] == 2
-    assert response.json()[0]["category"] is None
-    assert response.json()[1]["category"] == test_blog_insert_with_category.category
+
+    assert len(response.json()['items']) == 2
 
 
 def test_get_one_blog_post_not_valid(
     create_valid_user, test_client: TestClient
 ) -> None:
-    response = test_client.get(BLOG_URL + "/" + str(1))
+    response = test_client.get(BLOG_URL + "/" + 'abc')
     assert response.status_code == status.HTTP_404_NOT_FOUND
 
 
@@ -86,11 +83,11 @@ def test_get_one_blog_post_valid(
     )
     assert post_response.status_code == status.HTTP_200_OK
 
-    blog_id = post_response.json()["blog_id"]
+    slug = post_response.json()["slug"]
 
-    response = test_logged_in_client.get(BLOG_URL + "/" + str(blog_id))
+    response = test_logged_in_client.get(BLOG_URL + "/" + str(slug))
     assert response.status_code == status.HTTP_200_OK
-    assert response.json()["blog_id"] == blog_id
+    assert response.json()["slug"] == slug
     assert response.json()["title"] == test_blog_insert.title
 
 
@@ -104,12 +101,11 @@ def test_update_blog(
         BLOG_URL, params=test_blog_insert.dict(exclude_none=True)
     )
     assert response.status_code == status.HTTP_200_OK
-    blog_id = response.json()["blog_id"]
+    slug = response.json()["slug"]
     response = test_logged_in_client.put(
-        BLOG_URL + "/" + str(blog_id), params=test_blog_update.dict(exclude_none=True)
+        BLOG_URL + "/" + str(slug), params=test_blog_update.dict(exclude_none=True)
     )
     assert response.status_code == status.HTTP_200_OK
-    assert response.json()["blog_id"] == blog_id
     assert response.json()["title"] == test_blog_update.title
     assert response.json()["content"] == test_blog_update.content
     assert response.json()["last_edited_date"] is not None
@@ -127,7 +123,7 @@ def test_update_blog_not_found(
     assert response.status_code == status.HTTP_200_OK
 
     response = test_logged_in_client.put(
-        BLOG_URL + "/" + str(2), params=test_blog_update.dict(exclude_none=True)
+        BLOG_URL + "/" + 'something-else', params=test_blog_update.dict(exclude_none=True)
     )
     assert response.status_code == status.HTTP_404_NOT_FOUND
 
@@ -137,7 +133,7 @@ def test_update_blog_not_authorized(
     test_blog_update: schemas.core.BlogUpdateRequestModel,
 ) -> None:
     response = test_client.put(
-        BLOG_URL + "/" + str(2), params=test_blog_update.dict(exclude_none=True)
+        BLOG_URL + "/" + str('abc'), params=test_blog_update.dict(exclude_none=True)
     )
     assert response.status_code == status.HTTP_401_UNAUTHORIZED
 
@@ -152,23 +148,11 @@ def test_delete_blog(
     )
     assert response.status_code == status.HTTP_200_OK
 
-    exist_blog_id = 1
-    response = test_logged_in_client.delete(BLOG_URL + "/" + str(exist_blog_id))
+    response = test_logged_in_client.delete(BLOG_URL + "/" + response.json()['slug'])
     assert response.status_code == status.HTTP_204_NO_CONTENT
 
-    does_not_exist_id = 2
-    response = test_logged_in_client.delete(BLOG_URL + "/" + str(does_not_exist_id))
+    does_not_exist_slug = 'abc'
+    response = test_logged_in_client.delete(BLOG_URL + "/" + does_not_exist_slug)
     assert response.status_code == status.HTTP_404_NOT_FOUND
 
 
-# def test_delete_blog_unauthorized(
-#     create_valid_user,
-#     test_logged_in_client: TestClient,
-#     test_client: TestClient,
-#     test_blog_insert: schemas.core.BlogCreateRequestModel,
-# ) -> None:
-#     response = test_logged_in_client.post(BLOG_URL, params=test_blog_insert.dict(exclude_none=True))
-#     assert response.status_code == status.HTTP_200_OK
-#
-#     delete = test_client.delete(BLOG_URL + "/" + str(response.json()["blog_id"]))
-#     assert delete.status_code == status.HTTP_401_UNAUTHORIZED

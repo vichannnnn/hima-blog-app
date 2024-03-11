@@ -21,6 +21,7 @@ class BlogUpdateRequestModel(BaseModel):
 class BlogResponseModel(BlogCreateRequestModel):
     blog_id: int
     user_id: int
+    slug: str
     preview: str
     image: str
     date_posted: datetime.datetime

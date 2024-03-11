@@ -2,7 +2,7 @@ import { apiClient } from '@apiClient';
 import { BlogPost, UpdateBlogPost } from './types';
 import { AxiosError } from 'axios';
 
-export const updateBlogPost = async (blog_id: number, data: UpdateBlogPost): Promise<BlogPost> => {
+export const updateBlogPost = async (slug: string, data: UpdateBlogPost): Promise<BlogPost> => {
   const filteredData = {
     ...(data.title != undefined && { title: data.title }),
     ...(data.content != undefined && { content: data.content }),
@@ -17,7 +17,7 @@ export const updateBlogPost = async (blog_id: number, data: UpdateBlogPost): Pro
   }
 
   try {
-    return await apiClient.put(`/blog/${blog_id}?${queryParams}`, formData, {
+    return await apiClient.put(`/blog/${slug}?${queryParams}`, formData, {
       headers: data.image ? { 'Content-Type': 'multipart/form-data' } : undefined,
     });
   } catch (error) {

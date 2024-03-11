@@ -31,12 +31,12 @@ async def create_blog(
     return new_blog
 
 
-@router.put("/{blog_id}", response_model=BlogResponseModel)
+@router.put("/{slug}", response_model=BlogResponseModel)
 async def update_blog(
     session: CurrentSession,
     s3_bucket: SessionBucket,
     authenticated: CurrentUser,
-    blog_id: int,
+    slug: str,
     blog: BlogUpdateRequestModel = Depends(),
     image: Optional[UploadFile] = None,
 ) -> BlogResponseModel:
@@ -44,7 +44,7 @@ async def update_blog(
         session,
         s3_bucket=s3_bucket,
         data=blog,
-        blog_id=blog_id,
+        slug=slug,
         user_id=authenticated.user_id,
         image=image,
     )
@@ -55,7 +55,7 @@ async def update_blog(
 async def read_blogs(
     session: CurrentSession,
     page: int = Query(1, title="Page number", gt=0),
-    size: int = Query(12, title="Page size", gt=0, le=50),
+    size: int = Query(21, title="Page size", gt=0, le=50),
     sorted_by_date_posted: Optional[str] = "desc",
 ) -> Sequence[Blog]:
     blogs = await Blog.get_all_blog_posts(
@@ -64,15 +64,15 @@ async def read_blogs(
     return blogs
 
 
-@router.get("/{blog_id}", response_model=BlogResponseModel)
-async def read_blog(session: CurrentSession, blog_id: int) -> Blog:
-    blog = await Blog.get(session, blog_id)
+@router.get("/{slug}", response_model=BlogResponseModel)
+async def read_blog(session: CurrentSession, slug: str) -> Blog:
+    blog = await Blog.get(session, slug)
     return blog
 
 
-@router.delete("/{blog_id}")
+@router.delete("/{slug}")
 async def delete_blog(
-    session: CurrentSession, authenticated: CurrentUser, blog_id: int
+    session: CurrentSession, authenticated: CurrentUser, slug: str
 ) -> FastAPIResponse:
-    deleted_blog = await Blog.delete(session, blog_id)
+    deleted_blog = await Blog.delete(session, slug)
     return deleted_blog
