@@ -1,7 +1,7 @@
 import { useRouter } from 'next/navigation';
 import { addNewBlogPost, CreateBlogPost } from '@api/blog';
-import { BlogPostForm } from '../components/BlogPostForm';
-import { Action } from '../components/BlogPostForm/types';
+import { BlogPostForm } from '@components/BlogPostForm';
+import { Action } from '@components/BlogPostForm/types';
 
 const Create = () => {
   const router = useRouter();

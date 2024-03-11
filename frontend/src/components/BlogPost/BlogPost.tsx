@@ -1,6 +1,6 @@
 import { useRouter } from 'next/navigation';
 import { BlogPost as BlogPostObject, deleteBlogPost } from '@api/blog';
-import { Button } from '../index';
+import { Button } from '@components';
 import {
   Dialog,
   DialogActions,
@@ -10,7 +10,7 @@ import {
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import styles from '../../styles/components/BlogPost.module.css';
+import styles from '@styles/components/BlogPost.module.css';
 
 const NEXT_PUBLIC_AWS_CLOUDFRONT_URL = process.env.NEXT_PUBLIC_AWS_CLOUDFRONT_URL;
 

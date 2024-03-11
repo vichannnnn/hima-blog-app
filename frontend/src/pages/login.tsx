@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState, ReactNode } from 'react';
+import { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -6,8 +7,7 @@ import { Button, Description, ErrorText, Title } from '@components';
 import { AuthContext, LogInDetails } from '@providers';
 import { SignInValidation } from '@utils';
 import { FormControl, Stack, TextField } from '@mui/material';
-import { AxiosError } from 'axios';
-import styles from '../styles/pages/login.module.css';
+import styles from '@styles/pages/login.module.css';
 
 const Login = () => {
   const { user, isLoading, login } = useContext(AuthContext);

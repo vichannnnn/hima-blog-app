@@ -1,9 +1,9 @@
 import Head from 'next/head';
 import { AppProps } from 'next/app';
-import { createTheme, ThemeProvider } from '@mui/material';
-import { Header } from '../components/Header';
-import { Footer } from '../components/Footer';
 import { AuthProvider, MediaQueryProvider } from '@providers';
+import { createTheme, ThemeProvider } from '@mui/material';
+import { Header } from '@components/Header';
+import { Footer } from '@components/Footer';
 import '../app/globals.css';
 
 const customMuiTheme = {
@@ -56,12 +56,12 @@ function MyApp({ Component, pageProps }: AppProps) {
             <meta name='msapplication-TileColor' content='#ffffff' />
             <meta name='theme-color' content='#ffffff' />
             <meta name='viewport' content='width=device-width, initial-scale=1.0' />
-            <meta property='og:title' content="Hima&apos;s Blog" />
-            <meta property='og:description' content='Random ramblings of Hima&apos;s engineerings~' />
+            <meta property='og:title' content="Hima's Blog" />
+            <meta property='og:description' content="Random ramblings of Hima's engineerings~" />
             <meta property='og:type' content='website' />
             <meta property='og:url' content='https://blog.himaa.me' />
             <meta property='og:image' content='https://image.himaa.me/hima-chan-original.png' />
-            <title>Hima&apos;s Blog</title>
+            <title>Hima&apos;s Engineering Blog</title>
           </Head>
           <Component {...pageProps} />
           <Footer />

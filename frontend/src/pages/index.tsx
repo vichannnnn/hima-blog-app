@@ -1,9 +1,10 @@
 import { useEffect, useState, useContext } from 'react';
-import styles from '../styles/pages/index.module.css';
+import Head from 'next/head';
+import Image from 'next/image';
 import { getAllBlogPosts, BlogPost as BlogPostObject } from '@api/blog';
 import { BlogPost } from '@components';
 import { MediaQueryContext, AuthContext } from '@providers';
-import Image from "next/image";
+import styles from '@styles/pages/index.module.css';
 
 const HomePage = () => {
   const [blogPosts, setBlogPosts] = useState<BlogPostObject[]>([]);
@@ -45,20 +46,25 @@ const HomePage = () => {
 
   return (
     <>
+      <Head>
+        <title>Hima&apos;s Engineering Blog</title>
+        <meta name='description' content="Welcome to Hima's ramblings!" />
+      </Head>
       <div className={styles.heroContainer}>
         <Image
-            src='https://image.himaa.me/hima-chan-posing.png'
-            alt='Hima!'
-            width='225'
-            height='225'
-            loading='lazy'
+          src='https://image.himaa.me/hima-chan-posing.png'
+          alt='Hima!'
+          width='225'
+          height='225'
+          loading='lazy'
         />
         <div>
           <h1>Welcome to Hima&apos;s Engineering Blog</h1>
           <p className={styles.heroSubtitle}>
-            This is where the ramblings and yapping of my software engineering journey lies. It could be about engineering-related stuff like work,
-            personal projects, or it could be anything! I would ideally like to update the blog with new
-            post every other week to document down my engineering journey but we shall see how it goes!
+            This is where the ramblings and yapping of my software engineering journey lies. It
+            could be about engineering-related stuff like work, personal projects, or it could be
+            anything! I would ideally like to update the blog with new post every other week to
+            document down my engineering journey but we shall see how it goes!
           </p>
         </div>
       </div>

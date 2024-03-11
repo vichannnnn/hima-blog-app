@@ -23,9 +23,12 @@
       "@api/auth": ["src/api/auth/"],
       "@api/blog": ["src/api/blog/"],
       "@api/count": ["src/api/count/"],
-      "@components": ["src/components/"],
+      "@components": ["src/components"],
+      "@components/*": ["src/components/*"],
       "@features": ["src/features/"],
       "@providers": ["src/providers/"],
+
+      "@styles/*": ["src/styles/*"],
       "@utils": ["src/utils/"]
     }
   },

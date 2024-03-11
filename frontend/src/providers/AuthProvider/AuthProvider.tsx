@@ -1,9 +1,9 @@
 'use client';
 
 import { createContext, useEffect, useMemo, useState, useCallback } from 'react';
+import jwt_decode from 'jwt-decode';
 import { login as logInAPI } from '@api/auth';
 import { AuthContextType, AuthProviderProps, User, LogInDetails } from '@providers';
-import jwt_decode from 'jwt-decode';
 
 export const AuthContext = createContext<AuthContextType>({
   user: null,

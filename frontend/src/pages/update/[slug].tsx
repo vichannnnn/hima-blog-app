@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { BlogPost, getBlogPost, updateBlogPost, UpdateBlogPost } from '@api/blog';
-import { BlogPostForm } from '../../components/BlogPostForm';
-import { Action } from '../../components/BlogPostForm/types';
+import { BlogPostForm } from '@components/BlogPostForm';
+import { Action } from '@components/BlogPostForm/types';
 
 const Update = () => {
   const router = useRouter();

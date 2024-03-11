@@ -1,4 +1,5 @@
 import { useContext, useEffect, ChangeEvent } from 'react';
+import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -7,9 +8,8 @@ import { Button, Description, ErrorText, Title } from '@components';
 import { AuthContext } from '@providers';
 import { BlogPostValidation } from '@utils';
 import { TextField } from '@mui/material';
+import styles from '@styles/components/BlogPostForm.module.css';
 import { Action } from './types';
-import styles from '../../styles/components/BlogPostForm.module.css';
-import dynamic from 'next/dynamic';
 
 const MDEditor = dynamic(() => import('@uiw/react-md-editor').then((mod) => mod.default), {
   ssr: false,
