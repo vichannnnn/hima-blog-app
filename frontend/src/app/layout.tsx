@@ -9,6 +9,10 @@ const inter = Inter({ subsets: ['latin'] });
 export const metadata: Metadata = {
   title: 'Hima&apos;s Blog',
   description: 'Random ramblings of Hima&apos;s engineerings~',
+  openGraph: {
+    title: 'Hima&apos;s Blog',
+    description: 'Random ramblings of Hima&apos;s engineerings~',
+  }
 };
 
 export default function RootLayout({
