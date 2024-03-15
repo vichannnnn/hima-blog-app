@@ -1,16 +1,13 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import Head from 'next/head';
+import { NextSeo } from 'next-seo';
 import { Button } from '@components';
 import styles from '@styles/pages/404.module.css';
 
 export default function Custom404() {
   return (
     <>
-      <Head>
-        <title>404 - Hima&apos;s Blog</title>
-        <meta name='description' content="Whoops! You shouldn't be here" />
-      </Head>
+      <NextSeo title="404 - Hima's Blog" description="Whoops! You shouldn't be here" />
       <div className={styles.notFoundContainer}>
         <h1>Whoopsie!</h1>
         <h1>404 - Page Not Found</h1>

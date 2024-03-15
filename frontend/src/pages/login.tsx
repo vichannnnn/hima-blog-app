@@ -9,6 +9,7 @@ import { SignInValidation } from '@utils';
 import { FormControl, Stack, TextField } from '@mui/material';
 import styles from '@styles/pages/login.module.css';
 import Head from 'next/head';
+import { NextSeo } from 'next-seo';
 
 const Login = () => {
   const { user, isLoading, login } = useContext(AuthContext);
@@ -55,9 +56,7 @@ const Login = () => {
 
   return (
     <>
-      <Head>
-        <title>Log In - Hima&apos;s Blog</title>
-      </Head>
+      <NextSeo title="Log In - Hima's Blog" />
       <div className={styles.loginPage}>
         <div className={styles.loginContainer}>
           <Title>Log in</Title>

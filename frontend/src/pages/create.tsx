@@ -1,5 +1,5 @@
 import { useRouter } from 'next/navigation';
-import Head from 'next/head';
+import { NextSeo } from 'next-seo';
 import { addNewBlogPost, CreateBlogPost } from '@api/blog';
 import { BlogPostForm } from '@components/BlogPostForm';
 import { Action } from '@components/BlogPostForm/types';
@@ -23,9 +23,7 @@ const Create = () => {
 
   return (
     <>
-      <Head>
-        <title>Create New Blog Post - Hima&apos;s Blog</title>
-      </Head>
+      <NextSeo title="Create New Blog Post - Hima's Blog" />
       <BlogPostForm onSubmit={submitNewBlogPost} action={Action.CREATE} />
     </>
   );

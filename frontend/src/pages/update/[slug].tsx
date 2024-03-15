@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
-import Head from "next/head";
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { BlogPost, getBlogPost, updateBlogPost, UpdateBlogPost } from '@api/blog';
 import { BlogPostForm } from '@components/BlogPostForm';
 import { Action } from '@components/BlogPostForm/types';
+import { NextSeo } from 'next-seo';
 
 const Update = () => {
   const router = useRouter();
@@ -44,9 +45,7 @@ const Update = () => {
 
   return !isLoading ? (
     <>
-      <Head>
-        <title>Update Blog Post - Hima&apos;s Blog</title>
-      </Head>
+      <NextSeo title="Update Blog Post - Hima's Blog" />
       <BlogPostForm initialData={blogPost} onSubmit={submitUpdateBlogPost} action={Action.UPDATE} />
     </>
   ) : null;

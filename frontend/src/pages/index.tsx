@@ -1,10 +1,10 @@
 import { useEffect, useState, useContext } from 'react';
-import Head from 'next/head';
 import Image from 'next/image';
 import { getAllBlogPosts, BlogPost as BlogPostObject } from '@api/blog';
 import { BlogPost } from '@components';
 import { MediaQueryContext, AuthContext } from '@providers';
 import styles from '@styles/pages/index.module.css';
+import { NextSeo } from 'next-seo';
 
 const HomePage = () => {
   const [blogPosts, setBlogPosts] = useState<BlogPostObject[]>([]);
@@ -46,10 +46,7 @@ const HomePage = () => {
 
   return (
     <>
-      <Head>
-        <title>Hima&apos;s Engineering Blog</title>
-        <meta name='description' content="Welcome to Hima's ramblings!" />
-      </Head>
+      <NextSeo title="Hima's Engineering Blog" description="Welcome to Hima's ramblings!" />
       <div className={styles.heroContainer}>
         <Image
           src='https://image.himaa.me/hima-chan-posing.png'

@@ -1,6 +1,5 @@
 // @ts-nocheck
 import { useEffect, ReactNode } from 'react';
-import Head from 'next/head';
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 import 'github-markdown-css/github-markdown-light.css';
@@ -10,6 +9,7 @@ import { BlogPost, getBlogPost } from '@api/blog';
 import { Button, Description, Title } from '@components';
 import { Home } from '@mui/icons-material';
 import styles from '@styles/pages/post.module.css';
+import { NextSeo } from 'next-seo';
 
 const Prism = dynamic(() =>
   import('react-syntax-highlighter').then((mod) => mod.Prism || mod.default),
@@ -57,10 +57,7 @@ const FullBlogPost = ({ blogPostData, mdxSource }: FullBlogPostProps) => {
 
   return (
     <>
-      <Head>
-        <title>{blogPostData.title} - Hima&apos;s Blog</title>
-        <meta name='description' content={blogPostData.preview} />
-      </Head>
+      <NextSeo title={`${blogPostData.title} | Hima's Blog`} description={blogPostData.preview} />
       <div className={styles.fullBlogPostContainer}>
         <div className={styles.fullBlogPostHeader}>
           <Title className={styles.fullBlogPostTitle}>{blogPostData?.title}</Title>
